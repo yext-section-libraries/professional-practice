@@ -1,0 +1,1907 @@
+{
+  "root": {
+    "props": {
+      "title": {
+        "field": "name",
+        "constantValue": "Yext Professional Practice Pages",
+        "constantValueEnabled": false
+      },
+      "version": 81,
+      "description": {
+        "field": "description",
+        "constantValue": "",
+        "constantValueEnabled": false
+      }
+    }
+  },
+  "zones": {},
+  "content": [
+    {
+      "type": "ProfessionalPracticeHeader",
+      "props": {
+        "id": "ProfessionalPracticeHeader-ff769a88-e687-48bd-b9e5-5d9d7d66ef1a",
+        "cta": {
+          "show": true,
+          "items": [
+            {
+              "cta": {
+                "data": {
+                  "cta": {
+                    "field": "",
+                    "selectedType": "textAndLink",
+                    "constantValue": {
+                      "link": {
+                        "defaultValue": "#"
+                      },
+                      "label": {
+                        "defaultValue": "Book Online Now"
+                      },
+                      "ctaType": "textAndLink",
+                      "linkType": "URL"
+                    },
+                    "constantValueEnabled": true
+                  },
+                  "customId": "",
+                  "ariaLabel": {
+                    "defaultValue": "Book Online Now"
+                  },
+                  "actionType": "link",
+                  "buttonText": {
+                    "defaultValue": "Book Online Now"
+                  },
+                  "customClass": "",
+                  "openInNewTab": false,
+                  "dataAttributes": []
+                },
+                "styles": {
+                  "link": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "includeCaret": "default",
+                    "letterSpacing": "default",
+                    "textTransform": "default"
+                  },
+                  "color": {
+                    "selectedColor": "palette-primary",
+                    "contrastingColor": "palette-primary-contrast"
+                  },
+                  "button": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "borderRadius": "12px",
+                    "letterSpacing": "default",
+                    "textTransform": "default"
+                  },
+                  "variant": "primary"
+                }
+              }
+            }
+          ]
+        },
+        "section": {
+          "backgroundColor": {
+            "selectedColor": "white",
+            "contrastingColor": "palette-quaternary"
+          },
+          "visibleOnLivePage": true
+        },
+        "variant": "logoLeftInlineNav",
+        "logoImage": {
+          "url": {
+            "field": "",
+            "constantValue": {
+              "defaultValue": ""
+            },
+            "constantValueEnabled": true
+          },
+          "show": true,
+          "image": {
+            "field": "",
+            "constantValue": {
+              "url": "",
+              "width": 0,
+              "height": 0
+            },
+            "constantValueEnabled": true
+          },
+          "styles": {
+            "borderRadius": "default"
+          },
+          "aspectRatio": 1,
+          "imageConstrain": "fixed"
+        },
+        "utilities": {
+          "show": true,
+          "items": [
+            {
+              "link": "#",
+              "label": "Item 1",
+              "linkType": "URL",
+              "iconImage": {
+                "image": {
+                  "field": "",
+                  "constantValue": {
+                    "url": "",
+                    "width": 0,
+                    "height": 0
+                  },
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "borderRadius": "default"
+                },
+                "aspectRatio": 1,
+                "imageConstrain": "fixed"
+              },
+              "openInNewTab": false,
+              "normalizeLink": false
+            },
+            {
+              "link": "#",
+              "label": "Item 2",
+              "linkType": "URL",
+              "iconImage": {
+                "image": {
+                  "field": "",
+                  "constantValue": {
+                    "url": "",
+                    "width": 0,
+                    "height": 0
+                  },
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "borderRadius": "default"
+                },
+                "aspectRatio": 1,
+                "imageConstrain": "fixed"
+              },
+              "openInNewTab": false,
+              "normalizeLink": false
+            },
+            {
+              "link": "#",
+              "label": "Item 3",
+              "linkType": "URL",
+              "iconImage": {
+                "image": {
+                  "field": "",
+                  "constantValue": {
+                    "url": "",
+                    "width": 0,
+                    "height": 0
+                  },
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "borderRadius": "default"
+                },
+                "aspectRatio": 1,
+                "imageConstrain": "fixed"
+              },
+              "openInNewTab": false,
+              "normalizeLink": false
+            }
+          ]
+        },
+        "navigation": {
+          "show": true,
+          "links": [
+            {
+              "link": "#",
+              "label": "Our Services",
+              "linkType": "URL",
+              "openInNewTab": false,
+              "normalizeLink": false
+            },
+            {
+              "link": "#",
+              "label": "Service Areas & Pricing",
+              "linkType": "URL",
+              "openInNewTab": false,
+              "normalizeLink": false
+            },
+            {
+              "link": "#",
+              "label": "Membership Perks",
+              "linkType": "URL",
+              "openInNewTab": false,
+              "normalizeLink": false
+            },
+            {
+              "link": "#",
+              "label": "FAQs",
+              "linkType": "URL",
+              "openInNewTab": false,
+              "normalizeLink": false
+            },
+            {
+              "link": "#",
+              "label": "About Us",
+              "linkType": "URL",
+              "openInNewTab": false,
+              "normalizeLink": false
+            }
+          ],
+          "styles": {
+            "fontSize": "default",
+            "fontStyle": "default",
+            "fontFamily": "default",
+            "fontWeight": "default",
+            "includeCaret": "default",
+            "letterSpacing": "default",
+            "textTransform": "default"
+          }
+        }
+      }
+    },
+    {
+      "type": "MainContent",
+      "props": {
+        "id": "MainContent-default",
+        "content": [
+          {
+            "type": "ProfessionalPracticeBreadcrumbsSection",
+            "props": {
+              "id": "ProfessionalPracticeBreadcrumbsSection-8fd37e76-a6a2-4881-85bd-4e9870be21d3",
+              "section": {
+                "backgroundColor": {
+                  "selectedColor": "white",
+                  "contrastingColor": "palette-secondary"
+                },
+                "visibleOnLivePage": true
+              },
+              "rootLabel": {
+                "text": {
+                  "field": "",
+                  "constantValue": "All Locations",
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "fontSize": "default",
+                  "fontStyle": "default",
+                  "fontFamily": "default",
+                  "fontWeight": "default",
+                  "textTransform": "default"
+                }
+              },
+              "includeCurrentLocation": true
+            }
+          },
+          {
+            "type": "ProfessionalPracticeHeroSection",
+            "props": {
+              "id": "ProfessionalPracticeHeroSection-74da18e4-6d9b-4e2a-9c15-e950d9010abe",
+              "heading": {
+                "text": {
+                  "field": "name",
+                  "constantValue": "",
+                  "constantValueEnabled": false
+                },
+                "styles": {
+                  "fontSize": "default",
+                  "fontStyle": "default",
+                  "fontFamily": "default",
+                  "fontWeight": "default",
+                  "textTransform": "default"
+                }
+              },
+              "section": {
+                "backgroundColor": {
+                  "selectedColor": "white",
+                  "contrastingColor": "palette-quaternary"
+                },
+                "visibleOnLivePage": true
+              },
+              "heroImage": {
+                "image": {
+                  "field": "",
+                  "constantValue": {
+                    "url": "https://a.mktgcdn.com/p/vQqhmnexQfZueJGyh5M_j5W4EcTkTyZlW93eIoqjjvQ/1900x1267.jpg",
+                    "width": 1900,
+                    "height": 1267
+                  },
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "borderRadius": "default"
+                },
+                "aspectRatio": 1.5,
+                "imageConstrain": "filled"
+              },
+              "primaryCta": {
+                "data": {
+                  "cta": {
+                    "field": "",
+                    "selectedType": "textAndLink",
+                    "constantValue": {
+                      "link": {
+                        "defaultValue": "#"
+                      },
+                      "label": {
+                        "defaultValue": "Book Online Now"
+                      },
+                      "ctaType": "textAndLink",
+                      "linkType": "URL"
+                    },
+                    "constantValueEnabled": true
+                  },
+                  "customId": "",
+                  "ariaLabel": {
+                    "defaultValue": "Book Online Now"
+                  },
+                  "actionType": "link",
+                  "buttonText": {
+                    "defaultValue": "Book Online Now"
+                  },
+                  "customClass": "",
+                  "openInNewTab": false,
+                  "dataAttributes": []
+                },
+                "styles": {
+                  "link": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "includeCaret": "default",
+                    "letterSpacing": "default",
+                    "textTransform": "default"
+                  },
+                  "color": {
+                    "selectedColor": "palette-primary",
+                    "contrastingColor": "palette-primary-contrast"
+                  },
+                  "button": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "borderRadius": "12px",
+                    "letterSpacing": "default",
+                    "textTransform": "default"
+                  },
+                  "variant": "primary"
+                }
+              },
+              "statusPill": {
+                "hours": {
+                  "field": "hours",
+                  "constantValue": {},
+                  "constantValueEnabled": false
+                },
+                "hoursStyles": {
+                  "timeFormat": "12h",
+                  "showDayNames": false,
+                  "dayOfWeekFormat": "long",
+                  "showCurrentStatus": true
+                },
+                "backgroundColor": {
+                  "selectedColor": "palette-tertiary",
+                  "contrastingColor": "palette-tertiary-contrast"
+                }
+              },
+              "description": {
+                "text": {
+                  "field": "",
+                  "constantValue": {
+                    "defaultValue": {
+                      "html": "<p dir=\"ltr\" style=\"font-size: 14.67px; font-weight: 400; line-height: 18.67px; margin: 0; padding: 3px 2px 3px 2px; position: relative;\"><span>Lucky Dog Mobile Spa delivers a stress-free, cage-free luxury grooming experience right to your doorstep. Serving Falls Church, VA and surrounding neighborhoods, our certified groomers combine premium organic products with state-of-the-art mobile vans to keep your pup happy, healthy, and pristine.</span></p>",
+                      "json": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Lucky Dog Mobile Spa delivers a stress-free, cage-free luxury grooming experience right to your doorstep. Serving Falls Church, VA and surrounding neighborhoods, our certified groomers combine premium organic products with state-of-the-art mobile vans to keep your pup happy, healthy, and pristine.\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+                    },
+                    "hasLocalizedValue": "true"
+                  },
+                  "constantValueEnabled": true
+                }
+              },
+              "secondaryCta": {
+                "data": {
+                  "cta": {
+                    "field": "",
+                    "selectedType": "textAndLink",
+                    "constantValue": {
+                      "link": {
+                        "defaultValue": "#"
+                      },
+                      "label": {
+                        "defaultValue": "View Service Areas & Rates"
+                      },
+                      "ctaType": "textAndLink",
+                      "linkType": "URL"
+                    },
+                    "constantValueEnabled": true
+                  },
+                  "customId": "",
+                  "ariaLabel": {
+                    "defaultValue": "View Service Areas & Rates"
+                  },
+                  "actionType": "link",
+                  "buttonText": {
+                    "defaultValue": "View Service Areas & Rates"
+                  },
+                  "customClass": "",
+                  "openInNewTab": false,
+                  "dataAttributes": []
+                },
+                "styles": {
+                  "link": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "includeCaret": "default",
+                    "letterSpacing": "default",
+                    "textTransform": "default"
+                  },
+                  "color": {
+                    "selectedColor": "white",
+                    "contrastingColor": "palette-secondary"
+                  },
+                  "button": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "borderRadius": "12px",
+                    "letterSpacing": "default",
+                    "textTransform": "default"
+                  },
+                  "variant": "secondary"
+                }
+              }
+            }
+          },
+          {
+            "type": "ProfessionalPracticeDetailsSection",
+            "props": {
+              "id": "ProfessionalPracticeDetailsSection-d361e9e8-e527-49a3-a0fb-dede2e456711",
+              "perks": {
+                "icon": "thumbsUp",
+                "title": {
+                  "text": {
+                    "field": "",
+                    "constantValue": "Complimentary Services",
+                    "constantValueEnabled": true
+                  },
+                  "styles": {
+                    "fontSize": "20px",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "textTransform": "default"
+                  }
+                },
+                "listText": {
+                  "text": {
+                    "field": "",
+                    "constantValue": [
+                      "Hydro-Massage Bath",
+                      "Premium Tearless Blueberry Facial",
+                      "Blow Dry (No Cage Drying, Ever)",
+                      "Custom Bandana or Bow",
+                      "De-Shedding Consultation & Coat Health Check",
+                      "Free cancellation up to 24 hours prior to scheduled arrival",
+                      "Fully self-powered and climate-controlled mobile grooming vans (No hookups required), accommodating dogs up to 75 lbs."
+                    ],
+                    "constantValueEnabled": true
+                  },
+                  "styles": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "textTransform": "default"
+                  }
+                }
+              },
+              "section": {
+                "backgroundColor": {
+                  "selectedColor": "palette-primary",
+                  "contrastingColor": "palette-primary-contrast"
+                },
+                "visibleOnLivePage": true
+              },
+              "summary": {
+                "cta": {
+                  "data": {
+                    "cta": {
+                      "field": "",
+                      "selectedType": "textAndLink",
+                      "constantValue": {
+                        "link": {
+                          "defaultValue": "#"
+                        },
+                        "label": {
+                          "defaultValue": "Check Your Zip Code"
+                        },
+                        "ctaType": "textAndLink",
+                        "linkType": "URL"
+                      },
+                      "constantValueEnabled": true
+                    },
+                    "customId": "",
+                    "ariaLabel": {
+                      "defaultValue": "Check Your Zip Code"
+                    },
+                    "actionType": "link",
+                    "buttonText": {
+                      "defaultValue": "Check Your Zip Code"
+                    },
+                    "customClass": "",
+                    "openInNewTab": false,
+                    "dataAttributes": []
+                  },
+                  "styles": {
+                    "link": {
+                      "fontSize": "default",
+                      "fontStyle": "default",
+                      "fontFamily": "default",
+                      "fontWeight": "default",
+                      "includeCaret": "default",
+                      "letterSpacing": "default",
+                      "textTransform": "default"
+                    },
+                    "color": {
+                      "selectedColor": "white",
+                      "contrastingColor": "palette-secondary"
+                    },
+                    "button": {
+                      "fontSize": "default",
+                      "fontStyle": "default",
+                      "fontFamily": "default",
+                      "fontWeight": "default",
+                      "borderRadius": "12px",
+                      "letterSpacing": "default",
+                      "textTransform": "default"
+                    },
+                    "variant": "secondary"
+                  }
+                },
+                "icon": "location",
+                "title": {
+                  "text": {
+                    "field": "",
+                    "constantValue": "Service Summary",
+                    "constantValueEnabled": true
+                  },
+                  "styles": {
+                    "fontSize": "20px",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "textTransform": "default"
+                  }
+                },
+                "phones": {
+                  "items": [
+                    {
+                      "label": "",
+                      "number": {
+                        "field": "mainPhone",
+                        "constantValue": "",
+                        "constantValueEnabled": false
+                      }
+                    }
+                  ],
+                  "phoneFormat": "domestic",
+                  "includeHyperlink": true
+                },
+                "address": {
+                  "field": "address",
+                  "constantValue": {
+                    "city": "",
+                    "line1": "",
+                    "region": "",
+                    "postalCode": "",
+                    "countryCode": ""
+                  },
+                  "constantValueEnabled": false
+                },
+                "showRegion": true,
+                "showCountry": false,
+                "baseHubLabel": {
+                  "text": {
+                    "field": "",
+                    "constantValue": "Base Hub",
+                    "constantValueEnabled": true
+                  },
+                  "styles": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "600",
+                    "textTransform": "default"
+                  }
+                },
+                "bookingLabel": {
+                  "text": {
+                    "field": "",
+                    "constantValue": "Booking Desk",
+                    "constantValueEnabled": true
+                  },
+                  "styles": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "600",
+                    "textTransform": "default"
+                  }
+                },
+                "serviceRadiusText": {
+                  "text": {
+                    "field": "",
+                    "constantValue": "(Serving a 20-mile radius)",
+                    "constantValueEnabled": true
+                  },
+                  "styles": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "textTransform": "default"
+                  }
+                }
+              },
+              "dispatchHours": {
+                "icon": "clock",
+                "hours": {
+                  "field": "hours",
+                  "constantValue": {},
+                  "constantValueEnabled": false
+                },
+                "title": {
+                  "text": {
+                    "field": "",
+                    "constantValue": "Dispatch & Service Hours",
+                    "constantValueEnabled": true
+                  },
+                  "styles": {
+                    "fontSize": "20px",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "textTransform": "default"
+                  }
+                },
+                "hoursStyles": {
+                  "alignment": "items-start",
+                  "startOfWeek": "today",
+                  "collapseDays": false,
+                  "showAdditionalHoursText": true
+                }
+              },
+              "iconBackgroundColor": {
+                "selectedColor": "palette-tertiary",
+                "contrastingColor": "palette-tertiary-contrast"
+              }
+            }
+          },
+          {
+            "type": "ProfessionalPracticeServicesSection",
+            "props": {
+              "id": "ProfessionalPracticeServicesSection-453be33b-2489-4a5a-a37c-e7deb96a9024",
+              "intro": {
+                "text": {
+                  "field": "",
+                  "constantValue": {
+                    "defaultValue": {
+                      "html": "<p dir=\"ltr\" style=\"font-size: 14.67px; font-weight: 400; line-height: 18.67px; margin: 0; padding: 3px 2px 3px 2px; position: relative;\"><span>Skip the stressful car rides and chaotic salons. Choose the perfect, personalized care package for your furry family member.</span></p>",
+                      "json": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Skip the stressful car rides and chaotic salons. Choose the perfect, personalized care package for your furry family member.\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+                    },
+                    "hasLocalizedValue": "true"
+                  },
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "fontSize": "default",
+                  "fontStyle": "default",
+                  "fontFamily": "default",
+                  "fontWeight": "default",
+                  "textTransform": "default"
+                }
+              },
+              "heading": {
+                "text": {
+                  "field": "",
+                  "constantValue": "Our Grooming Services",
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "fontSize": "default",
+                  "fontStyle": "default",
+                  "fontFamily": "default",
+                  "fontWeight": "default",
+                  "textTransform": "default"
+                }
+              },
+              "section": {
+                "backgroundColor": {
+                  "selectedColor": "palette-quaternary",
+                  "contrastingColor": "palette-quaternary-contrast"
+                },
+                "visibleOnLivePage": true
+              },
+              "services": {
+                "data": {
+                  "field": "",
+                  "mappings": {
+                    "image": {
+                      "field": "",
+                      "constantValueEnabled": false
+                    },
+                    "title": {
+                      "field": "",
+                      "constantValueEnabled": false
+                    },
+                    "description": {
+                      "field": "",
+                      "constantValueEnabled": false
+                    }
+                  },
+                  "constantValue": [
+                    {
+                      "cta": {
+                        "data": {
+                          "cta": {
+                            "field": "",
+                            "selectedType": "textAndLink",
+                            "constantValue": {
+                              "link": {
+                                "defaultValue": "#"
+                              },
+                              "label": {
+                                "defaultValue": "View Pricing"
+                              },
+                              "ctaType": "textAndLink",
+                              "linkType": "URL"
+                            },
+                            "constantValueEnabled": true
+                          },
+                          "actionType": "link",
+                          "openInNewTab": false
+                        },
+                        "styles": {
+                          "link": {
+                            "fontSize": "default",
+                            "fontStyle": "default",
+                            "fontFamily": "default",
+                            "fontWeight": "default",
+                            "includeCaret": "default",
+                            "letterSpacing": "default",
+                            "textTransform": "default"
+                          },
+                          "color": {
+                            "selectedColor": "palette-primary",
+                            "contrastingColor": "palette-primary-contrast"
+                          },
+                          "button": {
+                            "fontSize": "default",
+                            "fontStyle": "default",
+                            "fontFamily": "default",
+                            "fontWeight": "default",
+                            "borderRadius": "12px",
+                            "letterSpacing": "default",
+                            "textTransform": "default"
+                          },
+                          "variant": "primary"
+                        }
+                      },
+                      "image": {
+                        "field": "",
+                        "constantValue": {
+                          "url": "https://a.mktgcdn.com/p/UHR6VTEvcR-yDMqPSOS7LyK87Qt56EOrmfNbhLQxI08/1267x1900.jpg",
+                          "width": 1267,
+                          "height": 1900
+                        },
+                        "constantValueEnabled": true
+                      },
+                      "title": {
+                        "field": "",
+                        "constantValue": "The Mobile Spa Package",
+                        "constantValueEnabled": true
+                      },
+                      "description": {
+                        "field": "",
+                        "constantValue": {
+                          "defaultValue": {
+                            "html": "<p dir=\"ltr\" style=\"font-size: 14.67px; font-weight: 400; line-height: 18.67px; margin: 0; padding: 3px 2px 3px 2px; position: relative;\"><span>Our signature door-to-door full service. Includes a deep-cleaning hydro-massage bath, blow dry, full haircut/style to breed standard, nail trim &amp; grind, ear cleaning, and gland expression.</span></p>",
+                            "json": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Our signature door-to-door full service. Includes a deep-cleaning hydro-massage bath, blow dry, full haircut/style to breed standard, nail trim & grind, ear cleaning, and gland expression.\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+                          },
+                          "hasLocalizedValue": "true"
+                        },
+                        "constantValueEnabled": true
+                      }
+                    },
+                    {
+                      "cta": {
+                        "data": {
+                          "cta": {
+                            "field": "",
+                            "selectedType": "textAndLink",
+                            "constantValue": {
+                              "link": {
+                                "defaultValue": "#"
+                              },
+                              "label": {
+                                "defaultValue": "Check In-Home Availability"
+                              },
+                              "ctaType": "textAndLink",
+                              "linkType": "URL"
+                            },
+                            "constantValueEnabled": true
+                          },
+                          "actionType": "link",
+                          "openInNewTab": false
+                        },
+                        "styles": {
+                          "link": {
+                            "fontSize": "default",
+                            "fontStyle": "default",
+                            "fontFamily": "default",
+                            "fontWeight": "default",
+                            "includeCaret": "default",
+                            "letterSpacing": "default",
+                            "textTransform": "default"
+                          },
+                          "color": {
+                            "selectedColor": "palette-primary",
+                            "contrastingColor": "palette-primary-contrast"
+                          },
+                          "button": {
+                            "fontSize": "default",
+                            "fontStyle": "default",
+                            "fontFamily": "default",
+                            "fontWeight": "default",
+                            "borderRadius": "12px",
+                            "letterSpacing": "default",
+                            "textTransform": "default"
+                          },
+                          "variant": "primary"
+                        }
+                      },
+                      "image": {
+                        "field": "",
+                        "constantValue": {
+                          "url": "https://a.mktgcdn.com/p/fbSbItkZpsHpkc8qHH7GxvQkWzxsfm6mGc0k4Lmfl-A/1267x1900.jpg",
+                          "width": 1267,
+                          "height": 1900
+                        },
+                        "constantValueEnabled": true
+                      },
+                      "title": {
+                        "field": "",
+                        "constantValue": "In-Home Pampering",
+                        "constantValueEnabled": true
+                      },
+                      "description": {
+                        "field": "",
+                        "constantValue": {
+                          "defaultValue": {
+                            "html": "<p dir=\"ltr\" style=\"font-size: 14.67px; font-weight: 400; line-height: 18.67px; margin: 0; padding: 3px 2px 3px 2px; position: relative;\"><span>Perfect for senior dogs or pets with extreme separation anxiety. Our groomers bring portable, sanitized equipment into the comfort of your home to perform baths, deshedding, and nail trims.</span></p>",
+                            "json": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Perfect for senior dogs or pets with extreme separation anxiety. Our groomers bring portable, sanitized equipment into the comfort of your home to perform baths, deshedding, and nail trims.\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+                          },
+                          "hasLocalizedValue": "true"
+                        },
+                        "constantValueEnabled": true
+                      }
+                    },
+                    {
+                      "cta": {
+                        "data": {
+                          "cta": {
+                            "field": "",
+                            "selectedType": "textAndLink",
+                            "constantValue": {
+                              "link": {
+                                "defaultValue": "#"
+                              },
+                              "label": {
+                                "defaultValue": "Join Waitlist"
+                              },
+                              "ctaType": "textAndLink",
+                              "linkType": "URL"
+                            },
+                            "constantValueEnabled": true
+                          },
+                          "actionType": "link",
+                          "openInNewTab": false
+                        },
+                        "styles": {
+                          "link": {
+                            "fontSize": "default",
+                            "fontStyle": "default",
+                            "fontFamily": "default",
+                            "fontWeight": "default",
+                            "includeCaret": "default",
+                            "letterSpacing": "default",
+                            "textTransform": "default"
+                          },
+                          "color": {
+                            "selectedColor": "palette-primary",
+                            "contrastingColor": "palette-primary-contrast"
+                          },
+                          "button": {
+                            "fontSize": "default",
+                            "fontStyle": "default",
+                            "fontFamily": "default",
+                            "fontWeight": "default",
+                            "borderRadius": "12px",
+                            "letterSpacing": "default",
+                            "textTransform": "default"
+                          },
+                          "variant": "primary"
+                        }
+                      },
+                      "image": {
+                        "field": "",
+                        "constantValue": {
+                          "url": "https://a.mktgcdn.com/p/Qdlacb36DqN5Lt3q6V9jw-qSMmbPyl_AeMEI_CyDkHc/1267x1900.jpg",
+                          "width": 1267,
+                          "height": 1900
+                        },
+                        "constantValueEnabled": true
+                      },
+                      "title": {
+                        "field": "",
+                        "constantValue": "Pet Spa & Salon (Coming Soon!)",
+                        "constantValueEnabled": true
+                      },
+                      "description": {
+                        "field": "",
+                        "constantValue": {
+                          "defaultValue": {
+                            "html": "<p dir=\"ltr\" style=\"font-size: 14.67px; font-weight: 400; line-height: 18.67px; margin: 0; padding: 3px 2px 3px 2px; position: relative;\"><span>We are expanding! Soon you’ll be able to drop your pup off at our flagship luxury salon for daycare grooming, express nail trims, and premium pet retail shopping.</span></p>",
+                            "json": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"We are expanding! Soon you’ll be able to drop your pup off at our flagship luxury salon for daycare grooming, express nail trims, and premium pet retail shopping.\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+                          },
+                          "hasLocalizedValue": "true"
+                        },
+                        "constantValueEnabled": true
+                      }
+                    }
+                  ],
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "image": {
+                    "borderRadius": "default"
+                  },
+                  "title": {
+                    "fontSize": "24px",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "textTransform": "default"
+                  },
+                  "description": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "textTransform": "default"
+                  },
+                  "imageAspectRatio": 0.814
+                }
+              }
+            }
+          },
+          {
+            "type": "ProfessionalPracticeAboutSection",
+            "props": {
+              "id": "ProfessionalPracticeAboutSection-d173e90a-bc23-4fb6-be9d-f4f238ac79c2",
+              "cta": {
+                "data": {
+                  "cta": {
+                    "field": "",
+                    "selectedType": "textAndLink",
+                    "constantValue": {
+                      "link": {
+                        "defaultValue": "#"
+                      },
+                      "label": {
+                        "defaultValue": "Book Online Now"
+                      },
+                      "ctaType": "textAndLink",
+                      "linkType": "URL"
+                    },
+                    "constantValueEnabled": true
+                  },
+                  "customId": "",
+                  "ariaLabel": {
+                    "defaultValue": "Book Online Now"
+                  },
+                  "actionType": "link",
+                  "buttonText": {
+                    "defaultValue": "Book Online Now"
+                  },
+                  "customClass": "",
+                  "openInNewTab": false,
+                  "dataAttributes": []
+                },
+                "styles": {
+                  "link": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "includeCaret": "default",
+                    "letterSpacing": "default",
+                    "textTransform": "default"
+                  },
+                  "color": {
+                    "selectedColor": "white",
+                    "contrastingColor": "palette-secondary"
+                  },
+                  "button": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "borderRadius": "12px",
+                    "letterSpacing": "default",
+                    "textTransform": "default"
+                  },
+                  "variant": "secondary"
+                }
+              },
+              "body": {
+                "text": {
+                  "field": "",
+                  "constantValue": {
+                    "defaultValue": {
+                      "html": "<p dir=\"ltr\" style=\"font-size: 14.67px; font-weight: 400; line-height: 18.67px; margin: 0; padding: 3px 2px 3px 2px; position: relative;\"><span>Founded by certified master groomers and lifelong pet lovers, Lucky Dog Mobile Spa was born out of a desire to eliminate the anxiety of traditional grooming salons. No cold cages, no barking strangers, and no hours spent waiting in a kennel. Our custom-built, state-of-the-art mobile vans are 100% self-contained with fresh warm water, electricity, and climate control—meaning we never need to plug into your home. We treat every dog like royalty, focusing on safety, sanitation, and individual emotional needs.</span></p>",
+                      "json": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Founded by certified master groomers and lifelong pet lovers, Lucky Dog Mobile Spa was born out of a desire to eliminate the anxiety of traditional grooming salons. No cold cages, no barking strangers, and no hours spent waiting in a kennel. Our custom-built, state-of-the-art mobile vans are 100% self-contained with fresh warm water, electricity, and climate control—meaning we never need to plug into your home. We treat every dog like royalty, focusing on safety, sanitation, and individual emotional needs.\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+                    },
+                    "hasLocalizedValue": "true"
+                  },
+                  "constantValueEnabled": true
+                }
+              },
+              "image": {
+                "image": {
+                  "field": "",
+                  "constantValue": {
+                    "url": "https://a.mktgcdn.com/p/UHR6VTEvcR-yDMqPSOS7LyK87Qt56EOrmfNbhLQxI08/1267x1900.jpg",
+                    "width": 1267,
+                    "height": 1900
+                  },
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "borderRadius": "default"
+                },
+                "aspectRatio": 1.5,
+                "imageConstrain": "filled"
+              },
+              "heading": {
+                "text": {
+                  "field": "",
+                  "constantValue": "About Lucky Dog Mobile Spa",
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "fontSize": "default",
+                  "fontStyle": "default",
+                  "fontFamily": "default",
+                  "fontWeight": "default",
+                  "textTransform": "default"
+                }
+              },
+              "section": {
+                "backgroundColor": {
+                  "selectedColor": "palette-primary",
+                  "contrastingColor": "palette-primary-contrast"
+                },
+                "visibleOnLivePage": true
+              }
+            }
+          },
+          {
+            "type": "ProfessionalPracticeFaqSection",
+            "props": {
+              "id": "ProfessionalPracticeFaqSection-fd85f904-b371-47a1-b34b-cbca858e5bca",
+              "faqs": {
+                "data": {
+                  "field": "",
+                  "mappings": {
+                    "answer": {
+                      "field": "",
+                      "constantValueEnabled": false
+                    },
+                    "question": {
+                      "field": "",
+                      "constantValueEnabled": false
+                    }
+                  },
+                  "constantValue": [
+                    {
+                      "answer": {
+                        "field": "",
+                        "constantValue": {
+                          "defaultValue": {
+                            "html": "<p dir=\"ltr\" style=\"font-size: 14.67px; font-weight: 400; line-height: 18.67px; margin: 0; padding: 3px 2px 3px 2px; position: relative;\"><span>Not at all! Our luxury mobile grooming vans are completely self-sufficient. They are equipped with their own quiet generators, fresh warm water tanks, and gray-water filtration systems.</span></p>",
+                            "json": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Not at all! Our luxury mobile grooming vans are completely self-sufficient. They are equipped with their own quiet generators, fresh warm water tanks, and gray-water filtration systems.\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+                          },
+                          "hasLocalizedValue": "true"
+                        },
+                        "constantValueEnabled": true
+                      },
+                      "question": {
+                        "field": "",
+                        "constantValue": "Do you need to plug into my electricity or water supply?",
+                        "constantValueEnabled": true
+                      }
+                    },
+                    {
+                      "answer": {
+                        "field": "",
+                        "constantValue": {
+                          "defaultValue": {
+                            "html": "<p dir=\"ltr\" style=\"font-size: 14.67px; font-weight: 400; line-height: 18.67px; margin: 0; padding: 3px 2px 3px 2px; position: relative;\"><span>Safety is our top priority. We require a brief meet-and-greet for reactive or highly anxious pets so we can tailor handling techniques, session length, and staffing. We never force a dog through a service they cannot tolerate safely.</span></p>",
+                            "json": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Safety is our top priority. We require a brief meet-and-greet for reactive or highly anxious pets so we can tailor handling techniques, session length, and staffing. We never force a dog through a service they cannot tolerate safely.\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+                          },
+                          "hasLocalizedValue": "true"
+                        },
+                        "constantValueEnabled": true
+                      },
+                      "question": {
+                        "field": "",
+                        "constantValue": "What is your policy for aggressive or highly anxious dogs?",
+                        "constantValueEnabled": true
+                      }
+                    },
+                    {
+                      "answer": {
+                        "field": "",
+                        "constantValue": {
+                          "defaultValue": {
+                            "html": "<p dir=\"ltr\" style=\"font-size: 14.67px; font-weight: 400; line-height: 18.67px; margin: 0; padding: 3px 2px 3px 2px; position: relative;\"><span>Most full grooming sessions take between 90 and 150 minutes depending on breed, coat condition, and temperament. We schedule one dog per van at a time so your pet never waits in a kennel.</span></p>",
+                            "json": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Most full grooming sessions take between 90 and 150 minutes depending on breed, coat condition, and temperament. We schedule one dog per van at a time so your pet never waits in a kennel.\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+                          },
+                          "hasLocalizedValue": "true"
+                        },
+                        "constantValueEnabled": true
+                      },
+                      "question": {
+                        "field": "",
+                        "constantValue": "How long does a mobile grooming session take?",
+                        "constantValueEnabled": true
+                      }
+                    },
+                    {
+                      "answer": {
+                        "field": "",
+                        "constantValue": {
+                          "defaultValue": {
+                            "html": "<p dir=\"ltr\" style=\"font-size: 14.67px; font-weight: 400; line-height: 18.67px; margin: 0; padding: 3px 2px 3px 2px; position: relative;\"><span>Our mobile vans safely accommodate dogs up to 75 lbs. For larger breeds, ask about our in-home pampering options or salon waitlist for when our flagship location opens.</span></p>",
+                            "json": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Our mobile vans safely accommodate dogs up to 75 lbs. For larger breeds, ask about our in-home pampering options or salon waitlist for when our flagship location opens.\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+                          },
+                          "hasLocalizedValue": "true"
+                        },
+                        "constantValueEnabled": true
+                      },
+                      "question": {
+                        "field": "",
+                        "constantValue": "What weight limits do you have for mobile grooming?",
+                        "constantValueEnabled": true
+                      }
+                    },
+                    {
+                      "answer": {
+                        "field": "",
+                        "constantValue": {
+                          "defaultValue": {
+                            "html": "<p dir=\"ltr\" style=\"font-size: 14.67px; font-weight: 400; line-height: 18.67px; margin: 0; padding: 3px 2px 3px 2px; position: relative;\"><span>You may cancel or reschedule free of charge up to 24 hours before your appointment. Late cancellations may incur a fee so we can hold the time slot for another pet parent.</span></p>",
+                            "json": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"You may cancel or reschedule free of charge up to 24 hours before your appointment. Late cancellations may incur a fee so we can hold the time slot for another pet parent.\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+                          },
+                          "hasLocalizedValue": "true"
+                        },
+                        "constantValueEnabled": true
+                      },
+                      "question": {
+                        "field": "",
+                        "constantValue": "What is your cancellation and rescheduling policy?",
+                        "constantValueEnabled": true
+                      }
+                    }
+                  ],
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "answer": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "textTransform": "default"
+                  },
+                  "question": {
+                    "fontSize": "20px",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "500",
+                    "textTransform": "default"
+                  }
+                }
+              },
+              "heading": {
+                "text": {
+                  "field": "",
+                  "constantValue": "Frequently Asked Questions",
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "fontSize": "default",
+                  "fontStyle": "default",
+                  "fontFamily": "default",
+                  "fontWeight": "default",
+                  "textTransform": "default"
+                }
+              },
+              "section": {
+                "backgroundColor": {
+                  "selectedColor": "white",
+                  "contrastingColor": "palette-secondary"
+                },
+                "visibleOnLivePage": true
+              }
+            }
+          },
+          {
+            "type": "ProfessionalPracticePromoSection",
+            "props": {
+              "id": "ProfessionalPracticePromoSection-b7b7082b-3cde-4650-bc7d-7b0bfa44481e",
+              "cta": {
+                "data": {
+                  "cta": {
+                    "field": "",
+                    "selectedType": "textAndLink",
+                    "constantValue": {
+                      "link": {
+                        "defaultValue": "#"
+                      },
+                      "label": {
+                        "defaultValue": "Join & Save"
+                      },
+                      "ctaType": "textAndLink",
+                      "linkType": "URL"
+                    },
+                    "constantValueEnabled": true
+                  },
+                  "customId": "",
+                  "ariaLabel": {
+                    "defaultValue": "Join & Save"
+                  },
+                  "actionType": "link",
+                  "buttonText": {
+                    "defaultValue": "Join & Save"
+                  },
+                  "customClass": "",
+                  "openInNewTab": false,
+                  "dataAttributes": []
+                },
+                "styles": {
+                  "link": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "includeCaret": "default",
+                    "letterSpacing": "default",
+                    "textTransform": "default"
+                  },
+                  "color": {
+                    "selectedColor": "white",
+                    "contrastingColor": "palette-secondary"
+                  },
+                  "button": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "borderRadius": "12px",
+                    "letterSpacing": "default",
+                    "textTransform": "default"
+                  },
+                  "variant": "secondary"
+                }
+              },
+              "body": {
+                "text": {
+                  "field": "",
+                  "constantValue": {
+                    "defaultValue": {
+                      "html": "<p dir=\"ltr\" style=\"font-size: 14.67px; font-weight: 400; line-height: 18.67px; margin: 0; padding: 3px 2px 3px 2px; position: relative;\"><span>Never worry about booking a last-minute appointment again. Save 15% on every visit and lock in a recurring 4, 6, or 8-week schedule. Members receive priority holiday booking and complimentary teeth brushing.</span></p>",
+                      "json": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Never worry about booking a last-minute appointment again. Save 15% on every visit and lock in a recurring 4, 6, or 8-week schedule. Members receive priority holiday booking and complimentary teeth brushing.\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+                    },
+                    "hasLocalizedValue": "true"
+                  },
+                  "constantValueEnabled": true
+                }
+              },
+              "image": {
+                "image": {
+                  "field": "",
+                  "constantValue": {
+                    "url": "https://a.mktgcdn.com/p/fbSbItkZpsHpkc8qHH7GxvQkWzxsfm6mGc0k4Lmfl-A/1267x1900.jpg",
+                    "width": 1267,
+                    "height": 1900
+                  },
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "borderRadius": "default"
+                },
+                "aspectRatio": 1.5,
+                "imageConstrain": "filled"
+              },
+              "heading": {
+                "text": {
+                  "field": "",
+                  "constantValue": "Join the Clean Pup Club",
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "fontSize": "default",
+                  "fontStyle": "default",
+                  "fontFamily": "default",
+                  "fontWeight": "default",
+                  "textTransform": "default"
+                }
+              },
+              "section": {
+                "backgroundColor": {
+                  "selectedColor": "palette-primary",
+                  "contrastingColor": "palette-primary-contrast"
+                },
+                "visibleOnLivePage": true
+              }
+            }
+          },
+          {
+            "type": "ProfessionalPracticeReviewsSection",
+            "props": {
+              "id": "ProfessionalPracticeReviewsSection-5215867a-f406-4d7c-b896-624b21eaee58",
+              "heading": {
+                "text": {
+                  "field": "",
+                  "constantValue": "What Local Pet Parents Are Saying",
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "fontSize": "default",
+                  "fontStyle": "default",
+                  "fontFamily": "default",
+                  "fontWeight": "default",
+                  "textTransform": "default"
+                }
+              },
+              "section": {
+                "backgroundColor": {
+                  "selectedColor": "white",
+                  "contrastingColor": "palette-secondary"
+                },
+                "visibleOnLivePage": true
+              },
+              "responseBackgroundColor": {
+                "selectedColor": "palette-quaternary-light",
+                "contrastingColor": "palette-secondary"
+              }
+            }
+          },
+          {
+            "type": "ProfessionalPracticeBlogSection",
+            "props": {
+              "id": "ProfessionalPracticeBlogSection-9203c322-5395-4d26-9960-30a953f43207",
+              "cards": {
+                "data": {
+                  "field": "",
+                  "mappings": {
+                    "image": {
+                      "field": "",
+                      "constantValueEnabled": false
+                    },
+                    "title": {
+                      "field": "",
+                      "constantValueEnabled": false
+                    },
+                    "description": {
+                      "field": "",
+                      "constantValueEnabled": false
+                    }
+                  },
+                  "constantValue": [
+                    {
+                      "cta": {
+                        "data": {
+                          "cta": {
+                            "field": "",
+                            "selectedType": "textAndLink",
+                            "constantValue": {
+                              "link": {
+                                "defaultValue": "#"
+                              },
+                              "label": {
+                                "defaultValue": "Read Grooming Guide"
+                              },
+                              "ctaType": "textAndLink",
+                              "linkType": "URL"
+                            },
+                            "constantValueEnabled": true
+                          },
+                          "actionType": "link",
+                          "openInNewTab": false
+                        },
+                        "styles": {
+                          "link": {
+                            "fontSize": "default",
+                            "fontStyle": "default",
+                            "fontFamily": "default",
+                            "fontWeight": "default",
+                            "includeCaret": "default",
+                            "letterSpacing": "default",
+                            "textTransform": "default"
+                          },
+                          "color": {
+                            "selectedColor": "white",
+                            "contrastingColor": "palette-secondary"
+                          },
+                          "button": {
+                            "fontSize": "default",
+                            "fontStyle": "default",
+                            "fontFamily": "default",
+                            "fontWeight": "default",
+                            "borderRadius": "12px",
+                            "letterSpacing": "default",
+                            "textTransform": "default"
+                          },
+                          "variant": "secondary"
+                        }
+                      },
+                      "image": {
+                        "field": "",
+                        "constantValue": {
+                          "url": "https://a.mktgcdn.com/p/Qdlacb36DqN5Lt3q6V9jw-qSMmbPyl_AeMEI_CyDkHc/1267x1900.jpg",
+                          "width": 1267,
+                          "height": 1900
+                        },
+                        "constantValueEnabled": true
+                      },
+                      "title": {
+                        "field": "",
+                        "constantValue": "Dog Coat Care Between Grooms: 5 Tips for Pet Parents",
+                        "constantValueEnabled": true
+                      },
+                      "description": {
+                        "field": "",
+                        "constantValue": {
+                          "defaultValue": {
+                            "html": "<p dir=\"ltr\" style=\"font-size: 14.67px; font-weight: 400; line-height: 18.67px; margin: 0; padding: 3px 2px 3px 2px; position: relative;\"><span>Prevent painful matting and keep your dog&#39;s coat looking fresh between professional visits with these easy, 5-minute brushing habits.</span></p>",
+                            "json": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Prevent painful matting and keep your dog's coat looking fresh between professional visits with these easy, 5-minute brushing habits.\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+                          },
+                          "hasLocalizedValue": "true"
+                        },
+                        "constantValueEnabled": true
+                      }
+                    },
+                    {
+                      "cta": {
+                        "data": {
+                          "cta": {
+                            "field": "",
+                            "selectedType": "textAndLink",
+                            "constantValue": {
+                              "link": {
+                                "defaultValue": "#"
+                              },
+                              "label": {
+                                "defaultValue": "Read Article"
+                              },
+                              "ctaType": "textAndLink",
+                              "linkType": "URL"
+                            },
+                            "constantValueEnabled": true
+                          },
+                          "actionType": "link",
+                          "openInNewTab": false
+                        },
+                        "styles": {
+                          "link": {
+                            "fontSize": "default",
+                            "fontStyle": "default",
+                            "fontFamily": "default",
+                            "fontWeight": "default",
+                            "includeCaret": "default",
+                            "letterSpacing": "default",
+                            "textTransform": "default"
+                          },
+                          "color": {
+                            "selectedColor": "white",
+                            "contrastingColor": "palette-secondary"
+                          },
+                          "button": {
+                            "fontSize": "default",
+                            "fontStyle": "default",
+                            "fontFamily": "default",
+                            "fontWeight": "default",
+                            "borderRadius": "12px",
+                            "letterSpacing": "default",
+                            "textTransform": "default"
+                          },
+                          "variant": "secondary"
+                        }
+                      },
+                      "image": {
+                        "field": "",
+                        "constantValue": {
+                          "url": "https://a.mktgcdn.com/p/UHR6VTEvcR-yDMqPSOS7LyK87Qt56EOrmfNbhLQxI08/1267x1900.jpg",
+                          "width": 1267,
+                          "height": 1900
+                        },
+                        "constantValueEnabled": true
+                      },
+                      "title": {
+                        "field": "",
+                        "constantValue": "Understanding the Doodle Coat: How to Pick the Right Trim",
+                        "constantValueEnabled": true
+                      },
+                      "description": {
+                        "field": "",
+                        "constantValue": {
+                          "defaultValue": {
+                            "html": "<p dir=\"ltr\" style=\"font-size: 14.67px; font-weight: 400; line-height: 18.67px; margin: 0; padding: 3px 2px 3px 2px; position: relative;\"><span>From kennel cuts to teddy bear trims, we break down the most popular Goldendoodle and Labradoodle cuts and how to maintain them.</span></p>",
+                            "json": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"From kennel cuts to teddy bear trims, we break down the most popular Goldendoodle and Labradoodle cuts and how to maintain them.\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+                          },
+                          "hasLocalizedValue": "true"
+                        },
+                        "constantValueEnabled": true
+                      }
+                    }
+                  ],
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "image": {
+                    "borderRadius": "default"
+                  },
+                  "title": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "textTransform": "default"
+                  },
+                  "description": {
+                    "fontSize": "default",
+                    "fontStyle": "default",
+                    "fontFamily": "default",
+                    "fontWeight": "default",
+                    "textTransform": "default"
+                  },
+                  "imageAspectRatio": 1.6,
+                  "overlayBackgroundColor": {
+                    "selectedColor": "palette-primary",
+                    "contrastingColor": "palette-primary-contrast"
+                  }
+                }
+              },
+              "heading": {
+                "text": {
+                  "field": "",
+                  "constantValue": "From The Grooming Journal",
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "fontSize": "default",
+                  "fontStyle": "default",
+                  "fontFamily": "default",
+                  "fontWeight": "default",
+                  "textTransform": "default"
+                }
+              },
+              "section": {
+                "backgroundColor": {
+                  "selectedColor": "white",
+                  "contrastingColor": "palette-secondary"
+                },
+                "visibleOnLivePage": true
+              }
+            }
+          },
+          {
+            "type": "ProfessionalPracticeCoverageSection",
+            "props": {
+              "id": "ProfessionalPracticeCoverageSection-18d78b5a-0715-4fad-b8f3-2fb2d20f1e49",
+              "intro": {
+                "text": {
+                  "field": "",
+                  "constantValue": {
+                    "defaultValue": {
+                      "html": "<p dir=\"ltr\" style=\"font-size: 14.67px; font-weight: 400; line-height: 18.67px; margin: 0; padding: 3px 2px 3px 2px; position: relative;\"><span>Our service vans routinely visit West Falls Church, Merrifield, Fairview Park, and Holmes Run Acres. Don&#39;t see your neighborhood listed? Give us a call—we are continuously expanding our service routes to meet demand.</span></p>",
+                      "json": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"Our service vans routinely visit West Falls Church, Merrifield, Fairview Park, and Holmes Run Acres. Don't see your neighborhood listed? Give us a call—we are continuously expanding our service routes to meet demand.\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+                    },
+                    "hasLocalizedValue": "true"
+                  },
+                  "constantValueEnabled": true
+                }
+              },
+              "limit": 3,
+              "phone": {
+                "phoneFormat": "domestic",
+                "includeHyperlink": true
+              },
+              "radius": 10,
+              "address": {
+                "showRegion": true,
+                "showCountry": false
+              },
+              "heading": {
+                "text": {
+                  "field": "",
+                  "constantValue": "Our Service Fleet Hubs & Coverage",
+                  "constantValueEnabled": true
+                },
+                "styles": {
+                  "fontSize": "default",
+                  "fontStyle": "default",
+                  "fontFamily": "default",
+                  "fontWeight": "default",
+                  "textTransform": "default"
+                }
+              },
+              "section": {
+                "backgroundColor": {
+                  "selectedColor": "white",
+                  "contrastingColor": "palette-secondary"
+                },
+                "visibleOnLivePage": true
+              },
+              "showHours": true,
+              "showPhone": true,
+              "hoursStyles": {
+                "timeFormat": "12h",
+                "showDayNames": true,
+                "dayOfWeekFormat": "long",
+                "showCurrentStatus": true
+              },
+              "showAddress": true,
+              "cardBackgroundColor": {
+                "selectedColor": "white",
+                "contrastingColor": "black"
+              },
+              "iconBackgroundColor": {
+                "selectedColor": "palette-quaternary-light",
+                "contrastingColor": "palette-secondary"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "ProfessionalPracticeFooter",
+      "props": {
+        "id": "ProfessionalPracticeFooter-de98e167-9ae7-444d-bb2f-bfbf3ae069c4",
+        "brand": {
+          "text": {
+            "field": "",
+            "constantValue": "Lucky Dog Mobile Spa",
+            "constantValueEnabled": true
+          },
+          "styles": {
+            "fontSize": "default",
+            "fontStyle": "default",
+            "fontFamily": "default",
+            "fontWeight": "default",
+            "textTransform": "default"
+          }
+        },
+        "phones": {
+          "items": [
+            {
+              "label": "",
+              "number": {
+                "field": "mainPhone",
+                "constantValue": "",
+                "constantValueEnabled": false
+              }
+            }
+          ],
+          "phoneFormat": "domestic",
+          "includeHyperlink": true
+        },
+        "section": {
+          "backgroundColor": {
+            "selectedColor": "palette-primary",
+            "contrastingColor": "palette-primary-contrast"
+          },
+          "visibleOnLivePage": true
+        },
+        "website": {
+          "field": "",
+          "constantValue": {
+            "link": {
+              "defaultValue": "https://www.luckydogmobilespa.com/locations/main-hub"
+            },
+            "label": {
+              "defaultValue": "https://www.luckydogmobilespa.com/locations/main-hub"
+            },
+            "linkType": "URL",
+            "openInNewTab": true
+          },
+          "constantValueEnabled": true
+        },
+        "showRegion": true,
+        "metaAddress": {
+          "field": "address",
+          "constantValue": {
+            "city": "",
+            "line1": "",
+            "region": "",
+            "postalCode": "",
+            "countryCode": ""
+          },
+          "constantValueEnabled": false
+        },
+        "showCountry": false,
+        "socialLinks": [
+          {
+            "cta": {
+              "field": "",
+              "constantValue": {
+                "link": {
+                  "defaultValue": "#"
+                },
+                "label": {
+                  "defaultValue": "LinkedIn"
+                },
+                "linkType": "URL",
+                "openInNewTab": false
+              },
+              "constantValueEnabled": true
+            },
+            "icon": "linkedin",
+            "ariaLabel": "LinkedIn"
+          },
+          {
+            "cta": {
+              "field": "",
+              "constantValue": {
+                "link": {
+                  "defaultValue": "#"
+                },
+                "label": {
+                  "defaultValue": "Instagram"
+                },
+                "linkType": "URL",
+                "openInNewTab": false
+              },
+              "constantValueEnabled": true
+            },
+            "icon": "instagram",
+            "ariaLabel": "Instagram"
+          },
+          {
+            "cta": {
+              "field": "",
+              "constantValue": {
+                "link": {
+                  "defaultValue": "#"
+                },
+                "label": {
+                  "defaultValue": "YouTube"
+                },
+                "linkType": "URL",
+                "openInNewTab": false
+              },
+              "constantValueEnabled": true
+            },
+            "icon": "youtube",
+            "ariaLabel": "YouTube"
+          }
+        ],
+        "navigationLinks": [
+          {
+            "cta": {
+              "field": "",
+              "constantValue": {
+                "link": {
+                  "defaultValue": "#"
+                },
+                "label": {
+                  "defaultValue": "Packages & Pricing"
+                },
+                "linkType": "URL",
+                "openInNewTab": false
+              },
+              "constantValueEnabled": true
+            }
+          },
+          {
+            "cta": {
+              "field": "",
+              "constantValue": {
+                "link": {
+                  "defaultValue": "#"
+                },
+                "label": {
+                  "defaultValue": "Clean Pup Club"
+                },
+                "linkType": "URL",
+                "openInNewTab": false
+              },
+              "constantValueEnabled": true
+            }
+          },
+          {
+            "cta": {
+              "field": "",
+              "constantValue": {
+                "link": {
+                  "defaultValue": "#"
+                },
+                "label": {
+                  "defaultValue": "Care Tips"
+                },
+                "linkType": "URL",
+                "openInNewTab": false
+              },
+              "constantValueEnabled": true
+            }
+          },
+          {
+            "cta": {
+              "field": "",
+              "constantValue": {
+                "link": {
+                  "defaultValue": "#"
+                },
+                "label": {
+                  "defaultValue": "Careers"
+                },
+                "linkType": "URL",
+                "openInNewTab": false
+              },
+              "constantValueEnabled": true
+            }
+          },
+          {
+            "cta": {
+              "field": "",
+              "constantValue": {
+                "link": {
+                  "defaultValue": "#"
+                },
+                "label": {
+                  "defaultValue": "Contact Us"
+                },
+                "linkType": "URL",
+                "openInNewTab": false
+              },
+              "constantValueEnabled": true
+            }
+          },
+          {
+            "cta": {
+              "field": "",
+              "constantValue": {
+                "link": {
+                  "defaultValue": "#"
+                },
+                "label": {
+                  "defaultValue": "Home"
+                },
+                "linkType": "URL",
+                "openInNewTab": false
+              },
+              "constantValueEnabled": true
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

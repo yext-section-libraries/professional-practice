@@ -1,0 +1,11 @@
+{
+  "id": "professional-practice",
+  "displayName": "Professional Practice",
+  "vertical": [
+    "PROFESSIONAL_SERVICES"
+  ],
+  "purpose": [
+    "LOCATION"
+  ],
+  "pageSetType": "ENTITY"
+}
