@@ -11,10 +11,8 @@ import {
   getSurfaceColorStyle,
   getThemeColorCssValue,
   Image,
-  MaybeRTF,
   resolveComponentData,
   type StyledImageValue,
-  type StyledTextValue,
   type ThemeColor,
   type TranslatableAssetImage,
   type TranslatableRichText,
@@ -27,20 +25,13 @@ import {
   type YextFields,
 } from "@yext/visual-editor";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
-
-type StyledTextValueWithLetterSpacing = StyledTextValue & {
-  letterSpacing?: string;
-};
-type StyledTextProps = {
-  text: YextEntityField<string>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
-type StyledRtfProps = {
-  text: YextEntityField<TranslatableRichText>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
+import {
+  defaultTextStyles,
+  renderResolvedRichText,
+  type StyledRtfWithStylesProps,
+  type StyledTextProps,
+  type StyledTextValueWithLetterSpacing,
+} from "../shared/sectionHelpers";
 type EventFields = {
   image: YextEntityField<TranslatableAssetImage>;
   title: YextEntityField<string>;
@@ -49,13 +40,6 @@ type EventFields = {
   endDate: YextEntityField<string>;
 };
 
-const defaultTextStyles: StyledTextValue = {
-  fontFamily: "default",
-  fontSize: "default",
-  fontWeight: "default",
-  fontStyle: "default",
-  textTransform: "default",
-};
 const eventImageUrls = [
   "https://a.mktgcdn.com/p/fbSbItkZpsHpkc8qHH7GxvQkWzxsfm6mGc0k4Lmfl-A/1267x1900.jpg",
   "https://a.mktgcdn.com/p/Qdlacb36DqN5Lt3q6V9jw-qSMmbPyl_AeMEI_CyDkHc/1267x1900.jpg",
@@ -134,7 +118,7 @@ type ProfessionalPracticeEventsSectionProps = {
     cardBackgroundColor: ThemeColor;
   };
   heading: StyledTextProps;
-  intro: StyledRtfProps;
+  intro: StyledRtfWithStylesProps;
   events: {
     data: typeof eventCardsSource.value;
     styles: {
@@ -277,9 +261,7 @@ const ProfessionalPracticeEventsSectionComponent: PuckComponent<
     ...props.intro.styles,
     color: props.intro.fontColor,
   };
-  const intro = resolveComponentData(props.intro.text, locale, streamDocument, {
-    richTextStyleOverrides: introOverrides,
-  });
+  const intro = resolveComponentData(props.intro.text, locale, streamDocument);
   return (
     <VisibilityWrapper
       liveVisibility={props.section.visibleOnLivePage}
@@ -320,14 +302,7 @@ const ProfessionalPracticeEventsSectionComponent: PuckComponent<
                 fieldId={props.intro.text.field}
                 constantValueEnabled={props.intro.text.constantValueEnabled}
               >
-                {typeof intro === "string" ? (
-                  <MaybeRTF
-                    data={intro}
-                    richTextStyleOverrides={introOverrides}
-                  />
-                ) : React.isValidElement(intro) ? (
-                  intro
-                ) : null}
+                {renderResolvedRichText(intro, introOverrides)}
               </EntityField>
               <EntityField
                 displayName="Events"
@@ -389,7 +364,6 @@ const ProfessionalPracticeEventsSectionComponent: PuckComponent<
                           authoredEvent.description,
                           locale,
                           streamDocument,
-                          { richTextStyleOverrides: descriptionOverrides },
                         )
                       : undefined;
                     const timestampOption = endDate
@@ -475,14 +449,10 @@ const ProfessionalPracticeEventsSectionComponent: PuckComponent<
                                 authoredEvent?.description.constantValueEnabled
                               }
                             >
-                              {typeof description === "string" ? (
-                                <MaybeRTF
-                                  data={description}
-                                  richTextStyleOverrides={descriptionOverrides}
-                                />
-                              ) : React.isValidElement(description) ? (
-                                description
-                              ) : null}
+                              {renderResolvedRichText(
+                                description,
+                                descriptionOverrides,
+                              )}
                             </EntityField>
                           </div>
                         </article>

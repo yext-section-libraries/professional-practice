@@ -9,17 +9,16 @@ import {
   EntityField,
   getDefaultRTF,
   Image,
-  MaybeRTF,
   type StyledImageValue,
-  type StyledTextValue,
   type ThemeColor,
-  type TranslatableRichText,
   VisibilityWrapper,
   type YextComponentConfig,
   type YextEntityField,
   type YextFields,
+  Background,
   getAnalyticsScopeHash,
-  isDarkColor,
+  getSurfaceColorStyle,
+  getThemeColorCssValue as resolveThemeColorCssValue,
   resolveComponentData,
   useDocument,
 } from "@yext/visual-editor";
@@ -31,21 +30,13 @@ import {
   type ImageType,
   type StatusParams,
 } from "@yext/pages-components";
-
-type StyledTextProps = {
-  text: YextEntityField<string>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
-
-type StyledTextValueWithLetterSpacing = StyledTextValue & {
-  letterSpacing?: string;
-};
-
-type StyledRtfProps = {
-  text: YextEntityField<TranslatableRichText>;
-  fontColor?: ThemeColor;
-};
+import {
+  defaultTextStyles,
+  getReadableForegroundColor as resolveReadableForegroundColor,
+  renderResolvedRichText,
+  type StyledRtfProps,
+  type StyledTextProps,
+} from "../shared/sectionHelpers";
 
 type HeroImageProps = {
   image: YextEntityField<ImageType | ComplexImageType>;
@@ -103,70 +94,6 @@ const defaultSecondaryCtaColor: ThemeColor = {
 
 const heroImageUrl =
   "https://a.mktgcdn.com/p/vQqhmnexQfZueJGyh5M_j5W4EcTkTyZlW93eIoqjjvQ/1900x1267.jpg";
-
-const defaultTextStyles: StyledTextValue = {
-  fontFamily: "default",
-  fontSize: "default",
-  fontWeight: "default",
-  fontStyle: "default",
-  textTransform: "default",
-};
-
-const resolveThemeColorCssValue = (color?: ThemeColor): string | undefined => {
-  if (!color?.selectedColor || color.selectedColor === "default") {
-    return undefined;
-  }
-
-  const selectedColor = color.selectedColor;
-  const customColorMatch = /^\[(#[0-9A-Fa-f]{3,8})\]$/.exec(selectedColor);
-
-  if (customColorMatch) {
-    return customColorMatch[1];
-  }
-
-  switch (selectedColor) {
-    case "palette-primary":
-      return "var(--colors-palette-primary)";
-    case "palette-secondary":
-      return "var(--colors-palette-secondary)";
-    case "palette-tertiary":
-      return "var(--colors-palette-tertiary)";
-    case "palette-quaternary":
-      return "var(--colors-palette-quaternary)";
-    case "palette-primary-light":
-      return "hsl(from var(--colors-palette-primary) h s 98)";
-    case "palette-secondary-light":
-      return "hsl(from var(--colors-palette-secondary) h s 98)";
-    case "palette-tertiary-light":
-      return "hsl(from var(--colors-palette-tertiary) h s 98)";
-    case "palette-quaternary-light":
-      return "hsl(from var(--colors-palette-quaternary) h s 98)";
-    case "palette-primary-dark":
-      return "hsl(from var(--colors-palette-primary) h s 20)";
-    case "palette-secondary-dark":
-      return "hsl(from var(--colors-palette-secondary) h s 20)";
-    case "white":
-      return "#ffffff";
-    default:
-      return selectedColor;
-  }
-};
-
-const resolveReadableForegroundColor = (
-  fontColor: ThemeColor | undefined,
-  backgroundColor: ThemeColor,
-  streamDocument: any,
-): string | undefined => {
-  const selectedFontColor =
-    fontColor?.selectedColor === "default" ? undefined : fontColor;
-
-  if (selectedFontColor) {
-    return resolveThemeColorCssValue(selectedFontColor);
-  }
-
-  return isDarkColor(backgroundColor, streamDocument) ? "#ffffff" : "#000000";
-};
-
 
 const ProfessionalPracticeHeroSectionFields: YextFields<ProfessionalPracticeHeroSectionProps> =
   {
@@ -343,9 +270,6 @@ const ProfessionalPracticeHeroSectionComponent: PuckComponent<ProfessionalPracti
       props.description.text,
       locale,
       streamDocument,
-      {
-        richTextStyleOverrides: descriptionRichTextStyleOverrides,
-      },
     );
     const resolvedHeroImage = resolveComponentData(
       props.heroImage.image,
@@ -410,14 +334,14 @@ const ProfessionalPracticeHeroSectionComponent: PuckComponent<ProfessionalPracti
         <AnalyticsScopeProvider
           name={`ProfessionalPracticeHeroSection${getAnalyticsScopeHash(props.id)}`}
         >
-          <section
-            data-ypp-scope="hero-section"
-            style={{
-              backgroundColor: resolveThemeColorCssValue(
+          <Background background={props.section.backgroundColor}>
+            <section
+              data-ypp-scope="hero-section"
+              style={getSurfaceColorStyle(
                 props.section.backgroundColor,
-              ),
-            }}
-          >
+                streamDocument,
+              )}
+            >
             <div className="mx-auto flex max-w-[1280px] flex-col gap-8 px-4 py-[30px] md:px-8 md:py-[60px] xl:grid xl:grid-cols-[minmax(0,1fr)_minmax(520px,1.15fr)] xl:gap-10 xl:px-20">
               <style>{`
                 [data-ypp-scope="hero-section"] .ypp-typography p {
@@ -629,17 +553,9 @@ const ProfessionalPracticeHeroSectionComponent: PuckComponent<ProfessionalPracti
                     constantValueEnabled={props.description.text.constantValueEnabled}
                   >
                     <div className="max-w-[32rem]">
-                      {React.isValidElement(resolvedDescription) ? (
-                        resolvedDescription
-                      ) : (
-                        <MaybeRTF
-                          data={
-                            resolvedDescription as React.ComponentProps<
-                              typeof MaybeRTF
-                            >["data"]
-                          }
-                          richTextStyleOverrides={descriptionRichTextStyleOverrides}
-                        />
+                      {renderResolvedRichText(
+                        resolvedDescription,
+                        descriptionRichTextStyleOverrides,
                       )}
                     </div>
                   </EntityField>
@@ -778,7 +694,8 @@ const ProfessionalPracticeHeroSectionComponent: PuckComponent<ProfessionalPracti
                 </EntityField>
               </div>
             </div>
-          </section>
+            </section>
+          </Background>
         </AnalyticsScopeProvider>
       </VisibilityWrapper>
     );

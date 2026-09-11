@@ -11,13 +11,10 @@ import {
   getSurfaceColorStyle,
   getThemeColorCssValue,
   Image,
-  MaybeRTF,
   resolveComponentData,
   type StyledImageValue,
-  type StyledTextValue,
   type ThemeColor,
   type TranslatableAssetImage,
-  type TranslatableRichText,
   useDocument,
   VisibilityWrapper,
   type YextComponentConfig,
@@ -25,33 +22,19 @@ import {
   type YextFields,
 } from "@yext/visual-editor";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
-
-type StyledTextValueWithLetterSpacing = StyledTextValue & {
-  letterSpacing?: string;
-};
-type StyledTextProps = {
-  text: YextEntityField<string>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
-type StyledRtfProps = {
-  text: YextEntityField<TranslatableRichText>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
+import {
+  defaultTextStyles,
+  renderResolvedRichText,
+  type StyledRtfWithStylesProps,
+  type StyledTextProps,
+  type StyledTextValueWithLetterSpacing,
+} from "../shared/sectionHelpers";
 type TeamMemberFields = {
   image: YextEntityField<TranslatableAssetImage>;
   name: YextEntityField<string>;
   jobTitle: YextEntityField<string>;
 };
 
-const defaultTextStyles: StyledTextValue = {
-  fontFamily: "default",
-  fontSize: "default",
-  fontWeight: "default",
-  fontStyle: "default",
-  textTransform: "default",
-};
 const teamImageUrls = [
   "https://a.mktgcdn.com/p/UHR6VTEvcR-yDMqPSOS7LyK87Qt56EOrmfNbhLQxI08/1267x1900.jpg",
   "https://a.mktgcdn.com/p/fbSbItkZpsHpkc8qHH7GxvQkWzxsfm6mGc0k4Lmfl-A/1267x1900.jpg",
@@ -103,7 +86,7 @@ type ProfessionalPracticeTeamSectionProps = {
     cardBackgroundColor: ThemeColor;
   };
   heading: StyledTextProps;
-  intro: StyledRtfProps;
+  intro: StyledRtfWithStylesProps;
   members: {
     data: typeof teamMembersSource.value;
     styles: {
@@ -250,9 +233,7 @@ const ProfessionalPracticeTeamSectionComponent: PuckComponent<
     ...props.intro.styles,
     color: props.intro.fontColor,
   };
-  const intro = resolveComponentData(props.intro.text, locale, streamDocument, {
-    richTextStyleOverrides: introOverrides,
-  });
+  const intro = resolveComponentData(props.intro.text, locale, streamDocument);
 
   return (
     <VisibilityWrapper
@@ -294,14 +275,7 @@ const ProfessionalPracticeTeamSectionComponent: PuckComponent<
                 fieldId={props.intro.text.field}
                 constantValueEnabled={props.intro.text.constantValueEnabled}
               >
-                {typeof intro === "string" ? (
-                  <MaybeRTF
-                    data={intro}
-                    richTextStyleOverrides={introOverrides}
-                  />
-                ) : React.isValidElement(intro) ? (
-                  intro
-                ) : null}
+                {renderResolvedRichText(intro, introOverrides)}
               </EntityField>
               <EntityField
                 displayName="Team Members"

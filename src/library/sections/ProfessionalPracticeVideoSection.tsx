@@ -5,35 +5,25 @@ import type { PuckComponent } from "@puckeditor/core";
 import {
   EntityField,
   getDefaultRTF,
-  MaybeRTF,
-  type StyledTextValue,
   type ThemeColor,
-  type TranslatableRichText,
   VisibilityWrapper,
   type YextComponentConfig,
-  type YextEntityField,
   type YextFields,
+  Background,
   getAnalyticsScopeHash,
-  isDarkColor,
+  getSurfaceColorStyle,
+  getThemeColorCssValue as resolveThemeColorCssValue,
   resolveComponentData,
   useDocument,
 } from "@yext/visual-editor";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
-
-type StyledTextProps = {
-  text: YextEntityField<string>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
-
-type StyledTextValueWithLetterSpacing = StyledTextValue & {
-  letterSpacing?: string;
-};
-
-type StyledRtfProps = {
-  text: YextEntityField<TranslatableRichText>;
-  fontColor?: ThemeColor;
-};
+import {
+  defaultTextStyles,
+  getReadableForegroundColor as resolveReadableForegroundColor,
+  renderResolvedRichText,
+  type StyledRtfProps,
+  type StyledTextProps,
+} from "../shared/sectionHelpers";
 
 type ProfessionalPracticeVideoSectionProps = {
   section: {
@@ -49,69 +39,6 @@ type ProfessionalPracticeVideoSectionProps = {
 const defaultSectionColor: ThemeColor = {
   selectedColor: "palette-primary",
   contrastingColor: "palette-primary-contrast",
-};
-
-const defaultTextStyles: StyledTextValue = {
-  fontFamily: "default",
-  fontSize: "default",
-  fontWeight: "default",
-  fontStyle: "default",
-  textTransform: "default",
-};
-
-const resolveThemeColorCssValue = (color?: ThemeColor): string | undefined => {
-  if (!color?.selectedColor || color.selectedColor === "default") {
-    return undefined;
-  }
-
-  const selectedColor = color.selectedColor;
-  const customColorMatch = /^\[(#[0-9A-Fa-f]{3,8})\]$/.exec(selectedColor);
-
-  if (customColorMatch) {
-    return customColorMatch[1];
-  }
-
-  switch (selectedColor) {
-    case "palette-primary":
-      return "var(--colors-palette-primary)";
-    case "palette-secondary":
-      return "var(--colors-palette-secondary)";
-    case "palette-tertiary":
-      return "var(--colors-palette-tertiary)";
-    case "palette-quaternary":
-      return "var(--colors-palette-quaternary)";
-    case "palette-primary-light":
-      return "hsl(from var(--colors-palette-primary) h s 98)";
-    case "palette-secondary-light":
-      return "hsl(from var(--colors-palette-secondary) h s 98)";
-    case "palette-tertiary-light":
-      return "hsl(from var(--colors-palette-tertiary) h s 98)";
-    case "palette-quaternary-light":
-      return "hsl(from var(--colors-palette-quaternary) h s 98)";
-    case "palette-primary-dark":
-      return "hsl(from var(--colors-palette-primary) h s 20)";
-    case "palette-secondary-dark":
-      return "hsl(from var(--colors-palette-secondary) h s 20)";
-    case "white":
-      return "#ffffff";
-    default:
-      return selectedColor;
-  }
-};
-
-const resolveReadableForegroundColor = (
-  fontColor: ThemeColor | undefined,
-  backgroundColor: ThemeColor,
-  streamDocument: any,
-): string | undefined => {
-  const selectedFontColor =
-    fontColor?.selectedColor === "default" ? undefined : fontColor;
-
-  if (selectedFontColor) {
-    return resolveThemeColorCssValue(selectedFontColor);
-  }
-
-  return isDarkColor(backgroundColor, streamDocument) ? "#ffffff" : "#000000";
 };
 
 const getYouTubeEmbedUrl = (source: string) => {
@@ -213,9 +140,7 @@ const ProfessionalPracticeVideoSectionComponent: PuckComponent<ProfessionalPract
     const richTextStyleOverrides = {
       color: bodyColor,
     };
-    const body = resolveComponentData(props.body.text, locale, streamDocument, {
-      richTextStyleOverrides,
-    });
+    const body = resolveComponentData(props.body.text, locale, streamDocument);
     const embedUrl = getYouTubeEmbedUrl(props.videoSource);
     const frameBackgroundColor = resolveThemeColorCssValue(
       props.section.backgroundColor,
@@ -238,12 +163,14 @@ const ProfessionalPracticeVideoSectionComponent: PuckComponent<ProfessionalPract
         <AnalyticsScopeProvider
           name={`ProfessionalPracticeVideoSection${getAnalyticsScopeHash(props.id)}`}
         >
-          <section
-            data-ypp-scope="video-section"
-            style={{
-              backgroundColor: resolveThemeColorCssValue(props.section.backgroundColor),
-            }}
-          >
+          <Background background={props.section.backgroundColor}>
+            <section
+              data-ypp-scope="video-section"
+              style={getSurfaceColorStyle(
+                props.section.backgroundColor,
+                streamDocument,
+              )}
+            >
             <div className="mx-auto grid max-w-[1280px] gap-8 px-4 py-[30px] md:px-8 md:py-[60px] xl:grid-cols-[minmax(0,0.9fr)_minmax(520px,1.1fr)] xl:items-center xl:px-20">
               <style>{`
                 [data-ypp-scope="video-section"] .ypp-typography p {
@@ -373,16 +300,7 @@ const ProfessionalPracticeVideoSectionComponent: PuckComponent<ProfessionalPract
                   fieldId={props.body.text.field}
                   constantValueEnabled={props.body.text.constantValueEnabled}
                 >
-                  {React.isValidElement(body) ? (
-                    body
-                  ) : (
-                    <MaybeRTF
-                      data={
-                        body as React.ComponentProps<typeof MaybeRTF>["data"]
-                      }
-                      richTextStyleOverrides={richTextStyleOverrides}
-                    />
-                  )}
+                  {renderResolvedRichText(body, richTextStyleOverrides)}
                 </EntityField>
               </div>
               <div
@@ -410,7 +328,8 @@ const ProfessionalPracticeVideoSectionComponent: PuckComponent<ProfessionalPract
                 )}
               </div>
             </div>
-          </section>
+            </section>
+          </Background>
         </AnalyticsScopeProvider>
       </VisibilityWrapper>
     );

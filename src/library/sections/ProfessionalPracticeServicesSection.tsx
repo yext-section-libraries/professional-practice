@@ -13,10 +13,8 @@ import {
   getSurfaceColorStyle,
   getThemeColorCssValue,
   Image,
-  MaybeRTF,
   resolveComponentData,
   type StyledImageValue,
-  type StyledTextValue,
   type ThemeColor,
   type TranslatableAssetImage,
   type TranslatableRichText,
@@ -27,20 +25,13 @@ import {
   type YextFields,
 } from "@yext/visual-editor";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
-
-type StyledTextValueWithLetterSpacing = StyledTextValue & {
-  letterSpacing?: string;
-};
-type StyledTextProps = {
-  text: YextEntityField<string>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
-type StyledRtfProps = {
-  text: YextEntityField<TranslatableRichText>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
+import {
+  defaultTextStyles,
+  renderResolvedRichText,
+  type StyledRtfWithStylesProps,
+  type StyledTextProps,
+  type StyledTextValueWithLetterSpacing,
+} from "../shared/sectionHelpers";
 type ServiceFields = {
   image: YextEntityField<TranslatableAssetImage>;
   title: YextEntityField<string>;
@@ -48,13 +39,6 @@ type ServiceFields = {
   cta: Pick<ComprehensiveCTAValue, "data" | "styles">;
 };
 
-const defaultTextStyles: StyledTextValue = {
-  fontFamily: "default",
-  fontSize: "default",
-  fontWeight: "default",
-  fontStyle: "default",
-  textTransform: "default",
-};
 const serviceImages = [
   "https://a.mktgcdn.com/p/UHR6VTEvcR-yDMqPSOS7LyK87Qt56EOrmfNbhLQxI08/1267x1900.jpg",
   "https://a.mktgcdn.com/p/fbSbItkZpsHpkc8qHH7GxvQkWzxsfm6mGc0k4Lmfl-A/1267x1900.jpg",
@@ -157,7 +141,7 @@ const serviceCardsSource = createItemSource<ServiceFields>({
 type ProfessionalPracticeServicesSectionProps = {
   section: { visibleOnLivePage: boolean; backgroundColor: ThemeColor };
   heading: StyledTextProps;
-  intro: StyledRtfProps;
+  intro: StyledRtfWithStylesProps;
   services: {
     data: typeof serviceCardsSource.value;
     styles: {
@@ -286,9 +270,7 @@ const ProfessionalPracticeServicesSectionComponent: PuckComponent<
     ...props.intro.styles,
     color: props.intro.fontColor,
   };
-  const intro = resolveComponentData(props.intro.text, locale, streamDocument, {
-    richTextStyleOverrides: introOverrides,
-  });
+  const intro = resolveComponentData(props.intro.text, locale, streamDocument);
 
   return (
     <VisibilityWrapper
@@ -331,14 +313,7 @@ const ProfessionalPracticeServicesSectionComponent: PuckComponent<
                   fieldId={props.intro.text.field}
                   constantValueEnabled={props.intro.text.constantValueEnabled}
                 >
-                  {typeof intro === "string" ? (
-                    <MaybeRTF
-                      data={intro}
-                      richTextStyleOverrides={introOverrides}
-                    />
-                  ) : React.isValidElement(intro) ? (
-                    intro
-                  ) : null}
+                  {renderResolvedRichText(intro, introOverrides)}
                 </EntityField>
               </div>
               <EntityField
@@ -387,7 +362,6 @@ const ProfessionalPracticeServicesSectionComponent: PuckComponent<
                           authoredService.description,
                           locale,
                           streamDocument,
-                          { richTextStyleOverrides: descriptionOverrides },
                         )
                       : undefined;
                     const ctaValue = service.cta as unknown as
@@ -445,14 +419,10 @@ const ProfessionalPracticeServicesSectionComponent: PuckComponent<
                               authoredService?.description.constantValueEnabled
                             }
                           >
-                            {typeof description === "string" ? (
-                              <MaybeRTF
-                                data={description}
-                                richTextStyleOverrides={descriptionOverrides}
-                              />
-                            ) : React.isValidElement(description) ? (
-                              description
-                            ) : null}
+                            {renderResolvedRichText(
+                              description,
+                              descriptionOverrides,
+                            )}
                           </EntityField>
                           {ctaValue ? (
                             <EntityField

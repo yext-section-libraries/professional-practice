@@ -10,9 +10,7 @@ import {
   getDefaultRTF,
   getSurfaceColorStyle,
   getThemeColorCssValue,
-  MaybeRTF,
   resolveComponentData,
-  type StyledTextValue,
   type ThemeColor,
   type TranslatableRichText,
   TimestampAtom,
@@ -24,16 +22,12 @@ import {
   type YextFields,
 } from "@yext/visual-editor";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
-
-type StyledTextValueWithLetterSpacing = StyledTextValue & {
-  letterSpacing?: string;
-};
-
-type StyledTextProps = {
-  text: YextEntityField<string>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
+import {
+  defaultTextStyles,
+  renderResolvedRichText,
+  type StyledTextProps,
+  type StyledTextValueWithLetterSpacing,
+} from "../shared/sectionHelpers";
 
 type TestimonialFields = {
   quote: YextEntityField<TranslatableRichText>;
@@ -41,14 +35,6 @@ type TestimonialFields = {
   category: YextEntityField<string>;
   date: YextEntityField<string>;
   endDate: YextEntityField<string>;
-};
-
-const defaultTextStyles: StyledTextValue = {
-  fontFamily: "default",
-  fontSize: "default",
-  fontWeight: "default",
-  fontStyle: "default",
-  textTransform: "default",
 };
 
 const testimonialSource = createItemSource<TestimonialFields>({
@@ -344,7 +330,6 @@ const ProfessionalPracticeTestimonialsSectionComponent: PuckComponent<
                           authoredTestimonial.quote,
                           locale,
                           streamDocument,
-                          { richTextStyleOverrides: quoteStyleOverrides },
                         )
                       : undefined;
                     const timestampOption = endDate
@@ -380,14 +365,10 @@ const ProfessionalPracticeTestimonialsSectionComponent: PuckComponent<
                               authoredTestimonial?.quote.constantValueEnabled
                             }
                           >
-                            {typeof quote === "string" ? (
-                              <MaybeRTF
-                                data={quote}
-                                richTextStyleOverrides={quoteStyleOverrides}
-                              />
-                            ) : React.isValidElement(quote) ? (
-                              quote
-                            ) : null}
+                            {renderResolvedRichText(
+                              quote,
+                              quoteStyleOverrides,
+                            )}
                           </EntityField>
                           <div className="mt-auto flex flex-col gap-1">
                             <EntityField

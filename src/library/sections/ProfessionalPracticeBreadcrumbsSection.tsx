@@ -4,30 +4,24 @@ import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import {
   EntityField,
-  type StyledTextValue,
   type ThemeColor,
   VisibilityWrapper,
   type YextComponentConfig,
-  type YextEntityField,
   type YextFields,
+  Background,
   getAnalyticsScopeHash,
-  isDarkColor,
+  getSurfaceColorStyle,
   resolveBreadcrumbs,
   resolveComponentData,
   useDocument,
   useTemplateProps,
 } from "@yext/visual-editor";
 import { AnalyticsScopeProvider, Link } from "@yext/pages-components";
-
-type StyledTextProps = {
-  text: YextEntityField<string>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
-
-type StyledTextValueWithLetterSpacing = StyledTextValue & {
-  letterSpacing?: string;
-};
+import {
+  defaultTextStyles,
+  getReadableForegroundColor as resolveReadableForegroundColor,
+  type StyledTextProps,
+} from "../shared/sectionHelpers";
 
 type BreadcrumbItem = {
   name?: string;
@@ -46,69 +40,6 @@ type ProfessionalPracticeBreadcrumbsSectionProps = {
 const defaultSectionColor: ThemeColor = {
   selectedColor: "white",
   contrastingColor: "palette-secondary",
-};
-
-const defaultTextStyles: StyledTextValue = {
-  fontFamily: "default",
-  fontSize: "default",
-  fontWeight: "default",
-  fontStyle: "default",
-  textTransform: "default",
-};
-
-const resolveThemeColorCssValue = (color?: ThemeColor): string | undefined => {
-  if (!color?.selectedColor || color.selectedColor === "default") {
-    return undefined;
-  }
-
-  const selectedColor = color.selectedColor;
-  const customColorMatch = /^\[(#[0-9A-Fa-f]{3,8})\]$/.exec(selectedColor);
-
-  if (customColorMatch) {
-    return customColorMatch[1];
-  }
-
-  switch (selectedColor) {
-    case "palette-primary":
-      return "var(--colors-palette-primary)";
-    case "palette-secondary":
-      return "var(--colors-palette-secondary)";
-    case "palette-tertiary":
-      return "var(--colors-palette-tertiary)";
-    case "palette-quaternary":
-      return "var(--colors-palette-quaternary)";
-    case "palette-primary-light":
-      return "hsl(from var(--colors-palette-primary) h s 98)";
-    case "palette-secondary-light":
-      return "hsl(from var(--colors-palette-secondary) h s 98)";
-    case "palette-tertiary-light":
-      return "hsl(from var(--colors-palette-tertiary) h s 98)";
-    case "palette-quaternary-light":
-      return "hsl(from var(--colors-palette-quaternary) h s 98)";
-    case "palette-primary-dark":
-      return "hsl(from var(--colors-palette-primary) h s 20)";
-    case "palette-secondary-dark":
-      return "hsl(from var(--colors-palette-secondary) h s 20)";
-    case "white":
-      return "#ffffff";
-    default:
-      return selectedColor;
-  }
-};
-
-const resolveReadableForegroundColor = (
-  fontColor: ThemeColor | undefined,
-  backgroundColor: ThemeColor,
-  streamDocument: any,
-): string | undefined => {
-  const selectedFontColor =
-    fontColor?.selectedColor === "default" ? undefined : fontColor;
-
-  if (selectedFontColor) {
-    return resolveThemeColorCssValue(selectedFontColor);
-  }
-
-  return isDarkColor(backgroundColor, streamDocument) ? "#ffffff" : "#000000";
 };
 
 const ProfessionalPracticeBreadcrumbsSectionFields: YextFields<ProfessionalPracticeBreadcrumbsSectionProps> =
@@ -215,14 +146,14 @@ const ProfessionalPracticeBreadcrumbsSectionComponent: PuckComponent<
         <AnalyticsScopeProvider
           name={`ProfessionalPracticeBreadcrumbsSection${getAnalyticsScopeHash(props.id)}`}
         >
-          <section
-            data-ypp-scope="breadcrumbs-section"
-            style={{
-              backgroundColor: resolveThemeColorCssValue(
+          <Background background={props.section.backgroundColor}>
+            <section
+              data-ypp-scope="breadcrumbs-section"
+              style={getSurfaceColorStyle(
                 props.section.backgroundColor,
-              ),
-            }}
-          >
+                streamDocument,
+              )}
+            >
             <style>{`
               [data-ypp-scope="breadcrumbs-section"] .ypp-typography p {
                 font-family: var(--fontFamily-body-fontFamily);
@@ -437,7 +368,8 @@ const ProfessionalPracticeBreadcrumbsSectionComponent: PuckComponent<
                 })}
               </ol>
             </div>
-          </section>
+            </section>
+          </Background>
         </AnalyticsScopeProvider>
       </VisibilityWrapper>
     );

@@ -8,17 +8,16 @@ import {
   EntityField,
   getDefaultRTF,
   Image,
-  MaybeRTF,
   type StyledImageValue,
-  type StyledTextValue,
   type ThemeColor,
-  type TranslatableRichText,
   VisibilityWrapper,
   type YextComponentConfig,
   type YextEntityField,
   type YextFields,
+  Background,
   getAnalyticsScopeHash,
-  isDarkColor,
+  getSurfaceColorStyle,
+  getThemeColorCssValue as resolveThemeColorCssValue,
   resolveComponentData,
   useDocument,
 } from "@yext/visual-editor";
@@ -27,21 +26,13 @@ import {
   type ComplexImageType,
   type ImageType,
 } from "@yext/pages-components";
-
-type StyledTextProps = {
-  text: YextEntityField<string>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
-
-type StyledTextValueWithLetterSpacing = StyledTextValue & {
-  letterSpacing?: string;
-};
-
-type StyledRtfProps = {
-  text: YextEntityField<TranslatableRichText>;
-  fontColor?: ThemeColor;
-};
+import {
+  defaultTextStyles,
+  getReadableForegroundColor,
+  renderResolvedRichText,
+  type StyledRtfProps,
+  type StyledTextProps,
+} from "../shared/sectionHelpers";
 
 type AboutImageProps = {
   image: YextEntityField<ImageType | ComplexImageType>;
@@ -78,70 +69,6 @@ const lightCtaColor: ThemeColor = {
 
 const aboutImageUrl =
   "https://a.mktgcdn.com/p/UHR6VTEvcR-yDMqPSOS7LyK87Qt56EOrmfNbhLQxI08/1267x1900.jpg";
-
-
-const defaultTextStyles: StyledTextValue = {
-  fontFamily: "default",
-  fontSize: "default",
-  fontWeight: "default",
-  fontStyle: "default",
-  textTransform: "default",
-};
-
-const resolveThemeColorCssValue = (color?: ThemeColor): string | undefined => {
-  if (!color?.selectedColor || color.selectedColor === "default") {
-    return undefined;
-  }
-
-  const selectedColor = color.selectedColor;
-  const customColorMatch = /^\[(#[0-9A-Fa-f]{3,8})\]$/.exec(selectedColor);
-
-  if (customColorMatch) {
-    return customColorMatch[1];
-  }
-
-  switch (selectedColor) {
-    case "palette-primary":
-      return "var(--colors-palette-primary)";
-    case "palette-secondary":
-      return "var(--colors-palette-secondary)";
-    case "palette-tertiary":
-      return "var(--colors-palette-tertiary)";
-    case "palette-quaternary":
-      return "var(--colors-palette-quaternary)";
-    case "palette-primary-light":
-      return "hsl(from var(--colors-palette-primary) h s 98)";
-    case "palette-secondary-light":
-      return "hsl(from var(--colors-palette-secondary) h s 98)";
-    case "palette-tertiary-light":
-      return "hsl(from var(--colors-palette-tertiary) h s 98)";
-    case "palette-quaternary-light":
-      return "hsl(from var(--colors-palette-quaternary) h s 98)";
-    case "palette-primary-dark":
-      return "hsl(from var(--colors-palette-primary) h s 20)";
-    case "palette-secondary-dark":
-      return "hsl(from var(--colors-palette-secondary) h s 20)";
-    case "white":
-      return "#ffffff";
-    default:
-      return selectedColor;
-  }
-};
-
-const resolveReadableForegroundColor = (
-  fontColor: ThemeColor | undefined,
-  backgroundColor: ThemeColor,
-  streamDocument: any,
-): string | undefined => {
-  const selectedFontColor =
-    fontColor?.selectedColor === "default" ? undefined : fontColor;
-
-  if (selectedFontColor) {
-    return resolveThemeColorCssValue(selectedFontColor);
-  }
-
-  return isDarkColor(backgroundColor, streamDocument) ? "#ffffff" : "#000000";
-};
 
 
 const ProfessionalPracticeAboutSectionFields: YextFields<ProfessionalPracticeAboutSectionProps> =
@@ -244,15 +171,13 @@ const ProfessionalPracticeAboutSectionComponent: PuckComponent<ProfessionalPract
   (props) => {
     const streamDocument = useDocument();
     const locale = streamDocument.locale ?? "en";
-    const headingColor = resolveReadableForegroundColor(props.heading.fontColor, props.section.backgroundColor, streamDocument);
+    const headingColor = getReadableForegroundColor(props.heading.fontColor, props.section.backgroundColor, streamDocument);
     const bodyRichTextStyleOverrides = {
-      color: resolveReadableForegroundColor(props.body.fontColor, props.section.backgroundColor, streamDocument),
+      color: getReadableForegroundColor(props.body.fontColor, props.section.backgroundColor, streamDocument),
     };
     const heading =
       resolveComponentData(props.heading.text, locale, streamDocument) || "";
-    const body = resolveComponentData(props.body.text, locale, streamDocument, {
-      richTextStyleOverrides: bodyRichTextStyleOverrides,
-    });
+    const body = resolveComponentData(props.body.text, locale, streamDocument);
     const image = resolveComponentData(
       props.image.image,
       locale,
@@ -275,15 +200,17 @@ const ProfessionalPracticeAboutSectionComponent: PuckComponent<ProfessionalPract
         <AnalyticsScopeProvider
           name={`ProfessionalPracticeAboutSection${getAnalyticsScopeHash(props.id)}`}
         >
-          <section
-            data-ypp-scope="about-section"
-            style={{
-              backgroundColor: resolveThemeColorCssValue(
-                props.section.backgroundColor,
-              ),
-              color: resolveThemeColorCssValue(textColor),
-            }}
-          >
+          <Background background={props.section.backgroundColor}>
+            <section
+              data-ypp-scope="about-section"
+              style={{
+                ...getSurfaceColorStyle(
+                  props.section.backgroundColor,
+                  streamDocument,
+                ),
+                color: resolveThemeColorCssValue(textColor),
+              }}
+            >
             <div className="mx-auto flex max-w-[1280px] flex-col gap-8 px-4 py-[30px] md:px-8 md:py-[60px] xl:grid xl:grid-cols-[minmax(0,1fr)_minmax(420px,1.1fr)] xl:items-center xl:gap-10 xl:px-20">
               <style>{`
                 [data-ypp-scope="about-section"] .ypp-typography p {
@@ -445,15 +372,9 @@ const ProfessionalPracticeAboutSectionComponent: PuckComponent<ProfessionalPract
                     fieldId={props.body.text.field}
                     constantValueEnabled={props.body.text.constantValueEnabled}
                   >
-                    {React.isValidElement(body) ? (
-                      body
-                    ) : (
-                      <MaybeRTF
-                        data={
-                          body as React.ComponentProps<typeof MaybeRTF>["data"]
-                        }
-                        richTextStyleOverrides={bodyRichTextStyleOverrides}
-                      />
+                    {renderResolvedRichText(
+                      body,
+                      bodyRichTextStyleOverrides,
                     )}
                   </EntityField>
                 </div>
@@ -486,7 +407,7 @@ const ProfessionalPracticeAboutSectionComponent: PuckComponent<ProfessionalPract
                           (!props.cta.styles.color?.selectedColor ||
                             props.cta.styles.color.selectedColor === "default")
                             ? {
-                                color: resolveReadableForegroundColor(
+                                color: getReadableForegroundColor(
                                   undefined,
                                   props.section.backgroundColor,
                                   streamDocument,
@@ -533,7 +454,8 @@ const ProfessionalPracticeAboutSectionComponent: PuckComponent<ProfessionalPract
                 ) : null}
               </EntityField>
             </div>
-          </section>
+            </section>
+          </Background>
         </AnalyticsScopeProvider>
       </VisibilityWrapper>
     );

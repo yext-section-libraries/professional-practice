@@ -7,22 +7,20 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import {
   EntityField,
   getDefaultRTF,
-  MaybeRTF,
   mergeMeta,
   resolveComponentData,
   resolveUrlTemplate,
-  type StyledTextValue,
   type ThemeColor,
-  type TranslatableRichText,
   useDocument,
   useNearbyLocations,
   useTemplateProps,
   VisibilityWrapper,
   type YextComponentConfig,
-  type YextEntityField,
   type YextFields,
+  Background,
   getAnalyticsScopeHash,
-  isDarkColor,
+  getSurfaceColorStyle,
+  getThemeColorCssValue as resolveThemeColorCssValue,
   CTA,
 } from "@yext/visual-editor";
 import {
@@ -32,21 +30,13 @@ import {
   Link,
   type StatusParams,
 } from "@yext/pages-components";
-
-type StyledTextProps = {
-  text: YextEntityField<string>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
-
-type StyledTextValueWithLetterSpacing = StyledTextValue & {
-  letterSpacing?: string;
-};
-
-type StyledRtfProps = {
-  text: YextEntityField<TranslatableRichText>;
-  fontColor?: ThemeColor;
-};
+import {
+  defaultTextStyles,
+  getReadableForegroundColor as resolveReadableForegroundColor,
+  renderResolvedRichText,
+  type StyledRtfProps,
+  type StyledTextProps,
+} from "../shared/sectionHelpers";
 
 type StreamDocumentWithCoordinate = {
   comingSoon?: boolean;
@@ -111,69 +101,6 @@ const primaryCtaBackgroundColor: ThemeColor = {
 const loadingMessage = "Loading nearby locations";
 const emptyEditorMessage = "No nearby locations found for this location";
 const locationCtaLabel = "View Location";
-
-const defaultTextStyles: StyledTextValue = {
-  fontFamily: "default",
-  fontSize: "default",
-  fontWeight: "default",
-  fontStyle: "default",
-  textTransform: "default",
-};
-
-const resolveThemeColorCssValue = (color?: ThemeColor): string | undefined => {
-  if (!color?.selectedColor || color.selectedColor === "default") {
-    return undefined;
-  }
-
-  const selectedColor = color.selectedColor;
-  const customColorMatch = /^\[(#[0-9A-Fa-f]{3,8})\]$/.exec(selectedColor);
-
-  if (customColorMatch) {
-    return customColorMatch[1];
-  }
-
-  switch (selectedColor) {
-    case "palette-primary":
-      return "var(--colors-palette-primary)";
-    case "palette-secondary":
-      return "var(--colors-palette-secondary)";
-    case "palette-tertiary":
-      return "var(--colors-palette-tertiary)";
-    case "palette-quaternary":
-      return "var(--colors-palette-quaternary)";
-    case "palette-primary-light":
-      return "hsl(from var(--colors-palette-primary) h s 98)";
-    case "palette-secondary-light":
-      return "hsl(from var(--colors-palette-secondary) h s 98)";
-    case "palette-tertiary-light":
-      return "hsl(from var(--colors-palette-tertiary) h s 98)";
-    case "palette-quaternary-light":
-      return "hsl(from var(--colors-palette-quaternary) h s 98)";
-    case "palette-primary-dark":
-      return "hsl(from var(--colors-palette-primary) h s 20)";
-    case "palette-secondary-dark":
-      return "hsl(from var(--colors-palette-secondary) h s 20)";
-    case "white":
-      return "#ffffff";
-    default:
-      return selectedColor;
-  }
-};
-
-const resolveReadableForegroundColor = (
-  fontColor: ThemeColor | undefined,
-  backgroundColor: ThemeColor,
-  streamDocument: any,
-): string | undefined => {
-  const selectedFontColor =
-    fontColor?.selectedColor === "default" ? undefined : fontColor;
-
-  if (selectedFontColor) {
-    return resolveThemeColorCssValue(selectedFontColor);
-  }
-
-  return isDarkColor(backgroundColor, streamDocument) ? "#ffffff" : "#000000";
-};
 
 const resolveSubtleBorderColor = (
   backgroundColor: ThemeColor,
@@ -419,9 +346,11 @@ const ProfessionalPracticeCoverageSectionComponent: PuckComponent<ProfessionalPr
     };
     const heading =
       resolveComponentData(props.heading.text, locale, streamDocument) || "";
-    const intro = resolveComponentData(props.intro.text, locale, streamDocument, {
-      richTextStyleOverrides: introRichTextStyleOverrides,
-    });
+    const intro = resolveComponentData(
+      props.intro.text,
+      locale,
+      streamDocument,
+    );
     const coordinate = streamDocument.yextDisplayCoordinate;
     const enabled =
       coordinate?.latitude !== undefined &&
@@ -445,9 +374,6 @@ const ProfessionalPracticeCoverageSectionComponent: PuckComponent<ProfessionalPr
 
     const nearbyLocationDocs = nearbyLocationsData?.response?.docs ?? [];
 
-    const sectionBackgroundColor = resolveThemeColorCssValue(
-      props.section.backgroundColor,
-    );
     const cardBorderColor = resolveSubtleBorderColor(
       props.cardBackgroundColor,
       streamDocument,
@@ -480,10 +406,14 @@ const ProfessionalPracticeCoverageSectionComponent: PuckComponent<ProfessionalPr
 
     if (nearbyLocationsStatus === "pending") {
       return (
-        <section
-          data-ypp-scope="coverage-section"
-          style={{ backgroundColor: sectionBackgroundColor }}
-        >
+        <Background background={props.section.backgroundColor}>
+          <section
+            data-ypp-scope="coverage-section"
+            style={getSurfaceColorStyle(
+              props.section.backgroundColor,
+              streamDocument,
+            )}
+          >
           <style>{`
             [data-ypp-scope="coverage-section"] .ypp-typography p {
               font-family: var(--fontFamily-body-fontFamily);
@@ -579,7 +509,8 @@ const ProfessionalPracticeCoverageSectionComponent: PuckComponent<ProfessionalPr
               {loadingMessage}
             </p>
           </div>
-        </section>
+          </section>
+        </Background>
       );
     }
 
@@ -589,10 +520,14 @@ const ProfessionalPracticeCoverageSectionComponent: PuckComponent<ProfessionalPr
       }
 
       return (
-        <section
-          data-ypp-scope="coverage-section"
-          style={{ backgroundColor: sectionBackgroundColor }}
-        >
+        <Background background={props.section.backgroundColor}>
+          <section
+            data-ypp-scope="coverage-section"
+            style={getSurfaceColorStyle(
+              props.section.backgroundColor,
+              streamDocument,
+            )}
+          >
           <style>{`
             [data-ypp-scope="coverage-section"] .ypp-typography p {
               font-family: var(--fontFamily-body-fontFamily);
@@ -688,7 +623,8 @@ const ProfessionalPracticeCoverageSectionComponent: PuckComponent<ProfessionalPr
               {emptyEditorMessage}
             </p>
           </div>
-        </section>
+          </section>
+        </Background>
       );
     }
 
@@ -700,10 +636,14 @@ const ProfessionalPracticeCoverageSectionComponent: PuckComponent<ProfessionalPr
       <AnalyticsScopeProvider
         name={`ProfessionalPracticeCoverageSection${getAnalyticsScopeHash(props.id)}`}
       >
-          <section
-            data-ypp-scope="coverage-section"
-            style={{ backgroundColor: sectionBackgroundColor }}
-          >
+          <Background background={props.section.backgroundColor}>
+            <section
+              data-ypp-scope="coverage-section"
+              style={getSurfaceColorStyle(
+                props.section.backgroundColor,
+                streamDocument,
+              )}
+            >
             <style>{`
               [data-ypp-scope="coverage-section"] .ypp-typography p {
                 font-family: var(--fontFamily-body-fontFamily);
@@ -880,15 +820,9 @@ const ProfessionalPracticeCoverageSectionComponent: PuckComponent<ProfessionalPr
                   fieldId={props.intro.text.field}
                   constantValueEnabled={props.intro.text.constantValueEnabled}
                 >
-                  {React.isValidElement(intro) ? (
-                    intro
-                  ) : (
-                    <MaybeRTF
-                      data={
-                        intro as React.ComponentProps<typeof MaybeRTF>["data"]
-                      }
-                      richTextStyleOverrides={introRichTextStyleOverrides}
-                    />
+                  {renderResolvedRichText(
+                    intro,
+                    introRichTextStyleOverrides,
                   )}
                 </EntityField>
               </div>
@@ -1054,6 +988,7 @@ const ProfessionalPracticeCoverageSectionComponent: PuckComponent<ProfessionalPr
                           variant={"primary"}
                           label={locationCtaLabel}
                           link={resolvedUrl}
+                          normalizeLink={false}
                           eventName={`coverageLocation${index}`}
                           className="coverage-section__cta ypp-cta-button ypp-cta-button--filled mt-2 inline-flex md:mt-auto"
                           style={{ color: locationCtaForegroundColor }}
@@ -1064,7 +999,8 @@ const ProfessionalPracticeCoverageSectionComponent: PuckComponent<ProfessionalPr
                 })}
               </div>
             </div>
-          </section>
+            </section>
+          </Background>
         </AnalyticsScopeProvider>
       </VisibilityWrapper>
     );

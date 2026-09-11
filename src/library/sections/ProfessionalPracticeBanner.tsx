@@ -1,35 +1,31 @@
 import type { SectionConfig } from "@yext/visual-editor";
 
-import { isValidElement } from "react";
 import { PuckComponent } from "@puckeditor/core";
 import { CircleSlash2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import {
   Body,
   EntityField,
-  MaybeRTF,
   PageSection,
-  type StyledTextValue,
   type ThemeColor,
-  type TranslatableRichText,
   VisibilityWrapper,
   type YextComponentConfig,
-  type YextEntityField,
   type YextFields,
   backgroundColors,
   getDefaultRTF,
   resolveComponentData,
   resolveYextEntityField,
-  toPuckFields,
   useDocument,
 } from "@yext/visual-editor";
+import {
+  defaultTextStyles,
+  isRichTextEmpty,
+  renderResolvedRichText,
+  type StyledRtfWithStylesProps,
+} from "../shared/sectionHelpers";
 
 type ProfessionalPracticeBannerProps = {
-  data: {
-    text: YextEntityField<TranslatableRichText>;
-    styles: StyledTextValue;
-    fontColor?: ThemeColor;
-  };
+  data: StyledRtfWithStylesProps;
   styles: {
     textAlignment: "left" | "center" | "right";
   };
@@ -37,23 +33,6 @@ type ProfessionalPracticeBannerProps = {
     backgroundColor: ThemeColor;
     visibleOnLivePage: boolean;
   };
-};
-
-const isRichTextEmpty = (value: unknown): boolean => {
-  if (!value) {
-    return true;
-  }
-
-  if (typeof value === "string") {
-    return value.trim() === "";
-  }
-
-  if (typeof value === "object" && "html" in value) {
-    const html = (value as { html?: unknown }).html;
-    return typeof html !== "string" || html.trim() === "";
-  }
-
-  return false;
 };
 
 const ProfessionalPracticeBannerFields: YextFields<ProfessionalPracticeBannerProps> = {
@@ -165,7 +144,6 @@ const ProfessionalPracticeBannerComponent: PuckComponent<ProfessionalPracticeBan
     data.text,
     i18n.language,
     streamDocument,
-    { richTextStyleOverrides },
   );
 
   if (!resolvedText) {
@@ -189,14 +167,7 @@ const ProfessionalPracticeBannerComponent: PuckComponent<ProfessionalPracticeBan
         displayName="Banner Text"
         fieldId={data.text.field}
       >
-        {isValidElement(resolvedText) ? (
-          resolvedText
-        ) : typeof resolvedText === "string" ? (
-          <MaybeRTF
-            data={resolvedText}
-            richTextStyleOverrides={richTextStyleOverrides}
-          />
-        ) : null}
+        {renderResolvedRichText(resolvedText, richTextStyleOverrides)}
       </EntityField>
     </PageSection>
   );
@@ -207,7 +178,7 @@ const ProfessionalPracticeBannerComponent: PuckComponent<ProfessionalPracticeBan
  */
 export const ProfessionalPracticeBanner: YextComponentConfig<ProfessionalPracticeBannerProps> = {
   label: "Banner",
-  fields: toPuckFields(ProfessionalPracticeBannerFields),
+  fields: ProfessionalPracticeBannerFields,
   defaultProps: {
     data: {
       text: {
@@ -219,13 +190,7 @@ export const ProfessionalPracticeBanner: YextComponentConfig<ProfessionalPractic
         },
         constantValueEnabled: true,
       },
-      styles: {
-        fontFamily: "default",
-        fontSize: "default",
-        fontWeight: "default",
-        fontStyle: "default",
-        textTransform: "default",
-      },
+      styles: defaultTextStyles,
     },
     styles: {
       textAlignment: "center",

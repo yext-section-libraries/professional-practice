@@ -6,36 +6,27 @@ import {
   EntityField,
   getDefaultRTF,
   MapboxStaticMapComponent,
-  MaybeRTF,
   mapboxStaticMapStyleOptions,
-  type StyledTextValue,
   type ThemeColor,
-  type TranslatableRichText,
   VisibilityWrapper,
   type YextComponentConfig,
   type YextEntityField,
   type YextFields,
+  Background,
   getAnalyticsScopeHash,
-  isDarkColor,
+  getSurfaceColorStyle,
+  getThemeColorCssValue as resolveThemeColorCssValue,
   resolveComponentData,
   useDocument,
 } from "@yext/visual-editor";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
-
-type StyledTextProps = {
-  text: YextEntityField<string>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
-
-type StyledTextValueWithLetterSpacing = StyledTextValue & {
-  letterSpacing?: string;
-};
-
-type StyledRtfProps = {
-  text: YextEntityField<TranslatableRichText>;
-  fontColor?: ThemeColor;
-};
+import {
+  defaultTextStyles,
+  getReadableForegroundColor as resolveReadableForegroundColor,
+  renderResolvedRichText,
+  type StyledRtfProps,
+  type StyledTextProps,
+} from "../shared/sectionHelpers";
 
 type CoordinateValue = {
   latitude: number;
@@ -68,69 +59,6 @@ type MapDocument = {
 const defaultSectionColor: ThemeColor = {
   selectedColor: "white",
   contrastingColor: "palette-secondary",
-};
-
-const defaultTextStyles: StyledTextValue = {
-  fontFamily: "default",
-  fontSize: "default",
-  fontWeight: "default",
-  fontStyle: "default",
-  textTransform: "default",
-};
-
-const resolveThemeColorCssValue = (color?: ThemeColor): string | undefined => {
-  if (!color?.selectedColor || color.selectedColor === "default") {
-    return undefined;
-  }
-
-  const selectedColor = color.selectedColor;
-  const customColorMatch = /^\[(#[0-9A-Fa-f]{3,8})\]$/.exec(selectedColor);
-
-  if (customColorMatch) {
-    return customColorMatch[1];
-  }
-
-  switch (selectedColor) {
-    case "palette-primary":
-      return "var(--colors-palette-primary)";
-    case "palette-secondary":
-      return "var(--colors-palette-secondary)";
-    case "palette-tertiary":
-      return "var(--colors-palette-tertiary)";
-    case "palette-quaternary":
-      return "var(--colors-palette-quaternary)";
-    case "palette-primary-light":
-      return "hsl(from var(--colors-palette-primary) h s 98)";
-    case "palette-secondary-light":
-      return "hsl(from var(--colors-palette-secondary) h s 98)";
-    case "palette-tertiary-light":
-      return "hsl(from var(--colors-palette-tertiary) h s 98)";
-    case "palette-quaternary-light":
-      return "hsl(from var(--colors-palette-quaternary) h s 98)";
-    case "palette-primary-dark":
-      return "hsl(from var(--colors-palette-primary) h s 20)";
-    case "palette-secondary-dark":
-      return "hsl(from var(--colors-palette-secondary) h s 20)";
-    case "white":
-      return "#ffffff";
-    default:
-      return selectedColor;
-  }
-};
-
-const resolveReadableForegroundColor = (
-  fontColor: ThemeColor | undefined,
-  backgroundColor: ThemeColor,
-  streamDocument: any,
-): string | undefined => {
-  const selectedFontColor =
-    fontColor?.selectedColor === "default" ? undefined : fontColor;
-
-  if (selectedFontColor) {
-    return resolveThemeColorCssValue(selectedFontColor);
-  }
-
-  return isDarkColor(backgroundColor, streamDocument) ? "#ffffff" : "#000000";
 };
 
 const resolveSubtleBorderColor = (
@@ -247,9 +175,7 @@ const ProfessionalPracticeStaticMapSectionComponent: PuckComponent<ProfessionalP
     };
     const heading =
       resolveComponentData(props.heading.text, locale, streamDocument) || "";
-    const body = resolveComponentData(props.body.text, locale, streamDocument, {
-      richTextStyleOverrides: bodyRichTextStyleOverrides,
-    });
+    const body = resolveComponentData(props.body.text, locale, streamDocument);
     const mapBorderColor = resolveSubtleBorderColor(
       props.section.backgroundColor,
       streamDocument,
@@ -263,14 +189,14 @@ const ProfessionalPracticeStaticMapSectionComponent: PuckComponent<ProfessionalP
         <AnalyticsScopeProvider
           name={`ProfessionalPracticeStaticMapSection${getAnalyticsScopeHash(props.id)}`}
         >
-          <section
-            data-ypp-scope="static-map-section"
-            style={{
-              backgroundColor: resolveThemeColorCssValue(
+          <Background background={props.section.backgroundColor}>
+            <section
+              data-ypp-scope="static-map-section"
+              style={getSurfaceColorStyle(
                 props.section.backgroundColor,
-              ),
-            }}
-          >
+                streamDocument,
+              )}
+            >
             <style>{`
               [data-ypp-scope="static-map-section"] .ypp-typography p {
                 font-family: var(--fontFamily-body-fontFamily);
@@ -417,15 +343,9 @@ const ProfessionalPracticeStaticMapSectionComponent: PuckComponent<ProfessionalP
                   fieldId={props.body.text.field}
                   constantValueEnabled={props.body.text.constantValueEnabled}
                 >
-                  {React.isValidElement(body) ? (
-                    body
-                  ) : (
-                    <MaybeRTF
-                      data={
-                        body as React.ComponentProps<typeof MaybeRTF>["data"]
-                      }
-                      richTextStyleOverrides={bodyRichTextStyleOverrides}
-                    />
+                  {renderResolvedRichText(
+                    body,
+                    bodyRichTextStyleOverrides,
                   )}
                 </EntityField>
               </div>
@@ -451,7 +371,8 @@ const ProfessionalPracticeStaticMapSectionComponent: PuckComponent<ProfessionalP
                 </div>
               </EntityField>
             </div>
-          </section>
+            </section>
+          </Background>
         </AnalyticsScopeProvider>
       </VisibilityWrapper>
     );

@@ -13,10 +13,8 @@ import {
   getSurfaceColorStyle,
   getThemeColorCssValue,
   Image,
-  MaybeRTF,
   resolveComponentData,
   type StyledImageValue,
-  type StyledTextValue,
   type ThemeColor,
   type TranslatableAssetImage,
   type TranslatableRichText,
@@ -27,29 +25,18 @@ import {
   type YextFields,
 } from "@yext/visual-editor";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
-
-type StyledTextValueWithLetterSpacing = StyledTextValue & {
-  letterSpacing?: string;
-};
-type StyledTextProps = {
-  text: YextEntityField<string>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
+import {
+  defaultTextStyles,
+  renderResolvedRichText,
+  type StyledTextProps,
+  type StyledTextValueWithLetterSpacing,
+} from "../shared/sectionHelpers";
 
 type BlogCardFields = {
   image: YextEntityField<TranslatableAssetImage>;
   title: YextEntityField<string>;
   description: YextEntityField<TranslatableRichText>;
   cta: Pick<ComprehensiveCTAValue, "data" | "styles">;
-};
-
-const defaultTextStyles: StyledTextValue = {
-  fontFamily: "default",
-  fontSize: "default",
-  fontWeight: "default",
-  fontStyle: "default",
-  textTransform: "default",
 };
 
 const defaultBlogCtaStyles: ComprehensiveCTAValue["styles"] = {
@@ -344,7 +331,6 @@ const ProfessionalPracticeBlogSectionComponent: PuckComponent<
                           authoredCard.description,
                           locale,
                           streamDocument,
-                          { richTextStyleOverrides: descriptionOverrides },
                         )
                       : undefined;
                     const ctaValue = card.cta as unknown as
@@ -405,14 +391,10 @@ const ProfessionalPracticeBlogSectionComponent: PuckComponent<
                                 authoredCard?.description.constantValueEnabled
                               }
                             >
-                              {typeof description === "string" ? (
-                                <MaybeRTF
-                                  data={description}
-                                  richTextStyleOverrides={descriptionOverrides}
-                                />
-                              ) : React.isValidElement(description) ? (
-                                description
-                              ) : null}
+                              {renderResolvedRichText(
+                                description,
+                                descriptionOverrides,
+                              )}
                             </EntityField>
                             {ctaValue ? (
                               <EntityField

@@ -11,9 +11,7 @@ import {
   getDefaultRTF,
   getSurfaceColorStyle,
   getThemeColorCssValue,
-  MaybeRTF,
   resolveComponentData,
-  type StyledTextValue,
   type ThemeColor,
   type TranslatableRichText,
   useDocument,
@@ -23,28 +21,16 @@ import {
   type YextFields,
 } from "@yext/visual-editor";
 import { AnalyticsScopeProvider, useAnalytics } from "@yext/pages-components";
-
-type StyledTextValueWithLetterSpacing = StyledTextValue & {
-  letterSpacing?: string;
-};
-
-type StyledTextProps = {
-  text: YextEntityField<string>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
+import {
+  defaultTextStyles,
+  renderResolvedRichText,
+  type StyledTextProps,
+  type StyledTextValueWithLetterSpacing,
+} from "../shared/sectionHelpers";
 
 type FaqItemFields = {
   question: YextEntityField<string>;
   answer: YextEntityField<TranslatableRichText>;
-};
-
-const defaultTextStyles: StyledTextValue = {
-  fontFamily: "default",
-  fontSize: "default",
-  fontWeight: "default",
-  fontStyle: "default",
-  textTransform: "default",
 };
 
 const faqItemsSource = createItemSource<FaqItemFields>({
@@ -282,9 +268,6 @@ const ProfessionalPracticeFaqSectionComponent: PuckComponent<
                           authoredItem.answer,
                           locale,
                           streamDocument,
-                          {
-                            richTextStyleOverrides,
-                          },
                         )
                       : undefined;
 
@@ -333,16 +316,10 @@ const ProfessionalPracticeFaqSectionComponent: PuckComponent<
                             }
                           >
                             <div className="max-w-[800px] pb-10">
-                              {typeof answer === "string" ? (
-                                <MaybeRTF
-                                  data={answer}
-                                  richTextStyleOverrides={
-                                    richTextStyleOverrides
-                                  }
-                                />
-                              ) : React.isValidElement(answer) ? (
-                                answer
-                              ) : null}
+                              {renderResolvedRichText(
+                                answer,
+                                richTextStyleOverrides,
+                              )}
                             </div>
                           </EntityField>
                         ) : null}

@@ -5,29 +5,24 @@ import type { PuckComponent } from "@puckeditor/core";
 import { FaRegStar, FaStar, FaStarHalfAlt, FaUser } from "react-icons/fa";
 import {
   EntityField,
-  type StyledTextValue,
   type ThemeColor,
   VisibilityWrapper,
   type YextComponentConfig,
-  type YextEntityField,
   type YextFields,
   getAggregateRating,
+  Background,
   getAnalyticsScopeHash,
-  isDarkColor,
+  getSurfaceColorStyle,
+  getThemeColorCssValue as resolveThemeColorCssValue,
   resolveComponentData,
   useDocument,
 } from "@yext/visual-editor";
 import { AnalyticsScopeProvider } from "@yext/pages-components";
-
-type StyledTextProps = {
-  text: YextEntityField<string>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
-
-type StyledTextValueWithLetterSpacing = StyledTextValue & {
-  letterSpacing?: string;
-};
+import {
+  defaultTextStyles,
+  getReadableForegroundColor as resolveReadableForegroundColor,
+  type StyledTextProps,
+} from "../shared/sectionHelpers";
 
 type ReviewRecord = {
   authorName?: string;
@@ -67,73 +62,10 @@ const defaultIconBackgroundColor: ThemeColor = {
   contrastingColor: "palette-secondary",
 };
 
-const defaultTextStyles: StyledTextValue = {
-  fontFamily: "default",
-  fontSize: "default",
-  fontWeight: "default",
-  fontStyle: "default",
-  textTransform: "default",
-};
-
 const aggregateReviewTextTemplate =
   "{averageRating} stars from {reviewCount} reviews";
 const businessResponseLabel = "Business Response";
 const emptyEditorMessage = "No first-party reviews found for this location";
-
-const resolveThemeColorCssValue = (color?: ThemeColor): string | undefined => {
-  if (!color?.selectedColor || color.selectedColor === "default") {
-    return undefined;
-  }
-
-  const selectedColor = color.selectedColor;
-  const customColorMatch = /^\[(#[0-9A-Fa-f]{3,8})\]$/.exec(selectedColor);
-
-  if (customColorMatch) {
-    return customColorMatch[1];
-  }
-
-  switch (selectedColor) {
-    case "palette-primary":
-      return "var(--colors-palette-primary)";
-    case "palette-secondary":
-      return "var(--colors-palette-secondary)";
-    case "palette-tertiary":
-      return "var(--colors-palette-tertiary)";
-    case "palette-quaternary":
-      return "var(--colors-palette-quaternary)";
-    case "palette-primary-light":
-      return "hsl(from var(--colors-palette-primary) h s 98)";
-    case "palette-secondary-light":
-      return "hsl(from var(--colors-palette-secondary) h s 98)";
-    case "palette-tertiary-light":
-      return "hsl(from var(--colors-palette-tertiary) h s 98)";
-    case "palette-quaternary-light":
-      return "hsl(from var(--colors-palette-quaternary) h s 98)";
-    case "palette-primary-dark":
-      return "hsl(from var(--colors-palette-primary) h s 20)";
-    case "palette-secondary-dark":
-      return "hsl(from var(--colors-palette-secondary) h s 20)";
-    case "white":
-      return "#ffffff";
-    default:
-      return selectedColor;
-  }
-};
-
-const resolveReadableForegroundColor = (
-  fontColor: ThemeColor | undefined,
-  backgroundColor: ThemeColor,
-  streamDocument: any,
-): string | undefined => {
-  const selectedFontColor =
-    fontColor?.selectedColor === "default" ? undefined : fontColor;
-
-  if (selectedFontColor) {
-    return resolveThemeColorCssValue(selectedFontColor);
-  }
-
-  return isDarkColor(backgroundColor, streamDocument) ? "#ffffff" : "#000000";
-};
 
 const ProfessionalPracticeReviewsSectionFields: YextFields<ProfessionalPracticeReviewsSectionProps> =
   {
@@ -246,20 +178,21 @@ const ProfessionalPracticeReviewsSectionComponent: PuckComponent<ProfessionalPra
       }
 
       return (
-        <section
-          style={{
-            backgroundColor: resolveThemeColorCssValue(
+        <Background background={props.section.backgroundColor}>
+          <section
+            style={getSurfaceColorStyle(
               props.section.backgroundColor,
-            ),
-          }}
-        >
-          <div
-            className="mx-auto max-w-[1280px] px-4 py-[30px] text-base md:px-8 md:py-[60px] xl:px-20"
-            style={{ color: sectionForegroundColor }}
+              streamDocument,
+            )}
           >
-            {emptyEditorMessage}
-          </div>
-        </section>
+            <div
+              className="mx-auto max-w-[1280px] px-4 py-[30px] text-base md:px-8 md:py-[60px] xl:px-20"
+              style={{ color: sectionForegroundColor }}
+            >
+              {emptyEditorMessage}
+            </div>
+          </section>
+        </Background>
       );
     }
 
@@ -271,14 +204,14 @@ const ProfessionalPracticeReviewsSectionComponent: PuckComponent<ProfessionalPra
         <AnalyticsScopeProvider
           name={`ProfessionalPracticeReviewsSection${getAnalyticsScopeHash(props.id)}`}
         >
-          <section
-            data-ypp-scope="reviews-section"
-            style={{
-              backgroundColor: resolveThemeColorCssValue(
+          <Background background={props.section.backgroundColor}>
+            <section
+              data-ypp-scope="reviews-section"
+              style={getSurfaceColorStyle(
                 props.section.backgroundColor,
-              ),
-            }}
-          >
+                streamDocument,
+              )}
+            >
             <style>{`
               [data-ypp-scope="reviews-section"] .ypp-typography p {
                 font-family: var(--fontFamily-body-fontFamily);
@@ -601,7 +534,8 @@ const ProfessionalPracticeReviewsSectionComponent: PuckComponent<ProfessionalPra
                 })}
               </div>
             </div>
-          </section>
+            </section>
+          </Background>
         </AnalyticsScopeProvider>
       </VisibilityWrapper>
     );

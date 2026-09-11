@@ -8,13 +8,15 @@ import {
   ComprehensiveCTA,
   type ComprehensiveCTAValue,
   EntityField,
-  type StyledTextValue,
   type ThemeColor,
   VisibilityWrapper,
   type YextComponentConfig,
   type YextEntityField,
   type YextFields,
+  Background,
   getAnalyticsScopeHash,
+  getSurfaceColorStyle,
+  getThemeColorCssValue as resolveThemeColorCssValue,
   isDarkColor,
   resolveComponentData,
   useDocument,
@@ -28,21 +30,17 @@ import {
   Link,
   type DayOfWeekNames,
 } from "@yext/pages-components";
-
-type StyledTextProps = {
-  text: YextEntityField<string>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
+import {
+  defaultTextStyles,
+  getReadableForegroundColor as resolveReadableForegroundColor,
+  type StyledTextProps,
+  type StyledTextValueWithLetterSpacing,
+} from "../shared/sectionHelpers";
 
 type TextListProps = {
   text: YextEntityField<string[]>;
   styles: StyledTextValueWithLetterSpacing;
   fontColor?: ThemeColor;
-};
-
-type StyledTextValueWithLetterSpacing = StyledTextValue & {
-  letterSpacing?: string;
 };
 
 type PhoneItemProps = {
@@ -109,14 +107,6 @@ const whiteColor: ThemeColor = {
   contrastingColor: "palette-secondary",
 };
 
-const defaultTextStyles: StyledTextValue = {
-  fontFamily: "default",
-  fontSize: "default",
-  fontWeight: "default",
-  fontStyle: "default",
-  textTransform: "default",
-};
-
 const detailsIconOptions = [
   { label: "Location", value: "location" },
   { label: "Clock", value: "clock" },
@@ -142,61 +132,6 @@ const detailsIcons: Record<
     component: FaThumbsUp,
     className: "h-[18px] w-[18px] text-current",
   },
-};
-
-const resolveThemeColorCssValue = (color?: ThemeColor): string | undefined => {
-  if (!color?.selectedColor || color.selectedColor === "default") {
-    return undefined;
-  }
-
-  const selectedColor = color.selectedColor;
-  const customColorMatch = /^\[(#[0-9A-Fa-f]{3,8})\]$/.exec(selectedColor);
-
-  if (customColorMatch) {
-    return customColorMatch[1];
-  }
-
-  switch (selectedColor) {
-    case "palette-primary":
-      return "var(--colors-palette-primary)";
-    case "palette-secondary":
-      return "var(--colors-palette-secondary)";
-    case "palette-tertiary":
-      return "var(--colors-palette-tertiary)";
-    case "palette-quaternary":
-      return "var(--colors-palette-quaternary)";
-    case "palette-primary-light":
-      return "hsl(from var(--colors-palette-primary) h s 98)";
-    case "palette-secondary-light":
-      return "hsl(from var(--colors-palette-secondary) h s 98)";
-    case "palette-tertiary-light":
-      return "hsl(from var(--colors-palette-tertiary) h s 98)";
-    case "palette-quaternary-light":
-      return "hsl(from var(--colors-palette-quaternary) h s 98)";
-    case "palette-primary-dark":
-      return "hsl(from var(--colors-palette-primary) h s 20)";
-    case "palette-secondary-dark":
-      return "hsl(from var(--colors-palette-secondary) h s 20)";
-    case "white":
-      return "#ffffff";
-    default:
-      return selectedColor;
-  }
-};
-
-const resolveReadableForegroundColor = (
-  fontColor: ThemeColor | undefined,
-  backgroundColor: ThemeColor,
-  streamDocument: any,
-): string | undefined => {
-  const selectedFontColor =
-    fontColor?.selectedColor === "default" ? undefined : fontColor;
-
-  if (selectedFontColor) {
-    return resolveThemeColorCssValue(selectedFontColor);
-  }
-
-  return isDarkColor(backgroundColor, streamDocument) ? "#ffffff" : "#000000";
 };
 
 const formatPhone = (value: string, format: "international" | "domestic") => {
@@ -643,19 +578,14 @@ const ProfessionalPracticeDetailsSectionComponent: PuckComponent<
       <AnalyticsScopeProvider
         name={`ProfessionalPracticeDetailsSection${getAnalyticsScopeHash(props.id)}`}
       >
-        <section
-          data-ypp-scope="details-section"
-          style={{
-            backgroundColor: resolveThemeColorCssValue(
-              props.section.backgroundColor,
-            ),
-            color: resolveReadableForegroundColor(
-              undefined,
+        <Background background={props.section.backgroundColor}>
+          <section
+            data-ypp-scope="details-section"
+            style={getSurfaceColorStyle(
               props.section.backgroundColor,
               streamDocument,
-            ),
-          }}
-        >
+            )}
+          >
           <style>{`
             [data-ypp-scope="details-section"] .ypp-typography p {
               font-family: var(--fontFamily-body-fontFamily);
@@ -1273,7 +1203,8 @@ const ProfessionalPracticeDetailsSectionComponent: PuckComponent<
               </EntityField>
             </div>
           </div>
-        </section>
+          </section>
+        </Background>
       </AnalyticsScopeProvider>
     </VisibilityWrapper>
   );

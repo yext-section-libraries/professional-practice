@@ -15,15 +15,15 @@ import {
 import {
   EntityField,
   type EnhancedTranslatableCTA,
-  type StyledTextValue,
   type ThemeColor,
   VisibilityWrapper,
   type YextCTAField,
   type YextComponentConfig,
   type YextEntityField,
   type YextFields,
+  Background,
   getAnalyticsScopeHash,
-  isDarkColor,
+  getSurfaceColorStyle,
   resolveComponentData,
   useDocument,
 } from "@yext/visual-editor";
@@ -33,16 +33,11 @@ import {
   Link,
   type AddressType,
 } from "@yext/pages-components";
-
-type StyledTextProps = {
-  text: YextEntityField<string>;
-  styles: StyledTextValueWithLetterSpacing;
-  fontColor?: ThemeColor;
-};
-
-type StyledTextValueWithLetterSpacing = StyledTextValue & {
-  letterSpacing?: string;
-};
+import {
+  defaultTextStyles,
+  getReadableForegroundColor as resolveReadableForegroundColor,
+  type StyledTextProps,
+} from "../shared/sectionHelpers";
 
 type SocialLink = {
   cta: YextCTAField;
@@ -103,69 +98,6 @@ const socialIcons: Record<
   pinterest: FaPinterestP,
   snapchat: FaSnapchatGhost,
   tiktok: FaTiktok,
-};
-
-const defaultTextStyles: StyledTextValue = {
-  fontFamily: "default",
-  fontSize: "default",
-  fontWeight: "default",
-  fontStyle: "default",
-  textTransform: "default",
-};
-
-const resolveThemeColorCssValue = (color?: ThemeColor): string | undefined => {
-  if (!color?.selectedColor || color.selectedColor === "default") {
-    return undefined;
-  }
-
-  const selectedColor = color.selectedColor;
-  const customColorMatch = /^\[(#[0-9A-Fa-f]{3,8})\]$/.exec(selectedColor);
-
-  if (customColorMatch) {
-    return customColorMatch[1];
-  }
-
-  switch (selectedColor) {
-    case "palette-primary":
-      return "var(--colors-palette-primary)";
-    case "palette-secondary":
-      return "var(--colors-palette-secondary)";
-    case "palette-tertiary":
-      return "var(--colors-palette-tertiary)";
-    case "palette-quaternary":
-      return "var(--colors-palette-quaternary)";
-    case "palette-primary-light":
-      return "hsl(from var(--colors-palette-primary) h s 98)";
-    case "palette-secondary-light":
-      return "hsl(from var(--colors-palette-secondary) h s 98)";
-    case "palette-tertiary-light":
-      return "hsl(from var(--colors-palette-tertiary) h s 98)";
-    case "palette-quaternary-light":
-      return "hsl(from var(--colors-palette-quaternary) h s 98)";
-    case "palette-primary-dark":
-      return "hsl(from var(--colors-palette-primary) h s 20)";
-    case "palette-secondary-dark":
-      return "hsl(from var(--colors-palette-secondary) h s 20)";
-    case "white":
-      return "#ffffff";
-    default:
-      return selectedColor;
-  }
-};
-
-const resolveReadableForegroundColor = (
-  fontColor: ThemeColor | undefined,
-  backgroundColor: ThemeColor,
-  streamDocument: any,
-): string | undefined => {
-  const selectedFontColor =
-    fontColor?.selectedColor === "default" ? undefined : fontColor;
-
-  if (selectedFontColor) {
-    return resolveThemeColorCssValue(selectedFontColor);
-  }
-
-  return isDarkColor(backgroundColor, streamDocument) ? "#ffffff" : "#000000";
 };
 
 const formatPhone = (value: string, format: "international" | "domestic") => {
@@ -516,15 +448,17 @@ const ProfessionalPracticeFooterComponent: PuckComponent<ProfessionalPracticeFoo
         <AnalyticsScopeProvider
           name={`ProfessionalPracticeFooter${getAnalyticsScopeHash(props.id)}`}
         >
-          <footer
-            data-ypp-scope="footer"
-            style={{
-              backgroundColor: resolveThemeColorCssValue(
-                props.section.backgroundColor,
-              ),
-              color: footerTextColor,
-            }}
-          >
+          <Background background={props.section.backgroundColor}>
+            <footer
+              data-ypp-scope="footer"
+              style={{
+                ...getSurfaceColorStyle(
+                  props.section.backgroundColor,
+                  streamDocument,
+                ),
+                color: footerTextColor,
+              }}
+            >
             <style>{`
               [data-ypp-scope="footer"] .ypp-typography p {
                 font-family: var(--fontFamily-body-fontFamily);
@@ -789,7 +723,8 @@ const ProfessionalPracticeFooterComponent: PuckComponent<ProfessionalPracticeFoo
                 ) : null}
               </div>
             </div>
-          </footer>
+            </footer>
+          </Background>
         </AnalyticsScopeProvider>
       </VisibilityWrapper>
     );
