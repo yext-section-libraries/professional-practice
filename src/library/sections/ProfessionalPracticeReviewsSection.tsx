@@ -3,7 +3,10 @@ import type { SectionConfig } from "@yext/visual-editor";
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { FaRegStar, FaStar, FaStarHalfAlt, FaUser } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import {
+  msg,
+  pt,
   EntityField,
   type ThemeColor,
   VisibilityWrapper,
@@ -62,54 +65,49 @@ const defaultIconBackgroundColor: ThemeColor = {
   contrastingColor: "palette-secondary",
 };
 
-const aggregateReviewTextTemplate =
-  "{averageRating} stars from {reviewCount} reviews";
-const businessResponseLabel = "Business Response";
-const emptyEditorMessage = "No first-party reviews found for this location";
-
 const ProfessionalPracticeReviewsSectionFields: YextFields<ProfessionalPracticeReviewsSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     responseBackgroundColor: {
-      label: "Business Response Background Color",
+      label: msg("fields.businessResponseBackgroundColor", "Business Response Background Color"),
       type: "basicSelector",
       options: "BACKGROUND_COLOR",
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: {
             types: ["type.string"],
           },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
@@ -135,19 +133,11 @@ const formatReviewDate = (value: string | undefined, locale: string) => {
   }).format(date);
 };
 
-const formatAggregateReviewText = (
-  template: string,
-  averageRating: number,
-  reviewCount: number,
-) =>
-  template
-    .replaceAll("{averageRating}", String(averageRating))
-    .replaceAll("{reviewCount}", String(reviewCount));
-
 const ProfessionalPracticeReviewsSectionComponent: PuckComponent<ProfessionalPracticeReviewsSectionProps> =
   (props) => {
+    const { t, i18n } = useTranslation();
     const streamDocument = useDocument<ReviewsDocument>();
-    const locale = streamDocument.locale ?? "en";
+    const locale = i18n.language || streamDocument.locale || "en";
     const sectionForegroundColor = resolveReadableForegroundColor(
       undefined,
       props.section.backgroundColor,
@@ -189,7 +179,10 @@ const ProfessionalPracticeReviewsSectionComponent: PuckComponent<ProfessionalPra
               className="mx-auto max-w-[1280px] px-4 py-[30px] text-base md:px-8 md:py-[60px] xl:px-20"
               style={{ color: sectionForegroundColor }}
             >
-              {emptyEditorMessage}
+              {pt(
+                "noFirstPartyReviewsFound",
+                "No first-party reviews found for this location",
+              )}
             </div>
           </section>
         </Background>
@@ -299,7 +292,7 @@ const ProfessionalPracticeReviewsSectionComponent: PuckComponent<ProfessionalPra
             <div className="mx-auto flex max-w-[1280px] flex-col gap-[30px] px-4 py-[30px] md:px-8 md:py-[60px] xl:px-20">
               <div className="ypp-typography flex flex-col gap-4">
                 <EntityField
-                  displayName="Heading"
+                  displayName={pt("heading", "Heading")}
                   fieldId={props.heading.text.field}
                   constantValueEnabled={props.heading.text.constantValueEnabled}
                 >
@@ -343,7 +336,11 @@ const ProfessionalPracticeReviewsSectionComponent: PuckComponent<ProfessionalPra
                   >
                     <span
                       className="flex items-center gap-0.5"
-                      aria-label={`${averageRating} out of 5 stars`}
+                      aria-label={t(
+                        "ratingOutOfFiveStarsAria",
+                        "{{rating}} out of 5 stars",
+                        { rating: averageRating },
+                      )}
                     >
                       {Array.from({ length: 5 }, (_, index) => {
                         const slotNumber = index + 1;
@@ -378,10 +375,10 @@ const ProfessionalPracticeReviewsSectionComponent: PuckComponent<ProfessionalPra
                       })}
                     </span>
                     <span>
-                      {formatAggregateReviewText(
-                        aggregateReviewTextTemplate,
-                        averageRating,
-                        reviewCount,
+                      {t(
+                        "reviewSummary",
+                        "{{averageRating}} stars from {{reviewCount}} reviews",
+                        { averageRating, reviewCount },
                       )}
                     </span>
                   </div>
@@ -430,7 +427,7 @@ const ProfessionalPracticeReviewsSectionComponent: PuckComponent<ProfessionalPra
                               lineHeight: "1.2",
                             }}
                           >
-                            {review.authorName || "Review"}
+                            {review.authorName || t("reviewLabel", "Review")}
                           </p>
                           {formattedReviewDate ? (
                             <p
@@ -482,7 +479,13 @@ const ProfessionalPracticeReviewsSectionComponent: PuckComponent<ProfessionalPra
                                 );
                               })}
                             </span>
-                            <span>{`${reviewRating}/5 stars`}</span>
+                            <span>
+                              {t(
+                                "ratingOutOfFiveStars",
+                                "{{rating}}/5 stars",
+                                { rating: reviewRating },
+                              )}
+                            </span>
                           </div>
                         ) : null}
                         {review.content ? (
@@ -510,7 +513,7 @@ const ProfessionalPracticeReviewsSectionComponent: PuckComponent<ProfessionalPra
                               className="m-0 tracking-[0.08em]"
                               style={{ color: responseForegroundColor }}
                             >
-                              {businessResponseLabel}
+                              {t("businessResponse", "Business Response")}
                             </p>
                             {formattedCommentDate ? (
                               <p

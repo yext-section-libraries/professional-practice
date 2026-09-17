@@ -3,6 +3,7 @@ import type { SectionConfig } from "@yext/visual-editor";
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import {
+  msg,
   Background,
   ComprehensiveCTA,
   type ComprehensiveCTAValue,
@@ -55,25 +56,25 @@ const defaultBlogCtaStyles: ComprehensiveCTAValue["styles"] = {
 };
 
 const blogCardsSource = createItemSource<BlogCardFields>({
-  label: "Blog Cards",
+  label: msg("fields.blogCards", "Blog Cards"),
   mappingFields: {
     image: {
       type: "entityField",
-      label: "Image",
+      label: msg("fields.options.image", "Image"),
       filter: { types: ["type.image"] },
     },
     title: {
       type: "entityField",
-      label: "Title",
+      label: msg("fields.title", "Title"),
       filter: { types: ["type.string"] },
     },
     description: {
       type: "entityField",
-      label: "Description",
+      label: msg("fields.description", "Description"),
       filter: { types: ["type.rich_text_v2"] },
     },
     cta: {
-      label: "Call to Action",
+      label: msg("fields.callToAction", "Call to Action"),
       type: "comprehensiveCTA",
     },
   },
@@ -150,66 +151,66 @@ type ProfessionalPracticeBlogSectionProps = {
 const ProfessionalPracticeBlogSectionFields: YextFields<ProfessionalPracticeBlogSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     cards: {
-      label: "Blog Cards",
+      label: msg("fields.blogCards", "Blog Cards"),
       type: "object",
       objectFields: {
         data: blogCardsSource.field,
         styles: {
-          label: "Card Presentation",
+          label: msg("fields.cardPresentation", "Card Presentation"),
           type: "object",
           objectFields: {
             overlayBackgroundColor: {
-              label: "Overlay Background Color",
+              label: msg("fields.overlayBackgroundColor", "Overlay Background Color"),
               type: "basicSelector",
               options: "BACKGROUND_COLOR",
             },
-            image: { label: "Image Styles", type: "styledImage" },
-            imageAspectRatio: { label: "Image Aspect Ratio", type: "number" },
-            title: { label: "Title Styles", type: "styledText" },
+            image: { label: msg("fields.imageStyles", "Image Styles"), type: "styledImage" },
+            imageAspectRatio: { label: msg("fields.imageAspectRatio", "Image Aspect Ratio"), type: "number" },
+            title: { label: msg("fields.titleStyles", "Title Styles"), type: "styledText" },
             titleFontColor: {
-              label: "Title Font Color",
+              label: msg("fields.titleFontColor", "Title Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
-            description: { label: "Description Styles", type: "styledText" },
+            description: { label: msg("fields.descriptionStyles", "Description Styles"), type: "styledText" },
             descriptionFontColor: {
-              label: "Description Font Color",
+              label: msg("fields.descriptionFontColor", "Description Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },

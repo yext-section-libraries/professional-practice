@@ -4,6 +4,7 @@ import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { FaChevronDown } from "react-icons/fa";
 import {
+  msg,
   Background,
   createItemSource,
   EntityField,
@@ -34,16 +35,16 @@ type FaqItemFields = {
 };
 
 const faqItemsSource = createItemSource<FaqItemFields>({
-  label: "FAQs",
+  label: msg("fields.faqs", "FAQs"),
   mappingFields: {
     question: {
       type: "entityField",
-      label: "Question",
+      label: msg("fields.question", "Question"),
       filter: { types: ["type.string"] },
     },
     answer: {
       type: "entityField",
-      label: "Answer",
+      label: msg("fields.answer", "Answer"),
       filter: { types: ["type.rich_text_v2"] },
     },
   },
@@ -105,59 +106,59 @@ type ProfessionalPracticeFaqSectionProps = {
 const ProfessionalPracticeFaqSectionFields: YextFields<ProfessionalPracticeFaqSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     faqs: {
-      label: "FAQs",
+      label: msg("fields.faqs", "FAQs"),
       type: "object",
       objectFields: {
         data: faqItemsSource.field,
         styles: {
-          label: "FAQ Presentation",
+          label: msg("fields.faqPresentation", "FAQ Presentation"),
           type: "object",
           objectFields: {
-            question: { label: "Question Styles", type: "styledText" },
+            question: { label: msg("fields.questionStyles", "Question Styles"), type: "styledText" },
             questionFontColor: {
-              label: "Question Font Color",
+              label: msg("fields.questionFontColor", "Question Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
-            answer: { label: "Answer Styles", type: "styledText" },
+            answer: { label: msg("fields.answerStyles", "Answer Styles"), type: "styledText" },
             answerFontColor: {
-              label: "Answer Font Color",
+              label: msg("fields.answerFontColor", "Answer Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },

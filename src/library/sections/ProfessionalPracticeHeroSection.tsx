@@ -3,7 +3,9 @@ import type { SectionConfig } from "@yext/visual-editor";
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { FaClock } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import {
+  msg,
   ComprehensiveCTA,
   type ComprehensiveCTAValue,
   EntityField,
@@ -37,6 +39,7 @@ import {
   type StyledRtfProps,
   type StyledTextProps,
 } from "../shared/sectionHelpers";
+import { renderTranslatedHoursStatus } from "../shared/components/TranslatedHoursStatus";
 
 type HeroImageProps = {
   image: YextEntityField<ImageType | ComplexImageType>;
@@ -98,120 +101,120 @@ const heroImageUrl =
 const ProfessionalPracticeHeroSectionFields: YextFields<ProfessionalPracticeHeroSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: {
             types: ["type.string"],
           },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     description: {
-      label: "Description",
+      label: msg("fields.description", "Description"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: {
             types: ["type.rich_text_v2"],
           },
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     statusPill: {
-      label: "Status Pill",
+      label: msg("fields.statusPill", "Status Pill"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
         hours: {
           type: "entityField",
-          label: "Hours",
+          label: msg("fields.hours", "Hours"),
           filter: {
             types: ["type.hours"],
           },
           disableConstantValueToggle: true,
         },
         hoursStyles: {
-          label: "Hours Styles",
+          label: msg("fields.hoursStyles", "Hours Styles"),
           type: "object",
           objectFields: {
             showCurrentStatus: {
-              label: "Show Current Status",
+              label: msg("fields.showCurrentStatus", "Show Current Status"),
               type: "radio",
               options: [
-                { label: "Yes", value: true },
-                { label: "No", value: false },
+                { label: msg("fields.options.yes", "Yes"), value: true },
+                { label: msg("fields.options.no", "No"), value: false },
               ],
             },
             timeFormat: {
-              label: "Time Format",
+              label: msg("fields.timeFormat", "Time Format"),
               type: "select",
               options: [
-                { label: "12 Hour", value: "12h" },
-                { label: "24 Hour", value: "24h" },
+                { label: msg("fields.options.hour12Label", "12 Hour"), value: "12h" },
+                { label: msg("fields.options.hour24Label", "24 Hour"), value: "24h" },
               ],
             },
             dayOfWeekFormat: {
-              label: "Day Of Week Format",
+              label: msg("fields.dayOfWeekFormatLabel", "Day Of Week Format"),
               type: "select",
               options: [
-                { label: "Short", value: "short" },
-                { label: "Long", value: "long" },
+                { label: msg("fields.options.short", "Short"), value: "short" },
+                { label: msg("fields.options.long", "Long"), value: "long" },
               ],
             },
             showDayNames: {
-              label: "Show Day Names",
+              label: msg("fields.showDayNames", "Show Day Names"),
               type: "radio",
               options: [
-                { label: "Yes", value: true },
-                { label: "No", value: false },
+                { label: msg("fields.options.yes", "Yes"), value: true },
+                { label: msg("fields.options.no", "No"), value: false },
               ],
             },
           },
@@ -219,48 +222,49 @@ const ProfessionalPracticeHeroSectionFields: YextFields<ProfessionalPracticeHero
       },
     },
     heroImage: {
-      label: "Hero Image",
+      label: msg("fields.heroImage", "Hero Image"),
       type: "object",
       objectFields: {
         image: {
           type: "entityField",
-          label: "Image",
+          label: msg("fields.options.image", "Image"),
           filter: {
             types: ["type.image"],
           },
         },
         aspectRatio: {
-          label: "Aspect Ratio",
+          label: msg("fields.options.aspectRatio", "Aspect Ratio"),
           type: "number",
         },
         imageConstrain: {
-          label: "Image Constrain",
+          label: msg("fields.imageConstrain", "Image Constrain"),
           type: "select",
           options: [
-            { label: "Fixed", value: "fixed" },
-            { label: "Filled", value: "filled" },
+            { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+            { label: msg("fields.options.filled", "Filled"), value: "filled" },
           ],
         },
         styles: {
-          label: "Image Styles",
+          label: msg("fields.imageStyles", "Image Styles"),
           type: "styledImage",
         },
       },
     },
     primaryCta: {
-      label: "Primary Call to Action",
+      label: msg("fields.primaryCallToAction", "Primary Call to Action"),
       type: "comprehensiveCTA",
     },
     secondaryCta: {
-      label: "Secondary Call to Action",
+      label: msg("fields.secondaryCallToAction", "Secondary Call to Action"),
       type: "comprehensiveCTA",
     },
   };
 
 const ProfessionalPracticeHeroSectionComponent: PuckComponent<ProfessionalPracticeHeroSectionProps> =
   (props) => {
+    const { t, i18n } = useTranslation();
     const streamDocument = useDocument<any>();
-    const locale = streamDocument.locale ?? "en";
+    const locale = i18n.language || streamDocument.locale || "en";
     const resolvedHeading =
       resolveComponentData(props.heading.text, locale, streamDocument) || "";
     const descriptionRichTextStyleOverrides = {
@@ -504,45 +508,19 @@ const ProfessionalPracticeHeroSectionComponent: PuckComponent<ProfessionalPracti
                           timeOptions={{
                             hour12: props.statusPill.hoursStyles.timeFormat === "12h",
                           }}
-                          statusTemplate={(params: StatusParams) => {
-                            const interval = params.isOpen
-                              ? params.currentInterval
-                              : params.futureInterval;
-                            const time = params.isOpen
-                              ? interval?.getEndTime(locale, params.timeOptions) ?? ""
-                              : interval?.getStartTime(locale, params.timeOptions) ?? "";
-                            const dayLabel =
-                              props.statusPill.hoursStyles.showDayNames && interval
-                                ? params.isOpen
-                                  ? interval.end?.setLocale(locale).toLocaleString(
-                                      params.dayOptions,
-                                    ) ?? ""
-                                  : interval.start?.setLocale(locale).toLocaleString(
-                                      params.dayOptions,
-                                    ) ?? ""
-                                : "";
-
-                            if (params.currentInterval?.is24h?.()) {
-                              return <span>Open 24 Hours</span>;
-                            }
-
-                            if (!params.futureInterval && !params.isOpen) {
-                              return <span>Temporarily Closed</span>;
-                            }
-
-                            const statusText = params.isOpen ? "Open Now" : "Closed";
-                            const futureText = dayLabel
-                              ? `${params.isOpen ? "Closes" : "Opens"} at ${time} ${dayLabel}`
-                              : `${params.isOpen ? "Closes" : "Opens"} at ${time}`;
-
-                            return (
-                              <div className="flex flex-wrap items-center gap-1">
-                                <span>{statusText}</span>
-                                <span aria-hidden>•</span>
-                                <span>{futureText}</span>
-                              </div>
-                            );
-                          }}
+                          statusTemplate={(params: StatusParams) =>
+                            renderTranslatedHoursStatus({
+                              params,
+                              t,
+                              locale,
+                              showCurrentStatus:
+                                props.statusPill.hoursStyles.showCurrentStatus,
+                              showDayNames:
+                                props.statusPill.hoursStyles.showDayNames,
+                              className:
+                                "flex flex-wrap items-center gap-1",
+                            })
+                          }
                         />
                       </EntityField>
                     </div>

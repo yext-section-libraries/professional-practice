@@ -3,6 +3,7 @@ import type { SectionConfig } from "@yext/visual-editor";
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import {
+  msg,
   Background,
   createItemSource,
   EntityField,
@@ -39,16 +40,16 @@ const imageUrls = [
 ];
 
 const photoSource = createItemSource<PhotoFields>({
-  label: "Photos",
+  label: msg("fields.photos", "Photos"),
   mappingFields: {
     image: {
       type: "entityField",
-      label: "Image",
+      label: msg("fields.options.image", "Image"),
       filter: { types: ["type.image"] },
     },
     caption: {
       type: "entityField",
-      label: "Caption",
+      label: msg("fields.caption", "Caption"),
       filter: { types: ["type.string"] },
     },
   },
@@ -92,79 +93,79 @@ type ProfessionalPracticePhotoGallerySectionProps = {
 const ProfessionalPracticePhotoGallerySectionFields: YextFields<ProfessionalPracticePhotoGallerySectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     displayType: {
-      label: "Display Type",
+      label: msg("fields.displayType", "Display Type"),
       type: "select",
       options: [
-        { label: "Grid", value: "grid" },
-        { label: "Carousel", value: "carousel" },
+        { label: msg("fields.options.grid", "Grid"), value: "grid" },
+        { label: msg("fields.options.carousel", "Carousel"), value: "carousel" },
       ],
     },
     photos: {
-      label: "Photos",
+      label: msg("fields.photos", "Photos"),
       type: "object",
       objectFields: {
         data: photoSource.field,
         styles: {
-          label: "Gallery Presentation",
+          label: msg("fields.galleryPresentation", "Gallery Presentation"),
           type: "object",
           objectFields: {
-            image: { label: "Image Styles", type: "styledImage" },
+            image: { label: msg("fields.imageStyles", "Image Styles"), type: "styledImage" },
             aspectRatio: {
-              label: "Aspect Ratio",
+              label: msg("fields.options.aspectRatio", "Aspect Ratio"),
               type: "select",
               options: [
-                { label: "Square", value: 1 },
-                { label: "Portrait", value: 1.24 },
-                { label: "Landscape", value: 1.6 },
+                { label: msg("fields.options.square", "Square"), value: 1 },
+                { label: msg("fields.options.portrait", "Portrait"), value: 1.24 },
+                { label: msg("fields.options.landscape", "Landscape"), value: 1.6 },
               ],
             },
             imageConstrain: {
-              label: "Image Constrain",
+              label: msg("fields.imageConstrain", "Image Constrain"),
               type: "select",
               options: [
-                { label: "Fixed", value: "fixed" },
-                { label: "Filled", value: "filled" },
+                { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
+                { label: msg("fields.options.filled", "Filled"), value: "filled" },
               ],
             },
-            caption: { label: "Caption Styles", type: "styledText" },
+            caption: { label: msg("fields.captionStyles", "Caption Styles"), type: "styledText" },
             captionFontColor: {
-              label: "Caption Font Color",
+              label: msg("fields.captionFontColor", "Caption Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },

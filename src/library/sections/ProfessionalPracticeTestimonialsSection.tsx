@@ -3,6 +3,7 @@ import type { SectionConfig } from "@yext/visual-editor";
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import {
+  msg,
   Background,
   createItemSource,
   EntityField,
@@ -38,31 +39,31 @@ type TestimonialFields = {
 };
 
 const testimonialSource = createItemSource<TestimonialFields>({
-  label: "Testimonials",
+  label: msg("fields.testimonials", "Testimonials"),
   mappingFields: {
     quote: {
       type: "entityField",
-      label: "Quote",
+      label: msg("fields.quote", "Quote"),
       filter: { types: ["type.rich_text_v2"] },
     },
     name: {
       type: "entityField",
-      label: "Name",
+      label: msg("fields.name", "Name"),
       filter: { types: ["type.string"] },
     },
     category: {
       type: "entityField",
-      label: "Category",
+      label: msg("fields.category", "Category"),
       filter: { types: ["type.string"] },
     },
     date: {
       type: "entityField",
-      label: "Date",
+      label: msg("fields.date", "Date"),
       filter: { types: ["type.datetime"] },
     },
     endDate: {
       type: "entityField",
-      label: "End Date",
+      label: msg("fields.endDate", "End Date"),
       filter: { types: ["type.datetime"] },
     },
   },
@@ -129,79 +130,79 @@ type ProfessionalPracticeTestimonialsSectionProps = {
 const ProfessionalPracticeTestimonialsSectionFields: YextFields<ProfessionalPracticeTestimonialsSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         cardBackgroundColor: {
-          label: "Card Background Color",
+          label: msg("fields.cardBackgroundColor", "Card Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     testimonials: {
-      label: "Testimonials",
+      label: msg("fields.testimonials", "Testimonials"),
       type: "object",
       objectFields: {
         data: testimonialSource.field,
         styles: {
-          label: "Testimonial Card Presentation",
+          label: msg("fields.testimonialCardPresentation", "Testimonial Card Presentation"),
           type: "object",
           objectFields: {
-            quote: { label: "Quote Styles", type: "styledText" },
+            quote: { label: msg("fields.quoteStyles", "Quote Styles"), type: "styledText" },
             quoteFontColor: {
-              label: "Quote Font Color",
+              label: msg("fields.quoteFontColor", "Quote Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
-            name: { label: "Name Styles", type: "styledText" },
+            name: { label: msg("fields.nameStyles", "Name Styles"), type: "styledText" },
             nameFontColor: {
-              label: "Name Font Color",
+              label: msg("fields.nameFontColor", "Name Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
-            category: { label: "Category Styles", type: "styledText" },
+            category: { label: msg("fields.categoryStyles", "Category Styles"), type: "styledText" },
             categoryFontColor: {
-              label: "Category Font Color",
+              label: msg("fields.categoryFontColor", "Category Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
             includeTime: {
-              label: "Include Time",
+              label: msg("fields.includeTime", "Include Time"),
               type: "radio",
               options: [
-                { label: "Yes", value: true },
-                { label: "No", value: false },
+                { label: msg("fields.options.yes", "Yes"), value: true },
+                { label: msg("fields.options.no", "No"), value: false },
               ],
             },
           },

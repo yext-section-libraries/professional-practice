@@ -2,7 +2,10 @@ import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
+import { useTranslation } from "react-i18next";
 import {
+  msg,
+  pt,
   EntityField,
   getDefaultRTF,
   type ThemeColor,
@@ -65,74 +68,75 @@ const getYouTubeEmbedUrl = (source: string) => {
 const ProfessionalPracticeVideoSectionFields: YextFields<ProfessionalPracticeVideoSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: {
             types: ["type.string"],
           },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     body: {
-      label: "Body",
+      label: msg("fields.body", "Body"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: {
             types: ["type.rich_text_v2"],
           },
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     videoSource: {
-      label: "Video Source",
+      label: msg("fields.videoSource", "Video Source"),
       type: "text",
     },
   };
 
 const ProfessionalPracticeVideoSectionComponent: PuckComponent<ProfessionalPracticeVideoSectionProps> =
   (props) => {
+    const { t, i18n } = useTranslation();
     const streamDocument = useDocument();
-    const locale = streamDocument.locale ?? "en";
+    const locale = i18n.language || streamDocument.locale || "en";
     const headingColor = resolveReadableForegroundColor(props.heading.fontColor, props.section.backgroundColor, streamDocument);
     const bodyColor = resolveReadableForegroundColor(props.body.fontColor, props.section.backgroundColor, streamDocument);
     const heading =
@@ -313,7 +317,7 @@ const ProfessionalPracticeVideoSectionComponent: PuckComponent<ProfessionalPract
                 {embedUrl ? (
                   <iframe
                     src={embedUrl}
-                    title={heading || "Embedded video"}
+                    title={heading || t("embeddedVideo", "Embedded video")}
                     className="block aspect-video w-full border-0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
@@ -323,7 +327,10 @@ const ProfessionalPracticeVideoSectionComponent: PuckComponent<ProfessionalPract
                     className="flex aspect-video items-center justify-center p-6 text-center"
                     style={{ color: frameForegroundColor }}
                   >
-                    Add a YouTube video URL to render this section.
+                    {pt(
+                      "addYouTubeVideoUrl",
+                      "Add a YouTube video URL to render this section.",
+                    )}
                   </div>
                 )}
               </div>

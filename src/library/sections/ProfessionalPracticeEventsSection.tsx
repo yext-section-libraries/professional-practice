@@ -3,6 +3,7 @@ import type { SectionConfig } from "@yext/visual-editor";
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import {
+  msg,
   Background,
   createItemSource,
   EntityField,
@@ -47,31 +48,31 @@ const eventImageUrls = [
 ];
 
 const eventCardsSource = createItemSource<EventFields>({
-  label: "Events",
+  label: msg("fields.events", "Events"),
   mappingFields: {
     image: {
       type: "entityField",
-      label: "Image",
+      label: msg("fields.options.image", "Image"),
       filter: { types: ["type.image"] },
     },
     title: {
       type: "entityField",
-      label: "Event Name",
+      label: msg("fields.eventName", "Event Name"),
       filter: { types: ["type.string"] },
     },
     description: {
       type: "entityField",
-      label: "Description",
+      label: msg("fields.description", "Description"),
       filter: { types: ["type.rich_text_v2"] },
     },
     date: {
       type: "entityField",
-      label: "Date",
+      label: msg("fields.date", "Date"),
       filter: { types: ["type.datetime"] },
     },
     endDate: {
       type: "entityField",
-      label: "End Date",
+      label: msg("fields.endDate", "End Date"),
       filter: { types: ["type.datetime"] },
     },
   },
@@ -136,92 +137,92 @@ type ProfessionalPracticeEventsSectionProps = {
 const ProfessionalPracticeEventsSectionFields: YextFields<ProfessionalPracticeEventsSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         cardBackgroundColor: {
-          label: "Card Background Color",
+          label: msg("fields.cardBackgroundColor", "Card Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     intro: {
-      label: "Intro",
+      label: msg("fields.intro", "Intro"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: { types: ["type.rich_text_v2"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     events: {
-      label: "Events",
+      label: msg("fields.events", "Events"),
       type: "object",
       objectFields: {
         data: eventCardsSource.field,
         styles: {
-          label: "Event Card Presentation",
+          label: msg("fields.eventCardPresentation", "Event Card Presentation"),
           type: "object",
           objectFields: {
-            image: { label: "Image Styles", type: "styledImage" },
-            imageAspectRatio: { label: "Image Aspect Ratio", type: "number" },
-            title: { label: "Title Styles", type: "styledText" },
+            image: { label: msg("fields.imageStyles", "Image Styles"), type: "styledImage" },
+            imageAspectRatio: { label: msg("fields.imageAspectRatio", "Image Aspect Ratio"), type: "number" },
+            title: { label: msg("fields.titleStyles", "Title Styles"), type: "styledText" },
             titleFontColor: {
-              label: "Title Font Color",
+              label: msg("fields.titleFontColor", "Title Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
-            description: { label: "Description Styles", type: "styledText" },
+            description: { label: msg("fields.descriptionStyles", "Description Styles"), type: "styledText" },
             descriptionFontColor: {
-              label: "Description Font Color",
+              label: msg("fields.descriptionFontColor", "Description Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
             includeTime: {
-              label: "Include Time",
+              label: msg("fields.includeTime", "Include Time"),
               type: "radio",
               options: [
-                { label: "Yes", value: true },
-                { label: "No", value: false },
+                { label: msg("fields.options.yes", "Yes"), value: true },
+                { label: msg("fields.options.no", "No"), value: false },
               ],
             },
           },
