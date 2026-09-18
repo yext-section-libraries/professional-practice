@@ -13,6 +13,7 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 import {
+  msg,
   EntityField,
   type EnhancedTranslatableCTA,
   type ThemeColor,
@@ -115,72 +116,72 @@ const formatPhone = (value: string, format: "international" | "domestic") => {
 const ProfessionalPracticeFooterFields: YextFields<ProfessionalPracticeFooterProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     brand: {
-      label: "Brand",
+      label: msg("fields.brand", "Brand"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: {
             types: ["type.string"],
           },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     socialLinks: {
-      label: "Social Links",
+      label: msg("fields.socialLinks", "Social Links"),
       type: "array",
       arrayFields: {
         cta: {
-          label: "Link",
+          label: msg("fields.options.link", "Link"),
           type: "entityField",
           filter: {
             types: ["type.cta"],
           },
         },
         ariaLabel: {
-          label: "Aria Label",
+          label: msg("fields.ariaLabel", "Aria Label"),
           type: "text",
         },
         icon: {
-          label: "Icon",
+          label: msg("fields.options.icon", "Icon"),
           type: "select",
           options: [
-            { label: "LinkedIn", value: "linkedin" },
-            { label: "Instagram", value: "instagram" },
-            { label: "YouTube", value: "youtube" },
-            { label: "Facebook", value: "facebook" },
-            { label: "Pinterest", value: "pinterest" },
-            { label: "Snapchat", value: "snapchat" },
-            { label: "TikTok", value: "tiktok" },
+            { label: msg("fields.options.linkedin", "LinkedIn"), value: "linkedin" },
+            { label: msg("fields.options.instagram", "Instagram"), value: "instagram" },
+            { label: msg("fields.options.youtube", "YouTube"), value: "youtube" },
+            { label: msg("fields.options.facebook", "Facebook"), value: "facebook" },
+            { label: msg("fields.options.pinterest", "Pinterest"), value: "pinterest" },
+            { label: msg("fields.options.snapchat", "Snapchat"), value: "snapchat" },
+            { label: msg("fields.options.tiktok", "TikTok"), value: "tiktok" },
           ],
         },
       },
@@ -211,11 +212,11 @@ const ProfessionalPracticeFooterFields: YextFields<ProfessionalPracticeFooterPro
         "Social",
     },
     navigationLinks: {
-      label: "Navigation Links",
+      label: msg("fields.navigationLinks", "Navigation Links"),
       type: "array",
       arrayFields: {
         cta: {
-          label: "Link",
+          label: msg("fields.options.link", "Link"),
           type: "entityField",
           filter: {
             types: ["type.cta"],
@@ -247,44 +248,44 @@ const ProfessionalPracticeFooterFields: YextFields<ProfessionalPracticeFooterPro
     },
     metaAddress: {
       type: "entityField",
-      label: "Address",
+      label: msg("fields.address", "Address"),
       filter: {
         types: ["type.address"],
       },
     },
     showRegion: {
-      label: "Show Region",
+      label: msg("fields.showRegion", "Show Region"),
       type: "radio",
       options: [
-        { label: "Yes", value: true },
-        { label: "No", value: false },
+        { label: msg("fields.options.yes", "Yes"), value: true },
+        { label: msg("fields.options.no", "No"), value: false },
       ],
     },
     showCountry: {
-      label: "Show Country",
+      label: msg("fields.showCountry", "Show Country"),
       type: "radio",
       options: [
-        { label: "Yes", value: true },
-        { label: "No", value: false },
+        { label: msg("fields.options.yes", "Yes"), value: true },
+        { label: msg("fields.options.no", "No"), value: false },
       ],
     },
     phones: {
-      label: "Phones",
+      label: msg("fields.phones", "Phones"),
       type: "object",
       objectFields: {
         items: {
-          label: "Items",
+          label: msg("fields.items", "Items"),
           type: "array",
           arrayFields: {
             number: {
               type: "entityField",
-              label: "Number",
+              label: msg("fields.number", "Number"),
               filter: {
                 types: ["type.phone"],
               },
             },
             label: {
-              label: "Label",
+              label: msg("fields.label", "Label"),
               type: "text",
             },
           },
@@ -300,25 +301,25 @@ const ProfessionalPracticeFooterFields: YextFields<ProfessionalPracticeFooterPro
             item.label || item.number.field || `Phone ${index ?? 0}`,
         },
         phoneFormat: {
-          label: "Phone Format",
+          label: msg("fields.phoneFormat", "Phone Format"),
           type: "radio",
           options: [
-            { label: "Domestic", value: "domestic" },
-            { label: "International", value: "international" },
+            { label: msg("fields.options.domestic", "Domestic"), value: "domestic" },
+            { label: msg("fields.options.international", "International"), value: "international" },
           ],
         },
         includeHyperlink: {
-          label: "Include Hyperlink",
+          label: msg("fields.includeHyperlink", "Include Hyperlink"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     website: {
-      label: "Website",
+      label: msg("fields.website", "Website"),
       type: "entityField",
       filter: {
         types: ["type.cta"],

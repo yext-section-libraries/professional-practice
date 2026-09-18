@@ -4,7 +4,10 @@ import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import { parsePhoneNumber } from "awesome-phonenumber";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import {
+  msg,
+  pt,
   EntityField,
   getDefaultRTF,
   mergeMeta,
@@ -37,6 +40,7 @@ import {
   type StyledRtfProps,
   type StyledTextProps,
 } from "../shared/sectionHelpers";
+import { renderTranslatedHoursStatus } from "../shared/components/TranslatedHoursStatus";
 
 type StreamDocumentWithCoordinate = {
   comingSoon?: boolean;
@@ -98,10 +102,6 @@ const primaryCtaBackgroundColor: ThemeColor = {
   contrastingColor: "palette-primary-contrast",
 };
 
-const loadingMessage = "Loading nearby locations";
-const emptyEditorMessage = "No nearby locations found for this location";
-const locationCtaLabel = "View Location";
-
 const resolveSubtleBorderColor = (
   backgroundColor: ThemeColor,
   streamDocument: any,
@@ -149,184 +149,184 @@ const formatPhone = (value: string, format: "international" | "domestic") => {
 const ProfessionalPracticeCoverageSectionFields: YextFields<ProfessionalPracticeCoverageSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     cardBackgroundColor: {
-      label: "Card Background Color",
+      label: msg("fields.cardBackgroundColor", "Card Background Color"),
       type: "basicSelector",
       options: "BACKGROUND_COLOR",
     },
     iconBackgroundColor: {
-      label: "Icon Background Color",
+      label: msg("fields.iconBackgroundColor", "Icon Background Color"),
       type: "basicSelector",
       options: "BACKGROUND_COLOR",
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: {
             types: ["type.string"],
           },
         },
         styles: {
-          label: "Text Styles",
+          label: msg("fields.textStyles", "Text Styles"),
           type: "styledText",
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     intro: {
-      label: "Intro",
+      label: msg("fields.intro", "Intro"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: {
             types: ["type.rich_text_v2"],
           },
         },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     radius: {
-      label: "Radius",
+      label: msg("fields.radius", "Radius"),
       type: "number",
     },
     limit: {
-      label: "Limit",
+      label: msg("fields.limit", "Limit"),
       type: "number",
     },
     showAddress: {
-      label: "Show Address",
+      label: msg("fields.showAddress", "Show Address"),
       type: "radio",
       options: [
-        { label: "Yes", value: true },
-        { label: "No", value: false },
+        { label: msg("fields.options.yes", "Yes"), value: true },
+        { label: msg("fields.options.no", "No"), value: false },
       ],
     },
     showPhone: {
-      label: "Show Phone",
+      label: msg("fields.showPhone", "Show Phone"),
       type: "radio",
       options: [
-        { label: "Yes", value: true },
-        { label: "No", value: false },
+        { label: msg("fields.options.yes", "Yes"), value: true },
+        { label: msg("fields.options.no", "No"), value: false },
       ],
     },
     showHours: {
-      label: "Show Hours",
+      label: msg("fields.showHours", "Show Hours"),
       type: "radio",
       options: [
-        { label: "Yes", value: true },
-        { label: "No", value: false },
+        { label: msg("fields.options.yes", "Yes"), value: true },
+        { label: msg("fields.options.no", "No"), value: false },
       ],
     },
     address: {
-      label: "Address",
+      label: msg("fields.address", "Address"),
       type: "object",
       objectFields: {
         showRegion: {
-          label: "Show Region",
+          label: msg("fields.showRegion", "Show Region"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         showCountry: {
-          label: "Show Country",
+          label: msg("fields.showCountry", "Show Country"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     phone: {
-      label: "Phone",
+      label: msg("fields.options.phone", "Phone"),
       type: "object",
       objectFields: {
         phoneFormat: {
-          label: "Phone Number Format",
+          label: msg("fields.phoneNumberFormat", "Phone Number Format"),
           type: "radio",
           options: [
-            { label: "Domestic", value: "domestic" },
-            { label: "International", value: "international" },
+            { label: msg("fields.options.domestic", "Domestic"), value: "domestic" },
+            { label: msg("fields.options.international", "International"), value: "international" },
           ],
         },
         includeHyperlink: {
-          label: "Include Phone Hyperlink",
+          label: msg("fields.includePhoneHyperlink", "Include Phone Hyperlink"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
     },
     hoursStyles: {
-      label: "Hours Styles",
+      label: msg("fields.hoursStyles", "Hours Styles"),
       type: "object",
       objectFields: {
         showCurrentStatus: {
-          label: "Show Current Status",
+          label: msg("fields.showCurrentStatus", "Show Current Status"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         timeFormat: {
-          label: "Time Format",
+          label: msg("fields.timeFormat", "Time Format"),
           type: "select",
           options: [
-            { label: "12 Hour", value: "12h" },
-            { label: "24 Hour", value: "24h" },
+            { label: msg("fields.options.hour12Label", "12 Hour"), value: "12h" },
+            { label: msg("fields.options.hour24Label", "24 Hour"), value: "24h" },
           ],
         },
         dayOfWeekFormat: {
-          label: "Day Of Week Format",
+          label: msg("fields.dayOfWeekFormatLabel", "Day Of Week Format"),
           type: "select",
           options: [
-            { label: "Short", value: "short" },
-            { label: "Long", value: "long" },
+            { label: msg("fields.options.short", "Short"), value: "short" },
+            { label: msg("fields.options.long", "Long"), value: "long" },
           ],
         },
         showDayNames: {
-          label: "Show Day Names",
+          label: msg("fields.showDayNames", "Show Day Names"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
       },
@@ -335,11 +335,18 @@ const ProfessionalPracticeCoverageSectionFields: YextFields<ProfessionalPractice
 
 const ProfessionalPracticeCoverageSectionComponent: PuckComponent<ProfessionalPracticeCoverageSectionProps> =
   (props) => {
+    const { t, i18n } = useTranslation();
     const streamDocument = useDocument<StreamDocumentWithCoordinate>();
     const { relativePrefixToRoot } = useTemplateProps<{
       relativePrefixToRoot?: string;
     }>();
-    const locale = streamDocument.locale ?? "en";
+    const locale = i18n.language || streamDocument.locale || "en";
+    const loadingMessage = t("loadingNearbyLocations", "Loading nearby locations");
+    const emptyEditorMessage = pt(
+      "noNearbyLocationsFound",
+      "No nearby locations found for this location",
+    );
+    const locationCtaLabel = t("viewLocation", "View Location");
     const headingColor = resolveReadableForegroundColor(props.heading.fontColor, props.section.backgroundColor, streamDocument);
     const introRichTextStyleOverrides = {
       color: resolveReadableForegroundColor(props.intro.fontColor, props.section.backgroundColor, streamDocument),
@@ -907,81 +914,23 @@ const ProfessionalPracticeCoverageSectionComponent: PuckComponent<ProfessionalPr
                             timeOptions={{
                               hour12: props.hoursStyles.timeFormat === "12h",
                             }}
-                            statusTemplate={(params: StatusParams) => {
-                              const showDayNames =
-                                props.hoursStyles.showDayNames;
-                              const interval = params.isOpen
-                                ? params.currentInterval
-                                : params.futureInterval;
-                              const time = params.isOpen
-                                ? interval?.getEndTime(
-                                    locale,
-                                    params.timeOptions,
-                                  ) ?? ""
-                                : interval?.getStartTime(
-                                    locale,
-                                    params.timeOptions,
-                                  ) ?? "";
-                              const dayLabel =
-                                showDayNames && interval
-                                  ? params.isOpen
-                                    ? interval.end
-                                        ?.setLocale(locale)
-                                        .toLocaleString(params.dayOptions) ?? ""
-                                    : interval.start
-                                        ?.setLocale(locale)
-                                        .toLocaleString(params.dayOptions) ?? ""
-                                  : "";
-
-                              if (params.currentInterval?.is24h?.()) {
-                                return (
-                                  <span
-                                    className="text-[14px] font-medium"
-                                    style={{ color: cardForegroundColor }}
-                                  >
-                                    Open 24 Hours
-                                  </span>
-                                );
-                              }
-
-                              if (!params.futureInterval && !params.isOpen) {
-                                return (
-                                  <span
-                                    className="text-[14px] font-medium"
-                                    style={{ color: cardForegroundColor }}
-                                  >
-                                    Temporarily Closed
-                                  </span>
-                                );
-                              }
-
-                              const statusText = params.isOpen
-                                ? "Open Now"
-                                : "Closed";
-                              const futureText = dayLabel
-                                ? `${params.isOpen ? "Closes" : "Opens"} at ${time} ${dayLabel}`
-                                : `${params.isOpen ? "Closes" : "Opens"} at ${time}`;
-
-                              return (
-                                <div
-                                  className="flex flex-wrap items-center gap-1 text-[14px]"
-                                  style={{ color: cardMutedColor }}
-                                >
-                                  {props.hoursStyles.showCurrentStatus ? (
-                                    <span
-                                      className="font-medium"
-                                      style={{ color: cardForegroundColor }}
-                                    >
-                                      {statusText}
-                                    </span>
-                                  ) : null}
-                                  {props.hoursStyles.showCurrentStatus ? (
-                                    <span aria-hidden>•</span>
-                                  ) : null}
-                                  <span>{futureText}</span>
-                                </div>
-                              );
-                            }}
+                            statusTemplate={(params: StatusParams) =>
+                              renderTranslatedHoursStatus({
+                                params,
+                                t,
+                                locale,
+                                showCurrentStatus:
+                                  props.hoursStyles.showCurrentStatus,
+                                showDayNames: props.hoursStyles.showDayNames,
+                                className:
+                                  "flex flex-wrap items-center gap-1 text-[14px]",
+                                style: { color: cardMutedColor },
+                                currentStyle: {
+                                  color: cardForegroundColor,
+                                  fontWeight: 500,
+                                },
+                              })
+                            }
                           />
                         ) : null}
                         <CTA

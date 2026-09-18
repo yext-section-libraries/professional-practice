@@ -3,6 +3,7 @@ import type { SectionConfig } from "@yext/visual-editor";
 import * as React from "react";
 import type { PuckComponent } from "@puckeditor/core";
 import {
+  msg,
   Background,
   createItemSource,
   EntityField,
@@ -42,21 +43,21 @@ const teamImageUrls = [
 ];
 
 const teamMembersSource = createItemSource<TeamMemberFields>({
-  label: "Team Members",
+  label: msg("fields.teamMembers", "Team Members"),
   mappingFields: {
     image: {
       type: "entityField",
-      label: "Image",
+      label: msg("fields.options.image", "Image"),
       filter: { types: ["type.image"] },
     },
     name: {
       type: "entityField",
-      label: "Name",
+      label: msg("fields.name", "Name"),
       filter: { types: ["type.string"] },
     },
     jobTitle: {
       type: "entityField",
-      label: "Job Title",
+      label: msg("fields.jobTitle", "Job Title"),
       filter: { types: ["type.string"] },
     },
   },
@@ -104,88 +105,88 @@ type ProfessionalPracticeTeamSectionProps = {
 const ProfessionalPracticeTeamSectionFields: YextFields<ProfessionalPracticeTeamSectionProps> =
   {
     section: {
-      label: "Section",
+      label: msg("fields.section", "Section"),
       type: "object",
       objectFields: {
         visibleOnLivePage: {
-          label: "Visible on Live Page",
+          label: msg("fields.visibleOnLivePage", "Visible on Live Page"),
           type: "radio",
           options: [
-            { label: "Yes", value: true },
-            { label: "No", value: false },
+            { label: msg("fields.options.yes", "Yes"), value: true },
+            { label: msg("fields.options.no", "No"), value: false },
           ],
         },
         backgroundColor: {
-          label: "Background Color",
+          label: msg("fields.backgroundColor", "Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
         cardBackgroundColor: {
-          label: "Card Background Color",
+          label: msg("fields.cardBackgroundColor", "Card Background Color"),
           type: "basicSelector",
           options: "BACKGROUND_COLOR",
         },
       },
     },
     heading: {
-      label: "Heading",
+      label: msg("fields.heading", "Heading"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     intro: {
-      label: "Intro",
+      label: msg("fields.intro", "Intro"),
       type: "object",
       objectFields: {
         text: {
           type: "entityField",
-          label: "Text",
+          label: msg("fields.options.text", "Text"),
           filter: { types: ["type.rich_text_v2"] },
         },
-        styles: { label: "Text Styles", type: "styledText" },
+        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
         fontColor: {
-          label: "Font Color",
+          label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
           options: "SITE_COLOR",
         },
       },
     },
     members: {
-      label: "Team Members",
+      label: msg("fields.teamMembers", "Team Members"),
       type: "object",
       objectFields: {
         data: teamMembersSource.field,
         styles: {
-          label: "Team Card Presentation",
+          label: msg("fields.teamCardPresentation", "Team Card Presentation"),
           type: "object",
           objectFields: {
-            image: { label: "Image Styles", type: "styledImage" },
-            imageAspectRatio: { label: "Image Aspect Ratio", type: "number" },
+            image: { label: msg("fields.imageStyles", "Image Styles"), type: "styledImage" },
+            imageAspectRatio: { label: msg("fields.imageAspectRatio", "Image Aspect Ratio"), type: "number" },
             fallbackAvatarBackgroundColor: {
-              label: "Fallback Avatar Background Color",
+              label: msg("fields.fallbackAvatarBackgroundColor", "Fallback Avatar Background Color"),
               type: "basicSelector",
               options: "BACKGROUND_COLOR",
             },
-            name: { label: "Name Styles", type: "styledText" },
+            name: { label: msg("fields.nameStyles", "Name Styles"), type: "styledText" },
             nameFontColor: {
-              label: "Name Font Color",
+              label: msg("fields.nameFontColor", "Name Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
-            jobTitle: { label: "Job Title Styles", type: "styledText" },
+            jobTitle: { label: msg("fields.jobTitleStyles", "Job Title Styles"), type: "styledText" },
             jobTitleFontColor: {
-              label: "Job Title Font Color",
+              label: msg("fields.jobTitleFontColor", "Job Title Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
