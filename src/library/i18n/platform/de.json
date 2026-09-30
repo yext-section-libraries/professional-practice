@@ -26,11 +26,13 @@
     "locator": "Standortfinder",
     "phone": "Telefon"
   },
+  "currentLocation": "Aktueller Standort",
   "customSearchArea": "Benutzerdefinierter Suchbereich",
   "distance": "Distanz",
   "distanceLineFromSearch": "<strong>{{distance}}</strong> aus der Suche",
   "distanceLineFromSearchLocation": "<strong>{{distance}}</strong> von {{searchLocation}}",
   "distanceLineFromYou": "<strong>{{distance}}</strong> von Ihnen",
+  "email": "E-Mail",
   "embeddedVideo": "Eingebettetes Video",
   "enableCookies": "Cookies aktivieren",
   "fields": {
