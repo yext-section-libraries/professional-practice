@@ -1,3 +1,5 @@
+import { resolveTextStyles, TypographyScope } from "../shared/typography";
+import { useTranslation } from "react-i18next";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -56,7 +58,6 @@ type MapDocument = {
   locale?: string;
 };
 
-
 const defaultSectionColor: ThemeColor = {
   selectedColor: "white",
   contrastingColor: "palette-secondary",
@@ -77,7 +78,6 @@ const resolveSubtleBorderColor = (
 
   return `color-mix(in srgb, ${foreground} 12%, ${surfaceBackground})`;
 };
-
 
 const ProfessionalPracticeStaticMapSectionFields: YextFields<ProfessionalPracticeStaticMapSectionProps> =
   {
@@ -169,7 +169,8 @@ const ProfessionalPracticeStaticMapSectionFields: YextFields<ProfessionalPractic
 const ProfessionalPracticeStaticMapSectionComponent: PuckComponent<ProfessionalPracticeStaticMapSectionProps> =
   (props) => {
     const streamDocument = useDocument<MapDocument>();
-    const locale = streamDocument.locale ?? "en";
+    const { i18n } = useTranslation();
+    const locale = i18n.language;
     const headingColor = resolveReadableForegroundColor(props.heading.fontColor, props.section.backgroundColor, streamDocument);
     const bodyRichTextStyleOverrides = {
       color: resolveReadableForegroundColor(props.body.fontColor, props.section.backgroundColor, streamDocument),
@@ -199,87 +200,10 @@ const ProfessionalPracticeStaticMapSectionComponent: PuckComponent<ProfessionalP
               )}
             >
             <style>{`
-              [data-ypp-scope="static-map-section"] .ypp-typography p {
-                font-family: var(--fontFamily-body-fontFamily);
-                font-size: var(--fontSize-body-fontSize);
-                line-height: 1.5;
-                font-weight: var(--fontWeight-body-fontWeight);
-                font-style: var(--fontStyle-body-fontStyle);
-                text-transform: var(--textTransform-body-textTransform);
-              }
-
-              [data-ypp-scope="static-map-section"] .ypp-typography li {
-                font-family: var(--fontFamily-body-fontFamily);
-                font-size: var(--fontSize-body-fontSize);
-                line-height: 1.5;
-                font-weight: var(--fontWeight-body-fontWeight);
-                font-style: var(--fontStyle-body-fontStyle);
-                text-transform: var(--textTransform-body-textTransform);
-              }
-
-              [data-ypp-scope="static-map-section"] .ypp-typography h1 {
-                font-family: var(--fontFamily-h1-fontFamily);
-                font-size: var(--fontSize-h1-fontSize);
-                line-height: 1.2;
-                font-weight: var(--fontWeight-h1-fontWeight);
-                font-style: var(--fontStyle-h1-fontStyle);
-                text-transform: var(--textTransform-h1-textTransform);
-              }
-
-              [data-ypp-scope="static-map-section"] .ypp-typography h2 {
-                font-family: var(--fontFamily-h2-fontFamily);
-                font-size: var(--fontSize-h2-fontSize);
-                line-height: 1.2;
-                font-weight: var(--fontWeight-h2-fontWeight);
-                font-style: var(--fontStyle-h2-fontStyle);
-                text-transform: var(--textTransform-h2-textTransform);
-              }
-
-              [data-ypp-scope="static-map-section"] .ypp-typography h3 {
-                font-family: var(--fontFamily-h3-fontFamily);
-                font-size: var(--fontSize-h3-fontSize);
-                line-height: 1.2;
-                font-weight: var(--fontWeight-h3-fontWeight);
-                font-style: var(--fontStyle-h3-fontStyle);
-                text-transform: var(--textTransform-h3-textTransform);
-              }
-
-              [data-ypp-scope="static-map-section"] .ypp-typography h4 {
-                font-family: var(--fontFamily-h4-fontFamily);
-                font-size: var(--fontSize-h4-fontSize);
-                line-height: 1.2;
-                font-weight: var(--fontWeight-h4-fontWeight);
-                font-style: var(--fontStyle-h4-fontStyle);
-                text-transform: var(--textTransform-h4-textTransform);
-              }
-
-              [data-ypp-scope="static-map-section"] .ypp-typography h5 {
-                font-family: var(--fontFamily-h5-fontFamily);
-                font-size: var(--fontSize-h5-fontSize);
-                line-height: 1.2;
-                font-weight: var(--fontWeight-h5-fontWeight);
-                font-style: var(--fontStyle-h5-fontStyle);
-                text-transform: var(--textTransform-h5-textTransform);
-              }
-
-              [data-ypp-scope="static-map-section"] .ypp-typography h6 {
-                font-family: var(--fontFamily-h6-fontFamily);
-                font-size: var(--fontSize-h6-fontSize);
-                line-height: 1.2;
-                font-weight: var(--fontWeight-h6-fontWeight);
-                font-style: var(--fontStyle-h6-fontStyle);
-                text-transform: var(--textTransform-h6-textTransform);
-              }
 
               [data-ypp-scope="static-map-section"] .ypp-typography a {
-                font-family: var(--fontFamily-link-fontFamily);
-                font-size: var(--fontSize-link-fontSize);
-                font-weight: var(--fontWeight-link-fontWeight);
-                font-style: var(--fontStyle-link-fontStyle);
-                line-height: 1.5;
+
                 text-decoration: underline;
-                text-transform: var(--textTransform-link-textTransform);
-                letter-spacing: var(--letterSpacing-link-letterSpacing);
               }
 
               [data-ypp-scope="static-map-section"] .ypp-static-map-frame .mapbox-static-map-shell {
@@ -309,31 +233,8 @@ const ProfessionalPracticeStaticMapSectionComponent: PuckComponent<ProfessionalP
                   <h2
                     className="m-0"
                     style={{
-                      fontFamily:
-                        props.heading.styles.fontFamily === "default"
-                          ? undefined
-                          : props.heading.styles.fontFamily,
-                      fontSize:
-                        props.heading.styles.fontSize === "default"
-                          ? undefined
-                          : props.heading.styles.fontSize,
+                      ...resolveTextStyles(props.heading.styles),
                       color: headingColor,
-                      fontWeight:
-                        props.heading.styles.fontWeight === "default"
-                          ? undefined
-                          : props.heading.styles.fontWeight,
-                      fontStyle:
-                        props.heading.styles.fontStyle === "default"
-                          ? undefined
-                          : props.heading.styles.fontStyle,
-                      textTransform:
-                        props.heading.styles.textTransform === "default"
-                          ? undefined
-                          : props.heading.styles.textTransform,
-                      letterSpacing:
-                        props.heading.styles.letterSpacing === "default"
-                          ? undefined
-                          : props.heading.styles.letterSpacing,
                     }}
                   >
                     {heading}
@@ -381,7 +282,7 @@ const ProfessionalPracticeStaticMapSectionComponent: PuckComponent<ProfessionalP
 
 export const ProfessionalPracticeStaticMapSection: YextComponentConfig<ProfessionalPracticeStaticMapSectionProps> =
   {
-    label: "Static Map Section",
+    label: "Static Map",
     fields: ProfessionalPracticeStaticMapSectionFields,
     defaultProps: {
       section: {
@@ -424,13 +325,15 @@ export const ProfessionalPracticeStaticMapSection: YextComponentConfig<Professio
       },
     },
     render: (props) => (
-      <ProfessionalPracticeStaticMapSectionComponent {...props} />
+      <TypographyScope>
+        <ProfessionalPracticeStaticMapSectionComponent {...props} />
+      </TypographyScope>
     ),
   };
 
 export const config: SectionConfig = {
   id: "ProfessionalPracticeStaticMapSection",
-  displayName: "Static Map Section",
+  displayName: "Static Map",
   description: "Static Map Section",
   pageSetTypes: ["ENTITY"],
 };

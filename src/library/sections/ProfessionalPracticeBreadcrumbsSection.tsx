@@ -1,3 +1,4 @@
+import { resolveTextStyles, TypographyScope } from "../shared/typography";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -106,7 +107,7 @@ const ProfessionalPracticeBreadcrumbsSectionComponent: PuckComponent<
   const { relativePrefixToRoot } = useTemplateProps<{
     relativePrefixToRoot?: string;
   }>();
-    const locale = i18n.language || streamDocument.locale || "en";
+    const locale = i18n.language;
   const rootLabelColor = resolveReadableForegroundColor(
     props.rootLabel.fontColor,
     props.section.backgroundColor,
@@ -130,7 +131,6 @@ const ProfessionalPracticeBreadcrumbsSectionComponent: PuckComponent<
     return props.puck.isEditing ? (
       <p
         style={{
-          fontFamily: "Arial, Helvetica, sans-serif",
           padding: "18px 24px",
         }}
       >
@@ -161,87 +161,10 @@ const ProfessionalPracticeBreadcrumbsSectionComponent: PuckComponent<
               )}
             >
             <style>{`
-              [data-ypp-scope="breadcrumbs-section"] .ypp-typography p {
-                font-family: var(--fontFamily-body-fontFamily);
-                font-size: var(--fontSize-body-fontSize);
-                line-height: 1.5;
-                font-weight: var(--fontWeight-body-fontWeight);
-                font-style: var(--fontStyle-body-fontStyle);
-                text-transform: var(--textTransform-body-textTransform);
-              }
-
-              [data-ypp-scope="breadcrumbs-section"] .ypp-typography li {
-                font-family: var(--fontFamily-body-fontFamily);
-                font-size: var(--fontSize-body-fontSize);
-                line-height: 1.5;
-                font-weight: var(--fontWeight-body-fontWeight);
-                font-style: var(--fontStyle-body-fontStyle);
-                text-transform: var(--textTransform-body-textTransform);
-              }
-
-              [data-ypp-scope="breadcrumbs-section"] .ypp-typography h1 {
-                font-family: var(--fontFamily-h1-fontFamily);
-                font-size: var(--fontSize-h1-fontSize);
-                line-height: 1.2;
-                font-weight: var(--fontWeight-h1-fontWeight);
-                font-style: var(--fontStyle-h1-fontStyle);
-                text-transform: var(--textTransform-h1-textTransform);
-              }
-
-              [data-ypp-scope="breadcrumbs-section"] .ypp-typography h2 {
-                font-family: var(--fontFamily-h2-fontFamily);
-                font-size: var(--fontSize-h2-fontSize);
-                line-height: 1.2;
-                font-weight: var(--fontWeight-h2-fontWeight);
-                font-style: var(--fontStyle-h2-fontStyle);
-                text-transform: var(--textTransform-h2-textTransform);
-              }
-
-              [data-ypp-scope="breadcrumbs-section"] .ypp-typography h3 {
-                font-family: var(--fontFamily-h3-fontFamily);
-                font-size: var(--fontSize-h3-fontSize);
-                line-height: 1.2;
-                font-weight: var(--fontWeight-h3-fontWeight);
-                font-style: var(--fontStyle-h3-fontStyle);
-                text-transform: var(--textTransform-h3-textTransform);
-              }
-
-              [data-ypp-scope="breadcrumbs-section"] .ypp-typography h4 {
-                font-family: var(--fontFamily-h4-fontFamily);
-                font-size: var(--fontSize-h4-fontSize);
-                line-height: 1.2;
-                font-weight: var(--fontWeight-h4-fontWeight);
-                font-style: var(--fontStyle-h4-fontStyle);
-                text-transform: var(--textTransform-h4-textTransform);
-              }
-
-              [data-ypp-scope="breadcrumbs-section"] .ypp-typography h5 {
-                font-family: var(--fontFamily-h5-fontFamily);
-                font-size: var(--fontSize-h5-fontSize);
-                line-height: 1.2;
-                font-weight: var(--fontWeight-h5-fontWeight);
-                font-style: var(--fontStyle-h5-fontStyle);
-                text-transform: var(--textTransform-h5-textTransform);
-              }
-
-              [data-ypp-scope="breadcrumbs-section"] .ypp-typography h6 {
-                font-family: var(--fontFamily-h6-fontFamily);
-                font-size: var(--fontSize-h6-fontSize);
-                line-height: 1.2;
-                font-weight: var(--fontWeight-h6-fontWeight);
-                font-style: var(--fontStyle-h6-fontStyle);
-                text-transform: var(--textTransform-h6-textTransform);
-              }
 
               [data-ypp-scope="breadcrumbs-section"] .ypp-typography a {
-                font-family: var(--fontFamily-link-fontFamily);
-                font-size: var(--fontSize-link-fontSize);
-                font-weight: var(--fontWeight-link-fontWeight);
-                font-style: var(--fontStyle-link-fontStyle);
-                line-height: 1.5;
+
                 text-decoration: underline;
-                text-transform: var(--textTransform-link-textTransform);
-                letter-spacing: var(--letterSpacing-link-letterSpacing);
               }
             `}</style>
             <div className="mx-auto max-w-[1280px] px-4 py-4 md:px-8 xl:px-20">
@@ -284,33 +207,8 @@ const ProfessionalPracticeBreadcrumbsSectionComponent: PuckComponent<
                           {isCurrent ? (
                             <span
                               style={{
-                                fontFamily:
-                                  props.rootLabel.styles.fontFamily === "default"
-                                    ? undefined
-                                    : props.rootLabel.styles.fontFamily,
-                                fontSize:
-                                  props.rootLabel.styles.fontSize === "default"
-                                    ? undefined
-                                    : props.rootLabel.styles.fontSize,
+                                ...resolveTextStyles(props.rootLabel.styles),
                                 color: rootLabelColor,
-                                fontWeight:
-                                  props.rootLabel.styles.fontWeight === "default"
-                                    ? undefined
-                                    : props.rootLabel.styles.fontWeight,
-                                fontStyle:
-                                  props.rootLabel.styles.fontStyle === "default"
-                                    ? undefined
-                                    : props.rootLabel.styles.fontStyle,
-                                textTransform:
-                                props.rootLabel.styles.textTransform ===
-                                "default"
-                                    ? undefined
-                                    : props.rootLabel.styles.textTransform,
-                                letterSpacing:
-                                props.rootLabel.styles.letterSpacing ===
-                                "default"
-                                    ? undefined
-                                    : props.rootLabel.styles.letterSpacing,
                               }}
                             >
                               {label}
@@ -320,33 +218,8 @@ const ProfessionalPracticeBreadcrumbsSectionComponent: PuckComponent<
                               href={href}
                               eventName={`link${index}`}
                               style={{
-                                fontFamily:
-                                  props.rootLabel.styles.fontFamily === "default"
-                                    ? undefined
-                                    : props.rootLabel.styles.fontFamily,
-                                fontSize:
-                                  props.rootLabel.styles.fontSize === "default"
-                                    ? undefined
-                                    : props.rootLabel.styles.fontSize,
+                                ...resolveTextStyles(props.rootLabel.styles),
                                 color: rootLabelColor,
-                                fontWeight:
-                                  props.rootLabel.styles.fontWeight === "default"
-                                    ? undefined
-                                    : props.rootLabel.styles.fontWeight,
-                                fontStyle:
-                                  props.rootLabel.styles.fontStyle === "default"
-                                    ? undefined
-                                    : props.rootLabel.styles.fontStyle,
-                                textTransform:
-                                props.rootLabel.styles.textTransform ===
-                                "default"
-                                    ? undefined
-                                    : props.rootLabel.styles.textTransform,
-                                letterSpacing:
-                                props.rootLabel.styles.letterSpacing ===
-                                "default"
-                                    ? undefined
-                                    : props.rootLabel.styles.letterSpacing,
                               }}
                             >
                               {label}
@@ -355,7 +228,7 @@ const ProfessionalPracticeBreadcrumbsSectionComponent: PuckComponent<
                         </EntityField>
                       ) : isCurrent ? (
                         <span
-                          className="font-medium"
+                          className=""
                           style={{ color: breadcrumbTextColor }}
                         >
                           {label}
@@ -385,7 +258,7 @@ const ProfessionalPracticeBreadcrumbsSectionComponent: PuckComponent<
 
 export const ProfessionalPracticeBreadcrumbsSection: YextComponentConfig<ProfessionalPracticeBreadcrumbsSectionProps> =
   {
-    label: "Breadcrumbs Section",
+    label: "Breadcrumbs",
     fields: ProfessionalPracticeBreadcrumbsSectionFields,
     defaultProps: {
       section: {
@@ -404,13 +277,15 @@ export const ProfessionalPracticeBreadcrumbsSection: YextComponentConfig<Profess
       includeCurrentLocation: true,
     },
     render: (props) => (
-      <ProfessionalPracticeBreadcrumbsSectionComponent {...props} />
+      <TypographyScope>
+        <ProfessionalPracticeBreadcrumbsSectionComponent {...props} />
+      </TypographyScope>
     ),
   };
 
 export const config: SectionConfig = {
   id: "ProfessionalPracticeBreadcrumbsSection",
-  displayName: "Breadcrumbs Section",
+  displayName: "Breadcrumbs",
   description: "Breadcrumbs Section",
   pageSetTypes: ["ENTITY"],
 };

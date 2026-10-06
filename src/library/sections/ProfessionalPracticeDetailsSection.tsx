@@ -1,3 +1,4 @@
+import { resolveTextStyles, getBodyTextStyle, TypographyScope } from "../shared/typography";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -497,7 +498,7 @@ const ProfessionalPracticeDetailsSectionComponent: PuckComponent<
 > = (props) => {
   const { t, i18n } = useTranslation();
   const streamDocument = useDocument();
-  const locale = i18n.language || streamDocument.locale || "en";
+  const locale = i18n.language;
   const dayOfWeekNames = React.useMemo<DayOfWeekNames>(() => {
     const formatter = new Intl.DateTimeFormat(locale, {
       timeZone: "UTC",
@@ -608,87 +609,10 @@ const ProfessionalPracticeDetailsSectionComponent: PuckComponent<
             )}
           >
           <style>{`
-            [data-ypp-scope="details-section"] .ypp-typography p {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-
-            [data-ypp-scope="details-section"] .ypp-typography li {
-              font-family: var(--fontFamily-body-fontFamily);
-              font-size: var(--fontSize-body-fontSize);
-              line-height: 1.5;
-              font-weight: var(--fontWeight-body-fontWeight);
-              font-style: var(--fontStyle-body-fontStyle);
-              text-transform: var(--textTransform-body-textTransform);
-            }
-
-            [data-ypp-scope="details-section"] .ypp-typography h1 {
-              font-family: var(--fontFamily-h1-fontFamily);
-              font-size: var(--fontSize-h1-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h1-fontWeight);
-              font-style: var(--fontStyle-h1-fontStyle);
-              text-transform: var(--textTransform-h1-textTransform);
-            }
-
-            [data-ypp-scope="details-section"] .ypp-typography h2 {
-              font-family: var(--fontFamily-h2-fontFamily);
-              font-size: var(--fontSize-h2-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h2-fontWeight);
-              font-style: var(--fontStyle-h2-fontStyle);
-              text-transform: var(--textTransform-h2-textTransform);
-            }
-
-            [data-ypp-scope="details-section"] .ypp-typography h3 {
-              font-family: var(--fontFamily-h3-fontFamily);
-              font-size: var(--fontSize-h3-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h3-fontWeight);
-              font-style: var(--fontStyle-h3-fontStyle);
-              text-transform: var(--textTransform-h3-textTransform);
-            }
-
-            [data-ypp-scope="details-section"] .ypp-typography h4 {
-              font-family: var(--fontFamily-h4-fontFamily);
-              font-size: var(--fontSize-h4-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h4-fontWeight);
-              font-style: var(--fontStyle-h4-fontStyle);
-              text-transform: var(--textTransform-h4-textTransform);
-            }
-
-            [data-ypp-scope="details-section"] .ypp-typography h5 {
-              font-family: var(--fontFamily-h5-fontFamily);
-              font-size: var(--fontSize-h5-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h5-fontWeight);
-              font-style: var(--fontStyle-h5-fontStyle);
-              text-transform: var(--textTransform-h5-textTransform);
-            }
-
-            [data-ypp-scope="details-section"] .ypp-typography h6 {
-              font-family: var(--fontFamily-h6-fontFamily);
-              font-size: var(--fontSize-h6-fontSize);
-              line-height: 1.2;
-              font-weight: var(--fontWeight-h6-fontWeight);
-              font-style: var(--fontStyle-h6-fontStyle);
-              text-transform: var(--textTransform-h6-textTransform);
-            }
 
             [data-ypp-scope="details-section"] .ypp-typography a {
-              font-family: var(--fontFamily-link-fontFamily);
-              font-size: var(--fontSize-link-fontSize);
-              font-weight: var(--fontWeight-link-fontWeight);
-              font-style: var(--fontStyle-link-fontStyle);
-              line-height: 1.5;
+
               text-decoration: underline;
-              text-transform: var(--textTransform-link-textTransform);
-              letter-spacing: var(--letterSpacing-link-letterSpacing);
             }
 
             [data-ypp-scope="details-section"] .ypp-cta-button {
@@ -749,31 +673,8 @@ const ProfessionalPracticeDetailsSectionComponent: PuckComponent<
                 <h2
                   className=""
                   style={{
-                    fontFamily:
-                      props.summary.title.styles.fontFamily === "default"
-                        ? undefined
-                        : props.summary.title.styles.fontFamily,
-                    fontSize:
-                      props.summary.title.styles.fontSize === "default"
-                        ? undefined
-                        : props.summary.title.styles.fontSize,
+                    ...resolveTextStyles(props.summary.title.styles),
                     color: resolveReadableForegroundColor(props.summary.title.fontColor, props.section.backgroundColor, streamDocument),
-                    fontWeight:
-                      props.summary.title.styles.fontWeight === "default"
-                        ? undefined
-                        : props.summary.title.styles.fontWeight,
-                    fontStyle:
-                      props.summary.title.styles.fontStyle === "default"
-                        ? undefined
-                        : props.summary.title.styles.fontStyle,
-                    textTransform:
-                      props.summary.title.styles.textTransform === "default"
-                        ? undefined
-                        : props.summary.title.styles.textTransform,
-                    letterSpacing:
-                      props.summary.title.styles.letterSpacing === "default"
-                        ? undefined
-                        : props.summary.title.styles.letterSpacing,
                   }}
                 >
                   {summaryTitle}
@@ -791,36 +692,12 @@ const ProfessionalPracticeDetailsSectionComponent: PuckComponent<
                 <p
                   className=""
                   style={{
-                    fontFamily:
-                      props.summary.baseHubLabel.styles.fontFamily === "default"
-                        ? undefined
-                        : props.summary.baseHubLabel.styles.fontFamily,
-                    fontSize:
-                      props.summary.baseHubLabel.styles.fontSize === "default"
-                        ? undefined
-                        : props.summary.baseHubLabel.styles.fontSize,
+                    ...getBodyTextStyle(props.summary.baseHubLabel.styles),
                     color: resolveReadableForegroundColor(
                       props.summary.baseHubLabel.fontColor,
                       props.section.backgroundColor,
                       streamDocument,
                     ),
-                    fontWeight:
-                      props.summary.baseHubLabel.styles.fontWeight === "default"
-                        ? undefined
-                        : props.summary.baseHubLabel.styles.fontWeight,
-                    fontStyle:
-                      props.summary.baseHubLabel.styles.fontStyle === "default"
-                        ? undefined
-                        : props.summary.baseHubLabel.styles.fontStyle,
-                    textTransform:
-                      props.summary.baseHubLabel.styles.textTransform ===
-                      "default"
-                        ? undefined
-                        : props.summary.baseHubLabel.styles.textTransform,
-                    letterSpacing:
-                      props.summary.baseHubLabel.styles.letterSpacing === "default"
-                        ? undefined
-                        : props.summary.baseHubLabel.styles.letterSpacing,
                   }}
                 >
                   {baseHubLabel}
@@ -850,37 +727,8 @@ const ProfessionalPracticeDetailsSectionComponent: PuckComponent<
                 >
                 <p
                   style={{
-                    fontFamily:
-                      props.summary.serviceRadiusText.styles.fontFamily ===
-                      "default"
-                        ? undefined
-                        : props.summary.serviceRadiusText.styles.fontFamily,
-                    fontSize:
-                      props.summary.serviceRadiusText.styles.fontSize ===
-                      "default"
-                        ? undefined
-                        : props.summary.serviceRadiusText.styles.fontSize,
+                    ...getBodyTextStyle(props.summary.serviceRadiusText.styles),
                     color: resolveReadableForegroundColor(props.summary.serviceRadiusText.fontColor, props.section.backgroundColor, streamDocument),
-                    fontWeight:
-                      props.summary.serviceRadiusText.styles.fontWeight ===
-                      "default"
-                        ? undefined
-                        : props.summary.serviceRadiusText.styles.fontWeight,
-                    fontStyle:
-                      props.summary.serviceRadiusText.styles.fontStyle ===
-                      "default"
-                        ? undefined
-                        : props.summary.serviceRadiusText.styles.fontStyle,
-                    textTransform:
-                      props.summary.serviceRadiusText.styles.textTransform ===
-                      "default"
-                        ? undefined
-                        : props.summary.serviceRadiusText.styles.textTransform,
-                    letterSpacing:
-                      props.summary.serviceRadiusText.styles.letterSpacing ===
-                      "default"
-                        ? undefined
-                        : props.summary.serviceRadiusText.styles.letterSpacing,
                   }}
                 >
                   {serviceRadiusText}
@@ -896,38 +744,14 @@ const ProfessionalPracticeDetailsSectionComponent: PuckComponent<
                   }
                 >
                 <p
-                  className="font-semibold"
+                  className=""
                   style={{
-                    fontFamily:
-                      props.summary.bookingLabel.styles.fontFamily === "default"
-                        ? undefined
-                        : props.summary.bookingLabel.styles.fontFamily,
-                    fontSize:
-                      props.summary.bookingLabel.styles.fontSize === "default"
-                        ? undefined
-                        : props.summary.bookingLabel.styles.fontSize,
+                    ...getBodyTextStyle(props.summary.bookingLabel.styles),
                     color: resolveReadableForegroundColor(
                       props.summary.bookingLabel.fontColor,
                       props.section.backgroundColor,
                       streamDocument,
                     ),
-                    fontWeight:
-                      props.summary.bookingLabel.styles.fontWeight === "default"
-                        ? undefined
-                        : props.summary.bookingLabel.styles.fontWeight,
-                    fontStyle:
-                      props.summary.bookingLabel.styles.fontStyle === "default"
-                        ? undefined
-                        : props.summary.bookingLabel.styles.fontStyle,
-                    textTransform:
-                      props.summary.bookingLabel.styles.textTransform ===
-                      "default"
-                        ? undefined
-                        : props.summary.bookingLabel.styles.textTransform,
-                    letterSpacing:
-                      props.summary.bookingLabel.styles.letterSpacing === "default"
-                        ? undefined
-                        : props.summary.bookingLabel.styles.letterSpacing,
                   }}
                 >
                   {bookingLabel}
@@ -1044,36 +868,12 @@ const ProfessionalPracticeDetailsSectionComponent: PuckComponent<
                 <h2
                   className=""
                   style={{
-                    fontFamily:
-                      props.dispatchHours.title.styles.fontFamily === "default"
-                        ? undefined
-                        : props.dispatchHours.title.styles.fontFamily,
-                    fontSize:
-                      props.dispatchHours.title.styles.fontSize === "default"
-                        ? undefined
-                        : props.dispatchHours.title.styles.fontSize,
+                    ...resolveTextStyles(props.dispatchHours.title.styles),
                     color: resolveReadableForegroundColor(
                       props.dispatchHours.title.fontColor,
                       props.section.backgroundColor,
                       streamDocument,
                     ),
-                    fontWeight:
-                      props.dispatchHours.title.styles.fontWeight === "default"
-                        ? undefined
-                        : props.dispatchHours.title.styles.fontWeight,
-                    fontStyle:
-                      props.dispatchHours.title.styles.fontStyle === "default"
-                        ? undefined
-                        : props.dispatchHours.title.styles.fontStyle,
-                    textTransform:
-                      props.dispatchHours.title.styles.textTransform ===
-                      "default"
-                        ? undefined
-                        : props.dispatchHours.title.styles.textTransform,
-                    letterSpacing:
-                      props.dispatchHours.title.styles.letterSpacing === "default"
-                        ? undefined
-                        : props.dispatchHours.title.styles.letterSpacing,
                   }}
                 >
                   {dispatchHoursTitle}
@@ -1142,31 +942,8 @@ const ProfessionalPracticeDetailsSectionComponent: PuckComponent<
                 <h2
                   className=""
                   style={{
-                    fontFamily:
-                      props.perks.title.styles.fontFamily === "default"
-                        ? undefined
-                        : props.perks.title.styles.fontFamily,
-                    fontSize:
-                      props.perks.title.styles.fontSize === "default"
-                        ? undefined
-                        : props.perks.title.styles.fontSize,
+                    ...resolveTextStyles(props.perks.title.styles),
                     color: resolveReadableForegroundColor(props.perks.title.fontColor, props.section.backgroundColor, streamDocument),
-                    fontWeight:
-                      props.perks.title.styles.fontWeight === "default"
-                        ? undefined
-                        : props.perks.title.styles.fontWeight,
-                    fontStyle:
-                      props.perks.title.styles.fontStyle === "default"
-                        ? undefined
-                        : props.perks.title.styles.fontStyle,
-                    textTransform:
-                      props.perks.title.styles.textTransform === "default"
-                        ? undefined
-                        : props.perks.title.styles.textTransform,
-                    letterSpacing:
-                      props.perks.title.styles.letterSpacing === "default"
-                        ? undefined
-                        : props.perks.title.styles.letterSpacing,
                   }}
                 >
                   {perksTitle}
@@ -1183,31 +960,8 @@ const ProfessionalPracticeDetailsSectionComponent: PuckComponent<
                 <ul
                   className="flex list-none flex-col gap-2 pl-0"
                   style={{
-                    fontFamily:
-                      props.perks.listText.styles.fontFamily === "default"
-                        ? undefined
-                        : props.perks.listText.styles.fontFamily,
-                    fontSize:
-                      props.perks.listText.styles.fontSize === "default"
-                        ? undefined
-                        : props.perks.listText.styles.fontSize,
+                    ...getBodyTextStyle(props.perks.listText.styles),
                     color: resolveReadableForegroundColor(props.perks.listText.fontColor, props.section.backgroundColor, streamDocument),
-                    fontWeight:
-                      props.perks.listText.styles.fontWeight === "default"
-                        ? undefined
-                        : props.perks.listText.styles.fontWeight,
-                    fontStyle:
-                      props.perks.listText.styles.fontStyle === "default"
-                        ? undefined
-                        : props.perks.listText.styles.fontStyle,
-                    textTransform:
-                      props.perks.listText.styles.textTransform === "default"
-                        ? undefined
-                        : props.perks.listText.styles.textTransform,
-                    letterSpacing:
-                      props.perks.listText.styles.letterSpacing === "default"
-                        ? undefined
-                        : props.perks.listText.styles.letterSpacing,
                   }}
                 >
                   {perks.map((item) => (
@@ -1240,7 +994,7 @@ const ProfessionalPracticeDetailsSectionComponent: PuckComponent<
 
 export const ProfessionalPracticeDetailsSection: YextComponentConfig<ProfessionalPracticeDetailsSectionProps> =
   {
-    label: "Details Section",
+    label: "Details",
     fields: ProfessionalPracticeDetailsSectionFields,
     defaultProps: {
       section: {
@@ -1258,7 +1012,7 @@ export const ProfessionalPracticeDetailsSection: YextComponentConfig<Professiona
           },
           styles: {
             fontFamily: "default",
-            fontSize: "20px",
+            fontSize: "default",
             fontWeight: "default",
             fontStyle: "default",
             textTransform: "default",
@@ -1287,7 +1041,7 @@ export const ProfessionalPracticeDetailsSection: YextComponentConfig<Professiona
           styles: {
             fontFamily: "default",
             fontSize: "default",
-            fontWeight: "600",
+            fontWeight: "default",
             fontStyle: "default",
             textTransform: "default",
           },
@@ -1311,7 +1065,7 @@ export const ProfessionalPracticeDetailsSection: YextComponentConfig<Professiona
           styles: {
             fontFamily: "default",
             fontSize: "default",
-            fontWeight: "600",
+            fontWeight: "default",
             fontStyle: "default",
             textTransform: "default",
           },
@@ -1386,7 +1140,7 @@ export const ProfessionalPracticeDetailsSection: YextComponentConfig<Professiona
           },
           styles: {
             fontFamily: "default",
-            fontSize: "20px",
+            fontSize: "default",
             fontWeight: "default",
             fontStyle: "default",
             textTransform: "default",
@@ -1415,7 +1169,7 @@ export const ProfessionalPracticeDetailsSection: YextComponentConfig<Professiona
           },
           styles: {
             fontFamily: "default",
-            fontSize: "20px",
+            fontSize: "default",
             fontWeight: "default",
             fontStyle: "default",
             textTransform: "default",
@@ -1442,13 +1196,15 @@ export const ProfessionalPracticeDetailsSection: YextComponentConfig<Professiona
       },
     },
     render: (props) => (
-      <ProfessionalPracticeDetailsSectionComponent {...props} />
+      <TypographyScope>
+        <ProfessionalPracticeDetailsSectionComponent {...props} />
+      </TypographyScope>
     ),
   };
 
 export const config: SectionConfig = {
   id: "ProfessionalPracticeDetailsSection",
-  displayName: "Details Section",
+  displayName: "Details",
   description: "Details Section",
   pageSetTypes: ["ENTITY"],
 };

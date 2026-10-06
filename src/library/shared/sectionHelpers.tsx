@@ -1,3 +1,4 @@
+import { applyRichTextOverrides, getBodyTextStyle, resolveTextStyles } from "./typography";
 import * as React from "react";
 import {
   MaybeRTF,
@@ -78,36 +79,26 @@ export const renderResolvedRichText = (
   value: unknown,
   richTextStyleOverrides?: MaybeRTFProps["richTextStyleOverrides"],
 ): React.ReactNode => {
-  if (React.isValidElement(value)) {
-    if (!richTextStyleOverrides) {
-      return value;
-    }
-
-    const resolvedColor = getThemeColorCssValue(richTextStyleOverrides.color);
-    const { color: _color, ...styleOverrides } = richTextStyleOverrides;
-    const element = value as React.ReactElement<{
-      style?: React.CSSProperties;
-    }>;
-
-    return React.cloneElement(element, {
-      style: {
-        ...element.props.style,
-        ...styleOverrides,
-        ...(resolvedColor ? { color: resolvedColor } : {}),
-      },
-    });
+  const overrides = {
+    ...richTextStyleOverrides,
+    ...resolveTextStyles(richTextStyleOverrides),
+  };
+  if (React.isValidElement(value) || Array.isArray(value)) {
+    return applyRichTextOverrides(value, overrides);
   }
 
   const data =
-    typeof value === "string" ||
-    (typeof value === "object" && value !== null && "html" in value)
-      ? (value as RichText | string)
-      : undefined;
+    typeof value === "string"
+      ? (/<[a-z][\s\S]*>/i.test(value) ? { html: value } : value)
+      : typeof value === "object" && value !== null && "html" in value
+        ? (value as RichText)
+        : undefined;
 
   return (
     <MaybeRTF
       data={data}
-      richTextStyleOverrides={richTextStyleOverrides}
+      richTextStyleOverrides={overrides}
+      style={getBodyTextStyle(overrides)}
     />
   );
 };

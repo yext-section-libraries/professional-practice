@@ -1,3 +1,4 @@
+import { resolveTextStyles, TypographyScope } from "../shared/typography";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -182,15 +183,7 @@ const getTextStyles = ({
 }): React.CSSProperties => {
   return {
     color: getThemeColorCssValue(color),
-    fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-    fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-    fontWeight:
-      styles.fontWeight === "default" ? undefined : styles.fontWeight,
-    fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-    textTransform:
-      styles.textTransform === "default" ? undefined : styles.textTransform,
-    letterSpacing:
-      styles.letterSpacing === "default" ? undefined : styles.letterSpacing,
+    ...resolveTextStyles(styles),
   };
 };
 
@@ -589,7 +582,7 @@ const ProfessionalPracticeHeaderComponent: PuckComponent<ProfessionalPracticeHea
   const { t, i18n } = useTranslation();
   const analytics = useAnalytics();
   const streamDocument = useDocument<StreamDocument>();
-  const locale = i18n.language || streamDocument.locale || "en";
+  const locale = i18n.language;
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   const resolvedLogoImage = resolveComponentData(
@@ -1416,11 +1409,13 @@ export const ProfessionalPracticeHeader: YextComponentConfig<ProfessionalPractic
     },
   },
   render: (props) => (
-    <AnalyticsScopeProvider
-      name={`ProfessionalPracticeHeader${getAnalyticsScopeHash(props.id)}`}
-    >
-      <ProfessionalPracticeHeaderComponent {...props} />
-    </AnalyticsScopeProvider>
+    <TypographyScope>
+      <AnalyticsScopeProvider
+        name={`ProfessionalPracticeHeader${getAnalyticsScopeHash(props.id)}`}
+      >
+        <ProfessionalPracticeHeaderComponent {...props} />
+      </AnalyticsScopeProvider>
+    </TypographyScope>
   ),
 };
 

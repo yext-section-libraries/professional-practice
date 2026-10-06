@@ -1,3 +1,4 @@
+import { resolveTextStyles, TypographyScope } from "../shared/typography";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -38,7 +39,6 @@ type ProfessionalPracticeVideoSectionProps = {
   videoSource: string;
 };
 
-
 const defaultSectionColor: ThemeColor = {
   selectedColor: "palette-primary",
   contrastingColor: "palette-primary-contrast",
@@ -63,7 +63,6 @@ const getYouTubeEmbedUrl = (source: string) => {
   const videoId = source.split("v=")[1]?.split("&")[0] ?? "";
   return videoId ? `https://www.youtube-nocookie.com/embed/${videoId}` : "";
 };
-
 
 const ProfessionalPracticeVideoSectionFields: YextFields<ProfessionalPracticeVideoSectionProps> =
   {
@@ -136,7 +135,7 @@ const ProfessionalPracticeVideoSectionComponent: PuckComponent<ProfessionalPract
   (props) => {
     const { t, i18n } = useTranslation();
     const streamDocument = useDocument();
-    const locale = i18n.language || streamDocument.locale || "en";
+    const locale = i18n.language;
     const headingColor = resolveReadableForegroundColor(props.heading.fontColor, props.section.backgroundColor, streamDocument);
     const bodyColor = resolveReadableForegroundColor(props.body.fontColor, props.section.backgroundColor, streamDocument);
     const heading =
@@ -177,87 +176,10 @@ const ProfessionalPracticeVideoSectionComponent: PuckComponent<ProfessionalPract
             >
             <div className="mx-auto grid max-w-[1280px] gap-8 px-4 py-[30px] md:px-8 md:py-[60px] xl:grid-cols-[minmax(0,0.9fr)_minmax(520px,1.1fr)] xl:items-center xl:px-20">
               <style>{`
-                [data-ypp-scope="video-section"] .ypp-typography p {
-                  font-family: var(--fontFamily-body-fontFamily);
-                  font-size: var(--fontSize-body-fontSize);
-                  line-height: 1.5;
-                  font-weight: var(--fontWeight-body-fontWeight);
-                  font-style: var(--fontStyle-body-fontStyle);
-                  text-transform: var(--textTransform-body-textTransform);
-                }
-
-                [data-ypp-scope="video-section"] .ypp-typography li {
-                  font-family: var(--fontFamily-body-fontFamily);
-                  font-size: var(--fontSize-body-fontSize);
-                  line-height: 1.5;
-                  font-weight: var(--fontWeight-body-fontWeight);
-                  font-style: var(--fontStyle-body-fontStyle);
-                  text-transform: var(--textTransform-body-textTransform);
-                }
-
-                [data-ypp-scope="video-section"] .ypp-typography h1 {
-                  font-family: var(--fontFamily-h1-fontFamily);
-                  font-size: var(--fontSize-h1-fontSize);
-                  line-height: 1.2;
-                  font-weight: var(--fontWeight-h1-fontWeight);
-                  font-style: var(--fontStyle-h1-fontStyle);
-                  text-transform: var(--textTransform-h1-textTransform);
-                }
-
-                [data-ypp-scope="video-section"] .ypp-typography h2 {
-                  font-family: var(--fontFamily-h2-fontFamily);
-                  font-size: var(--fontSize-h2-fontSize);
-                  line-height: 1.2;
-                  font-weight: var(--fontWeight-h2-fontWeight);
-                  font-style: var(--fontStyle-h2-fontStyle);
-                  text-transform: var(--textTransform-h2-textTransform);
-                }
-
-                [data-ypp-scope="video-section"] .ypp-typography h3 {
-                  font-family: var(--fontFamily-h3-fontFamily);
-                  font-size: var(--fontSize-h3-fontSize);
-                  line-height: 1.2;
-                  font-weight: var(--fontWeight-h3-fontWeight);
-                  font-style: var(--fontStyle-h3-fontStyle);
-                  text-transform: var(--textTransform-h3-textTransform);
-                }
-
-                [data-ypp-scope="video-section"] .ypp-typography h4 {
-                  font-family: var(--fontFamily-h4-fontFamily);
-                  font-size: var(--fontSize-h4-fontSize);
-                  line-height: 1.2;
-                  font-weight: var(--fontWeight-h4-fontWeight);
-                  font-style: var(--fontStyle-h4-fontStyle);
-                  text-transform: var(--textTransform-h4-textTransform);
-                }
-
-                [data-ypp-scope="video-section"] .ypp-typography h5 {
-                  font-family: var(--fontFamily-h5-fontFamily);
-                  font-size: var(--fontSize-h5-fontSize);
-                  line-height: 1.2;
-                  font-weight: var(--fontWeight-h5-fontWeight);
-                  font-style: var(--fontStyle-h5-fontStyle);
-                  text-transform: var(--textTransform-h5-textTransform);
-                }
-
-                [data-ypp-scope="video-section"] .ypp-typography h6 {
-                  font-family: var(--fontFamily-h6-fontFamily);
-                  font-size: var(--fontSize-h6-fontSize);
-                  line-height: 1.2;
-                  font-weight: var(--fontWeight-h6-fontWeight);
-                  font-style: var(--fontStyle-h6-fontStyle);
-                  text-transform: var(--textTransform-h6-textTransform);
-                }
 
                 [data-ypp-scope="video-section"] .ypp-typography a {
-                  font-family: var(--fontFamily-link-fontFamily);
-                  font-size: var(--fontSize-link-fontSize);
-                  font-weight: var(--fontWeight-link-fontWeight);
-                  font-style: var(--fontStyle-link-fontStyle);
-                  line-height: 1.5;
+
                   text-decoration: underline;
-                  text-transform: var(--textTransform-link-textTransform);
-                  letter-spacing: var(--letterSpacing-link-letterSpacing);
                 }
               `}</style>
               <div className="ypp-typography flex flex-col gap-4">
@@ -269,31 +191,8 @@ const ProfessionalPracticeVideoSectionComponent: PuckComponent<ProfessionalPract
                   <h2
                     className="m-0"
                     style={{
-                      fontFamily:
-                        props.heading.styles.fontFamily === "default"
-                          ? undefined
-                          : props.heading.styles.fontFamily,
-                      fontSize:
-                        props.heading.styles.fontSize === "default"
-                          ? undefined
-                          : props.heading.styles.fontSize,
+                      ...resolveTextStyles(props.heading.styles),
                       color: headingColor,
-                      fontWeight:
-                        props.heading.styles.fontWeight === "default"
-                          ? undefined
-                          : props.heading.styles.fontWeight,
-                      fontStyle:
-                        props.heading.styles.fontStyle === "default"
-                          ? undefined
-                          : props.heading.styles.fontStyle,
-                      textTransform:
-                        props.heading.styles.textTransform === "default"
-                          ? undefined
-                          : props.heading.styles.textTransform,
-                      letterSpacing:
-                        props.heading.styles.letterSpacing === "default"
-                          ? undefined
-                          : props.heading.styles.letterSpacing,
                     }}
                   >
                     {heading}
@@ -344,7 +243,7 @@ const ProfessionalPracticeVideoSectionComponent: PuckComponent<ProfessionalPract
 
 export const ProfessionalPracticeVideoSection: YextComponentConfig<ProfessionalPracticeVideoSectionProps> =
   {
-    label: "Video Section",
+    label: "Video",
     fields: ProfessionalPracticeVideoSectionFields,
     defaultProps: {
       section: {
@@ -375,12 +274,16 @@ export const ProfessionalPracticeVideoSection: YextComponentConfig<ProfessionalP
       },
       videoSource: "https://www.youtube.com/watch?v=ysz5S6PUM-U",
     },
-    render: (props) => <ProfessionalPracticeVideoSectionComponent {...props} />,
+    render: (props) => (
+      <TypographyScope>
+        <ProfessionalPracticeVideoSectionComponent {...props} />
+      </TypographyScope>
+    ),
   };
 
 export const config: SectionConfig = {
   id: "ProfessionalPracticeVideoSection",
-  displayName: "Video Section",
+  displayName: "Video",
   description: "Video Section",
   pageSetTypes: ["ENTITY"],
 };

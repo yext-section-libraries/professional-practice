@@ -1,3 +1,5 @@
+import { resolveTextStyles, TypographyScope } from "../shared/typography";
+import { useTranslation } from "react-i18next";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -235,14 +237,7 @@ const textStyle = (
   styles: StyledTextValueWithLetterSpacing,
   color?: ThemeColor,
 ): React.CSSProperties => ({
-  fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-  fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-  fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-  fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-  textTransform:
-    styles.textTransform === "default" ? undefined : styles.textTransform,
-  letterSpacing:
-    styles.letterSpacing === "default" ? undefined : styles.letterSpacing,
+  ...resolveTextStyles(styles),
   color: color ? getThemeColorCssValue(color.selectedColor) : undefined,
 });
 
@@ -250,7 +245,8 @@ const ProfessionalPracticeEventsSectionComponent: PuckComponent<
   ProfessionalPracticeEventsSectionProps
 > = (props) => {
   const streamDocument = useDocument();
-  const locale = streamDocument.locale ?? "en";
+  const { i18n } = useTranslation();
+  const locale = i18n.language;
   const events = eventCardsSource.resolveItems(
     props.events.data,
     streamDocument,
@@ -472,7 +468,7 @@ const ProfessionalPracticeEventsSectionComponent: PuckComponent<
 
 export const ProfessionalPracticeEventsSection: YextComponentConfig<ProfessionalPracticeEventsSectionProps> =
   {
-    label: "Events Section",
+    label: "Events",
     fields: ProfessionalPracticeEventsSectionFields,
     defaultProps: {
       section: {
@@ -523,13 +519,15 @@ export const ProfessionalPracticeEventsSection: YextComponentConfig<Professional
       },
     },
     render: (props) => (
-      <ProfessionalPracticeEventsSectionComponent {...props} />
+      <TypographyScope>
+        <ProfessionalPracticeEventsSectionComponent {...props} />
+      </TypographyScope>
     ),
   };
 
 export const config: SectionConfig = {
   id: "ProfessionalPracticeEventsSection",
-  displayName: "Events Section",
+  displayName: "Events",
   description: "Events Section",
   pageSetTypes: ["ENTITY"],
 };

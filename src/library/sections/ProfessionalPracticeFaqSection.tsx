@@ -1,3 +1,5 @@
+import { resolveTextStyles, TypographyScope } from "../shared/typography";
+import { useTranslation } from "react-i18next";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -172,14 +174,7 @@ const textStyle = (
   styles: StyledTextValueWithLetterSpacing,
   fontColor?: ThemeColor,
 ): React.CSSProperties => ({
-  fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-  fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-  fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-  fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-  textTransform:
-    styles.textTransform === "default" ? undefined : styles.textTransform,
-  letterSpacing:
-    styles.letterSpacing === "default" ? undefined : styles.letterSpacing,
+  ...resolveTextStyles(styles),
   color: fontColor ? getThemeColorCssValue(fontColor.selectedColor) : undefined,
 });
 
@@ -188,7 +183,8 @@ const ProfessionalPracticeFaqSectionComponent: PuckComponent<
 > = (props) => {
   const analytics = useAnalytics();
   const streamDocument = useDocument();
-  const locale = streamDocument.locale ?? "en";
+  const { i18n } = useTranslation();
+  const locale = i18n.language;
   const items = faqItemsSource.resolveItems(props.faqs.data, streamDocument);
   const itemResetKey = items
     .map((item, index) => `${index}:${item.question ?? ""}`)
@@ -280,10 +276,6 @@ const ProfessionalPracticeFaqSectionComponent: PuckComponent<
                         <button
                           type="button"
                           className="flex w-full items-start justify-between gap-3 py-10 text-left"
-                          style={textStyle(
-                            props.faqs.styles.question,
-                            props.faqs.styles.questionFontColor,
-                          )}
                           onClick={() => {
                             const nextOpen = isOpen ? -1 : index;
                             setOpenIndex(nextOpen);
@@ -301,7 +293,15 @@ const ProfessionalPracticeFaqSectionComponent: PuckComponent<
                               authoredItem?.question.constantValueEnabled
                             }
                           >
-                            <span>{question}</span>
+                            <span
+                              className="professional-practice-faq-question"
+                              style={textStyle(
+                                props.faqs.styles.question,
+                                props.faqs.styles.questionFontColor,
+                              )}
+                            >
+                              {question}
+                            </span>
                           </EntityField>
                           <FaChevronDown
                             aria-hidden="true"
@@ -339,7 +339,7 @@ const ProfessionalPracticeFaqSectionComponent: PuckComponent<
 
 export const ProfessionalPracticeFaqSection: YextComponentConfig<ProfessionalPracticeFaqSectionProps> =
   {
-    label: "FAQ Section",
+    label: "FAQ",
     fields: ProfessionalPracticeFaqSectionFields,
     defaultProps: {
       section: {
@@ -361,11 +361,7 @@ export const ProfessionalPracticeFaqSection: YextComponentConfig<ProfessionalPra
       faqs: {
         data: faqItemsSource.defaultValue,
         styles: {
-          question: {
-            ...defaultTextStyles,
-            fontSize: "20px",
-            fontWeight: "500",
-          },
+          question: defaultTextStyles,
           questionFontColor: undefined,
           answer: defaultTextStyles,
           answerFontColor: undefined,
@@ -373,13 +369,15 @@ export const ProfessionalPracticeFaqSection: YextComponentConfig<ProfessionalPra
       },
     },
     render: (props) => (
-      <ProfessionalPracticeFaqSectionComponent {...props} />
+      <TypographyScope>
+        <ProfessionalPracticeFaqSectionComponent {...props} />
+      </TypographyScope>
     ),
   };
 
 export const config: SectionConfig = {
   id: "ProfessionalPracticeFaqSection",
-  displayName: "FAQ Section",
+  displayName: "FAQ",
   description: "FAQ Section",
   pageSetTypes: ["ENTITY"],
 };

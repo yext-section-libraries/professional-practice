@@ -1,3 +1,5 @@
+import { resolveTextStyles, TypographyScope } from "../shared/typography";
+import { useTranslation } from "react-i18next";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -200,14 +202,7 @@ const textStyle = (
   styles: StyledTextValueWithLetterSpacing,
   color?: ThemeColor,
 ): React.CSSProperties => ({
-  fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-  fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-  fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-  fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-  textTransform:
-    styles.textTransform === "default" ? undefined : styles.textTransform,
-  letterSpacing:
-    styles.letterSpacing === "default" ? undefined : styles.letterSpacing,
+  ...resolveTextStyles(styles),
   color: color ? getThemeColorCssValue(color.selectedColor) : undefined,
 });
 const getInitials = (name: string) =>
@@ -222,7 +217,8 @@ const ProfessionalPracticeTeamSectionComponent: PuckComponent<
   ProfessionalPracticeTeamSectionProps
 > = (props) => {
   const streamDocument = useDocument();
-  const locale = streamDocument.locale ?? "en";
+  const { i18n } = useTranslation();
+  const locale = i18n.language;
   const members = teamMembersSource.resolveItems(
     props.members.data,
     streamDocument,
@@ -361,7 +357,7 @@ const ProfessionalPracticeTeamSectionComponent: PuckComponent<
                               />
                             ) : (
                               <div
-                                className="flex aspect-square items-center justify-center text-4xl font-semibold"
+                                className="flex aspect-square items-center justify-center"
                                 style={getSurfaceColorStyle(
                                   props.members.styles
                                     .fallbackAvatarBackgroundColor,
@@ -424,7 +420,7 @@ const ProfessionalPracticeTeamSectionComponent: PuckComponent<
 
 export const ProfessionalPracticeTeamSection: YextComponentConfig<ProfessionalPracticeTeamSectionProps> =
   {
-    label: "Team Section",
+    label: "Team",
     fields: ProfessionalPracticeTeamSectionFields,
     defaultProps: {
       section: {
@@ -478,13 +474,15 @@ export const ProfessionalPracticeTeamSection: YextComponentConfig<ProfessionalPr
       },
     },
     render: (props) => (
-      <ProfessionalPracticeTeamSectionComponent {...props} />
+      <TypographyScope>
+        <ProfessionalPracticeTeamSectionComponent {...props} />
+      </TypographyScope>
     ),
   };
 
 export const config: SectionConfig = {
   id: "ProfessionalPracticeTeamSection",
-  displayName: "Team Section",
+  displayName: "Team",
   description: "Team Section",
   pageSetTypes: ["ENTITY"],
 };

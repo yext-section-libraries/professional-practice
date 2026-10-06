@@ -1,3 +1,5 @@
+import { resolveTextStyles, TypographyScope } from "../shared/typography";
+import { useTranslation } from "react-i18next";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -244,14 +246,7 @@ const textStyle = (
   styles: StyledTextValueWithLetterSpacing,
   color?: ThemeColor,
 ): React.CSSProperties => ({
-  fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-  fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-  fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-  fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-  textTransform:
-    styles.textTransform === "default" ? undefined : styles.textTransform,
-  letterSpacing:
-    styles.letterSpacing === "default" ? undefined : styles.letterSpacing,
+  ...resolveTextStyles(styles),
   color: color ? getThemeColorCssValue(color.selectedColor) : undefined,
 });
 
@@ -259,7 +254,8 @@ const ProfessionalPracticeServicesSectionComponent: PuckComponent<
   ProfessionalPracticeServicesSectionProps
 > = (props) => {
   const streamDocument = useDocument();
-  const locale = streamDocument.locale ?? "en";
+  const { i18n } = useTranslation();
+  const locale = i18n.language;
   const services = serviceCardsSource.resolveItems(
     props.services.data,
     streamDocument,
@@ -456,7 +452,7 @@ const ProfessionalPracticeServicesSectionComponent: PuckComponent<
 
 export const ProfessionalPracticeServicesSection: YextComponentConfig<ProfessionalPracticeServicesSectionProps> =
   {
-    label: "Services Section",
+    label: "Services",
     fields: ProfessionalPracticeServicesSectionFields,
     defaultProps: {
       section: {
@@ -494,7 +490,7 @@ export const ProfessionalPracticeServicesSection: YextComponentConfig<Profession
         styles: {
           image: { borderRadius: "default" },
           imageAspectRatio: 0.814,
-          title: { ...defaultTextStyles, fontSize: "24px" },
+          title: { ...defaultTextStyles, fontSize: "default" },
           titleFontColor: undefined,
           description: defaultTextStyles,
           descriptionFontColor: undefined,
@@ -502,13 +498,15 @@ export const ProfessionalPracticeServicesSection: YextComponentConfig<Profession
       },
     },
     render: (props) => (
-      <ProfessionalPracticeServicesSectionComponent {...props} />
+      <TypographyScope>
+        <ProfessionalPracticeServicesSectionComponent {...props} />
+      </TypographyScope>
     ),
   };
 
 export const config: SectionConfig = {
   id: "ProfessionalPracticeServicesSection",
-  displayName: "Services Section",
+  displayName: "Services",
   description: "Services Section",
   pageSetTypes: ["ENTITY"],
 };

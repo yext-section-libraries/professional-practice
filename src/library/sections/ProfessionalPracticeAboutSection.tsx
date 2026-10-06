@@ -1,3 +1,4 @@
+import { resolveTextStyles, TypographyScope } from "../shared/typography";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -34,6 +35,7 @@ import {
   type StyledRtfProps,
   type StyledTextProps,
 } from "../shared/sectionHelpers";
+import { useTranslation } from "react-i18next";
 
 type AboutImageProps = {
   image: YextEntityField<ImageType | ComplexImageType>;
@@ -70,7 +72,6 @@ const lightCtaColor: ThemeColor = {
 
 const aboutImageUrl =
   "https://a.mktgcdn.com/p/UHR6VTEvcR-yDMqPSOS7LyK87Qt56EOrmfNbhLQxI08/1267x1900.jpg";
-
 
 const ProfessionalPracticeAboutSectionFields: YextFields<ProfessionalPracticeAboutSectionProps> =
   {
@@ -168,133 +169,66 @@ const ProfessionalPracticeAboutSectionFields: YextFields<ProfessionalPracticeAbo
     },
   };
 
-const ProfessionalPracticeAboutSectionComponent: PuckComponent<ProfessionalPracticeAboutSectionProps> =
-  (props) => {
-    const streamDocument = useDocument();
-    const locale = streamDocument.locale ?? "en";
-    const headingColor = getReadableForegroundColor(props.heading.fontColor, props.section.backgroundColor, streamDocument);
-    const bodyRichTextStyleOverrides = {
-      color: getReadableForegroundColor(props.body.fontColor, props.section.backgroundColor, streamDocument),
-    };
-    const heading =
-      resolveComponentData(props.heading.text, locale, streamDocument) || "";
-    const body = resolveComponentData(props.body.text, locale, streamDocument);
-    const image = resolveComponentData(
-      props.image.image,
-      locale,
+const ProfessionalPracticeAboutSectionComponent: PuckComponent<
+  ProfessionalPracticeAboutSectionProps
+> = (props) => {
+  const { i18n } = useTranslation();
+  const streamDocument = useDocument();
+  const locale = i18n.language;
+  const headingColor = getReadableForegroundColor(
+    props.heading.fontColor,
+    props.section.backgroundColor,
+    streamDocument,
+  );
+  const bodyRichTextStyleOverrides = {
+    color: getReadableForegroundColor(
+      props.body.fontColor,
+      props.section.backgroundColor,
       streamDocument,
-    ) as ImageType | ComplexImageType | undefined;
-    const imageBorderRadius =
-      !props.image.styles?.borderRadius ||
-      props.image.styles.borderRadius === "default"
-        ? undefined
-        : props.image.styles.borderRadius === "none"
-          ? 0
-          : props.image.styles.borderRadius;
-    const imageWrapperBorderRadius = imageBorderRadius ?? 14;
+    ),
+  };
+  const heading =
+    resolveComponentData(props.heading.text, locale, streamDocument) || "";
+  const body = resolveComponentData(props.body.text, locale, streamDocument);
+  const image = resolveComponentData(
+    props.image.image,
+    locale,
+    streamDocument,
+  ) as ImageType | ComplexImageType | undefined;
+  const imageBorderRadius =
+    !props.image.styles?.borderRadius ||
+    props.image.styles.borderRadius === "default"
+      ? undefined
+      : props.image.styles.borderRadius === "none"
+        ? 0
+        : props.image.styles.borderRadius;
+  const imageWrapperBorderRadius = imageBorderRadius ?? 14;
 
-    return (
-      <VisibilityWrapper
-        liveVisibility={props.section.visibleOnLivePage}
-        isEditing={props.puck.isEditing}
+  return (
+    <VisibilityWrapper
+      liveVisibility={props.section.visibleOnLivePage}
+      isEditing={props.puck.isEditing}
+    >
+      <AnalyticsScopeProvider
+        name={`ProfessionalPracticeAboutSection${getAnalyticsScopeHash(props.id)}`}
       >
-        <AnalyticsScopeProvider
-          name={`ProfessionalPracticeAboutSection${getAnalyticsScopeHash(props.id)}`}
-        >
-          <Background background={props.section.backgroundColor}>
-            <section
-              data-ypp-scope="about-section"
-              style={{
-                ...getSurfaceColorStyle(
-                  props.section.backgroundColor,
-                  streamDocument,
-                ),
-                color: resolveThemeColorCssValue(textColor),
-              }}
-            >
+        <Background background={props.section.backgroundColor}>
+          <section
+            data-ypp-scope="about-section"
+            style={{
+              ...getSurfaceColorStyle(
+                props.section.backgroundColor,
+                streamDocument,
+              ),
+              color: resolveThemeColorCssValue(textColor),
+            }}
+          >
             <div className="mx-auto flex max-w-[1280px] flex-col gap-8 px-4 py-[30px] md:px-8 md:py-[60px] xl:grid xl:grid-cols-[minmax(0,1fr)_minmax(420px,1.1fr)] xl:items-center xl:gap-10 xl:px-20">
               <style>{`
-                [data-ypp-scope="about-section"] .ypp-typography p {
-                  font-family: var(--fontFamily-body-fontFamily);
-                  font-size: var(--fontSize-body-fontSize);
-                  line-height: 1.5;
-                  font-weight: var(--fontWeight-body-fontWeight);
-                  font-style: var(--fontStyle-body-fontStyle);
-                  text-transform: var(--textTransform-body-textTransform);
-                }
-
-                [data-ypp-scope="about-section"] .ypp-typography li {
-                  font-family: var(--fontFamily-body-fontFamily);
-                  font-size: var(--fontSize-body-fontSize);
-                  line-height: 1.5;
-                  font-weight: var(--fontWeight-body-fontWeight);
-                  font-style: var(--fontStyle-body-fontStyle);
-                  text-transform: var(--textTransform-body-textTransform);
-                }
-
-                [data-ypp-scope="about-section"] .ypp-typography h1 {
-                  font-family: var(--fontFamily-h1-fontFamily);
-                  font-size: var(--fontSize-h1-fontSize);
-                  line-height: 1.2;
-                  font-weight: var(--fontWeight-h1-fontWeight);
-                  font-style: var(--fontStyle-h1-fontStyle);
-                  text-transform: var(--textTransform-h1-textTransform);
-                }
-
-                [data-ypp-scope="about-section"] .ypp-typography h2 {
-                  font-family: var(--fontFamily-h2-fontFamily);
-                  font-size: var(--fontSize-h2-fontSize);
-                  line-height: 1.2;
-                  font-weight: var(--fontWeight-h2-fontWeight);
-                  font-style: var(--fontStyle-h2-fontStyle);
-                  text-transform: var(--textTransform-h2-textTransform);
-                }
-
-                [data-ypp-scope="about-section"] .ypp-typography h3 {
-                  font-family: var(--fontFamily-h3-fontFamily);
-                  font-size: var(--fontSize-h3-fontSize);
-                  line-height: 1.2;
-                  font-weight: var(--fontWeight-h3-fontWeight);
-                  font-style: var(--fontStyle-h3-fontStyle);
-                  text-transform: var(--textTransform-h3-textTransform);
-                }
-
-                [data-ypp-scope="about-section"] .ypp-typography h4 {
-                  font-family: var(--fontFamily-h4-fontFamily);
-                  font-size: var(--fontSize-h4-fontSize);
-                  line-height: 1.2;
-                  font-weight: var(--fontWeight-h4-fontWeight);
-                  font-style: var(--fontStyle-h4-fontStyle);
-                  text-transform: var(--textTransform-h4-textTransform);
-                }
-
-                [data-ypp-scope="about-section"] .ypp-typography h5 {
-                  font-family: var(--fontFamily-h5-fontFamily);
-                  font-size: var(--fontSize-h5-fontSize);
-                  line-height: 1.2;
-                  font-weight: var(--fontWeight-h5-fontWeight);
-                  font-style: var(--fontStyle-h5-fontStyle);
-                  text-transform: var(--textTransform-h5-textTransform);
-                }
-
-                [data-ypp-scope="about-section"] .ypp-typography h6 {
-                  font-family: var(--fontFamily-h6-fontFamily);
-                  font-size: var(--fontSize-h6-fontSize);
-                  line-height: 1.2;
-                  font-weight: var(--fontWeight-h6-fontWeight);
-                  font-style: var(--fontStyle-h6-fontStyle);
-                  text-transform: var(--textTransform-h6-textTransform);
-                }
 
                 [data-ypp-scope="about-section"] .ypp-typography a {
-                  font-family: var(--fontFamily-link-fontFamily);
-                  font-size: var(--fontSize-link-fontSize);
-                  font-weight: var(--fontWeight-link-fontWeight);
-                  font-style: var(--fontStyle-link-fontStyle);
-                  line-height: 1.5;
+
                   text-decoration: underline;
-                  text-transform: var(--textTransform-link-textTransform);
-                  letter-spacing: var(--letterSpacing-link-letterSpacing);
                 }
 
                 [data-ypp-scope="about-section"] .ypp-cta-button {
@@ -337,31 +271,8 @@ const ProfessionalPracticeAboutSectionComponent: PuckComponent<ProfessionalPract
                   <h2
                     className="m-0"
                     style={{
-                      fontFamily:
-                        props.heading.styles.fontFamily === "default"
-                          ? undefined
-                          : props.heading.styles.fontFamily,
-                      fontSize:
-                        props.heading.styles.fontSize === "default"
-                          ? undefined
-                          : props.heading.styles.fontSize,
+                      ...resolveTextStyles(props.heading.styles),
                       color: headingColor,
-                      fontWeight:
-                        props.heading.styles.fontWeight === "default"
-                          ? undefined
-                          : props.heading.styles.fontWeight,
-                      fontStyle:
-                        props.heading.styles.fontStyle === "default"
-                          ? undefined
-                          : props.heading.styles.fontStyle,
-                      textTransform:
-                        props.heading.styles.textTransform === "default"
-                          ? undefined
-                          : props.heading.styles.textTransform,
-                      letterSpacing:
-                        props.heading.styles.letterSpacing === "default"
-                          ? undefined
-                          : props.heading.styles.letterSpacing,
                     }}
                   >
                     {heading}
@@ -373,10 +284,7 @@ const ProfessionalPracticeAboutSectionComponent: PuckComponent<ProfessionalPract
                     fieldId={props.body.text.field}
                     constantValueEnabled={props.body.text.constantValueEnabled}
                   >
-                    {renderResolvedRichText(
-                      body,
-                      bodyRichTextStyleOverrides,
-                    )}
+                    {renderResolvedRichText(body, bodyRichTextStyleOverrides)}
                   </EntityField>
                 </div>
                 <EntityField
@@ -384,46 +292,49 @@ const ProfessionalPracticeAboutSectionComponent: PuckComponent<ProfessionalPract
                   fieldId={props.cta.data.cta.field}
                   constantValueEnabled={props.cta.data.cta.constantValueEnabled}
                 >
-                <ComprehensiveCTA
-                  value={props.cta as Partial<ComprehensiveCTAValue>}
-                  eventName="cta"
-                  className={`inline-flex min-h-12 items-center justify-center px-4${
-                    ["primary", "solid"].includes(props.cta.styles.variant ?? "")
-                      ? " ypp-cta-button ypp-cta-button--filled"
-                      : ["secondary", "outline"].includes(
-                            props.cta.styles.variant ?? "",
-                          )
-                        ? " ypp-cta-button ypp-cta-button--outline"
-                        : ""
-                  }`}
-                  style={
-                    ["primary", "secondary", "solid", "outline"].includes(
-                      props.cta.styles.variant ?? "",
-                    )
-                      ? {
-                          textDecoration: "none",
-                          ...(["secondary", "outline"].includes(
-                            props.cta.styles.variant ?? "",
-                          ) &&
-                          (!props.cta.styles.color?.selectedColor ||
-                            props.cta.styles.color.selectedColor === "default")
-                            ? {
-                                color: getReadableForegroundColor(
-                                  undefined,
-                                  props.section.backgroundColor,
-                                  streamDocument,
-                                ),
-                              }
-                            : {}),
-                          ...(["secondary", "outline"].includes(
-                            props.cta.styles.variant ?? "",
-                          )
-                            ? { borderColor: "currentColor" }
-                            : {}),
-                        }
-                      : undefined
-                  }
-                />
+                  <ComprehensiveCTA
+                    value={props.cta as Partial<ComprehensiveCTAValue>}
+                    eventName="cta"
+                    className={`inline-flex min-h-12 items-center justify-center px-4${
+                      ["primary", "solid"].includes(
+                        props.cta.styles.variant ?? "",
+                      )
+                        ? " ypp-cta-button ypp-cta-button--filled"
+                        : ["secondary", "outline"].includes(
+                              props.cta.styles.variant ?? "",
+                            )
+                          ? " ypp-cta-button ypp-cta-button--outline"
+                          : ""
+                    }`}
+                    style={
+                      ["primary", "secondary", "solid", "outline"].includes(
+                        props.cta.styles.variant ?? "",
+                      )
+                        ? {
+                            textDecoration: "none",
+                            ...(["secondary", "outline"].includes(
+                              props.cta.styles.variant ?? "",
+                            ) &&
+                            (!props.cta.styles.color?.selectedColor ||
+                              props.cta.styles.color.selectedColor ===
+                                "default")
+                              ? {
+                                  color: getReadableForegroundColor(
+                                    undefined,
+                                    props.section.backgroundColor,
+                                    streamDocument,
+                                  ),
+                                }
+                              : {}),
+                            ...(["secondary", "outline"].includes(
+                              props.cta.styles.variant ?? "",
+                            )
+                              ? { borderColor: "currentColor" }
+                              : {}),
+                          }
+                        : undefined
+                    }
+                  />
                 </EntityField>
               </div>
               <EntityField
@@ -455,16 +366,16 @@ const ProfessionalPracticeAboutSectionComponent: PuckComponent<ProfessionalPract
                 ) : null}
               </EntityField>
             </div>
-            </section>
-          </Background>
-        </AnalyticsScopeProvider>
-      </VisibilityWrapper>
-    );
-  };
+          </section>
+        </Background>
+      </AnalyticsScopeProvider>
+    </VisibilityWrapper>
+  );
+};
 
 export const ProfessionalPracticeAboutSection: YextComponentConfig<ProfessionalPracticeAboutSectionProps> =
   {
-    label: "About Section",
+    label: "About",
     fields: ProfessionalPracticeAboutSectionFields,
     defaultProps: {
       section: {
@@ -554,12 +465,16 @@ export const ProfessionalPracticeAboutSection: YextComponentConfig<ProfessionalP
         },
       },
     },
-    render: (props) => <ProfessionalPracticeAboutSectionComponent {...props} />,
+    render: (props) => (
+      <TypographyScope>
+        <ProfessionalPracticeAboutSectionComponent {...props} />
+      </TypographyScope>
+    ),
   };
 
 export const config: SectionConfig = {
   id: "ProfessionalPracticeAboutSection",
-  displayName: "About Section",
+  displayName: "About",
   description: "About Section",
   pageSetTypes: ["ENTITY"],
 };
