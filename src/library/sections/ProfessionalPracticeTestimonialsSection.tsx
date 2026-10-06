@@ -1,3 +1,5 @@
+import { resolveTextStyles, TypographyScope } from "../shared/typography";
+import { useTranslation } from "react-i18next";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -215,14 +217,7 @@ const textStyle = (
   styles: StyledTextValueWithLetterSpacing,
   fontColor?: ThemeColor,
 ): React.CSSProperties => ({
-  fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-  fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-  fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-  fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-  textTransform:
-    styles.textTransform === "default" ? undefined : styles.textTransform,
-  letterSpacing:
-    styles.letterSpacing === "default" ? undefined : styles.letterSpacing,
+  ...resolveTextStyles(styles),
   color: fontColor ? getThemeColorCssValue(fontColor.selectedColor) : undefined,
 });
 
@@ -230,7 +225,8 @@ const ProfessionalPracticeTestimonialsSectionComponent: PuckComponent<
   ProfessionalPracticeTestimonialsSectionProps
 > = (props) => {
   const streamDocument = useDocument();
-  const locale = streamDocument.locale ?? "en";
+  const { i18n } = useTranslation();
+  const locale = i18n.language;
   const testimonials = testimonialSource.resolveItems(
     props.testimonials.data,
     streamDocument,
@@ -355,7 +351,7 @@ const ProfessionalPracticeTestimonialsSectionComponent: PuckComponent<
                         >
                           <span
                             aria-hidden="true"
-                            className="text-[32px] leading-none"
+                            className=""
                           >
                             “
                           </span>
@@ -440,7 +436,7 @@ const ProfessionalPracticeTestimonialsSectionComponent: PuckComponent<
 
 export const ProfessionalPracticeTestimonialsSection: YextComponentConfig<ProfessionalPracticeTestimonialsSectionProps> =
   {
-    label: "Testimonials Section",
+    label: "Testimonials",
     fields: ProfessionalPracticeTestimonialsSectionFields,
     defaultProps: {
       section: {
@@ -477,13 +473,15 @@ export const ProfessionalPracticeTestimonialsSection: YextComponentConfig<Profes
       },
     },
     render: (props) => (
-      <ProfessionalPracticeTestimonialsSectionComponent {...props} />
+      <TypographyScope>
+        <ProfessionalPracticeTestimonialsSectionComponent {...props} />
+      </TypographyScope>
     ),
   };
 
 export const config: SectionConfig = {
   id: "ProfessionalPracticeTestimonialsSection",
-  displayName: "Testimonials Section",
+  displayName: "Testimonials",
   description: "Testimonials Section",
   pageSetTypes: ["ENTITY"],
 };

@@ -1,3 +1,5 @@
+import { resolveTextStyles, TypographyScope } from "../shared/typography";
+import { useTranslation } from "react-i18next";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -224,14 +226,7 @@ const textStyle = (
   styles: StyledTextValueWithLetterSpacing,
   color?: ThemeColor,
 ): React.CSSProperties => ({
-  fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-  fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-  fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-  fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-  textTransform:
-    styles.textTransform === "default" ? undefined : styles.textTransform,
-  letterSpacing:
-    styles.letterSpacing === "default" ? undefined : styles.letterSpacing,
+  ...resolveTextStyles(styles),
   color: color ? getThemeColorCssValue(color.selectedColor) : undefined,
 });
 
@@ -239,7 +234,8 @@ const ProfessionalPracticeBlogSectionComponent: PuckComponent<
   ProfessionalPracticeBlogSectionProps
 > = (props) => {
   const streamDocument = useDocument();
-  const locale = streamDocument.locale ?? "en";
+  const { i18n } = useTranslation();
+  const locale = i18n.language;
   const cards = blogCardsSource.resolveItems(props.cards.data, streamDocument);
   const authoredCards = props.cards.data.constantValueEnabled
     ? props.cards.data.constantValue
@@ -429,7 +425,7 @@ const ProfessionalPracticeBlogSectionComponent: PuckComponent<
 
 export const ProfessionalPracticeBlogSection: YextComponentConfig<ProfessionalPracticeBlogSectionProps> =
   {
-    label: "Blog Section",
+    label: "Blog",
     fields: ProfessionalPracticeBlogSectionFields,
     defaultProps: {
       section: {
@@ -465,13 +461,15 @@ export const ProfessionalPracticeBlogSection: YextComponentConfig<ProfessionalPr
       },
     },
     render: (props) => (
-      <ProfessionalPracticeBlogSectionComponent {...props} />
+      <TypographyScope>
+        <ProfessionalPracticeBlogSectionComponent {...props} />
+      </TypographyScope>
     ),
   };
 
 export const config: SectionConfig = {
   id: "ProfessionalPracticeBlogSection",
-  displayName: "Blog Section",
+  displayName: "Blog",
   description: "Blog Section",
   pageSetTypes: ["ENTITY"],
 };

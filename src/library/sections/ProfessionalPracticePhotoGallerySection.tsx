@@ -1,3 +1,5 @@
+import { resolveTextStyles, TypographyScope } from "../shared/typography";
+import { useTranslation } from "react-i18next";
 import type { SectionConfig } from "@yext/visual-editor";
 
 import * as React from "react";
@@ -179,14 +181,7 @@ const textStyle = (
   styles: StyledTextValueWithLetterSpacing,
   fontColor?: ThemeColor,
 ): React.CSSProperties => ({
-  fontFamily: styles.fontFamily === "default" ? undefined : styles.fontFamily,
-  fontSize: styles.fontSize === "default" ? undefined : styles.fontSize,
-  fontWeight: styles.fontWeight === "default" ? undefined : styles.fontWeight,
-  fontStyle: styles.fontStyle === "default" ? undefined : styles.fontStyle,
-  textTransform:
-    styles.textTransform === "default" ? undefined : styles.textTransform,
-  letterSpacing:
-    styles.letterSpacing === "default" ? undefined : styles.letterSpacing,
+  ...resolveTextStyles(styles),
   color: fontColor ? getThemeColorCssValue(fontColor.selectedColor) : undefined,
 });
 
@@ -194,7 +189,8 @@ const ProfessionalPracticePhotoGallerySectionComponent: PuckComponent<
   ProfessionalPracticePhotoGallerySectionProps
 > = (props) => {
   const streamDocument = useDocument();
-  const locale = streamDocument.locale ?? "en";
+  const { i18n } = useTranslation();
+  const locale = i18n.language;
   const photos = photoSource.resolveItems(props.photos.data, streamDocument);
   const authoredPhotos = props.photos.data.constantValueEnabled
     ? props.photos.data.constantValue
@@ -350,7 +346,7 @@ const ProfessionalPracticePhotoGallerySectionComponent: PuckComponent<
 
 export const ProfessionalPracticePhotoGallerySection: YextComponentConfig<ProfessionalPracticePhotoGallerySectionProps> =
   {
-    label: "Photo Gallery Section",
+    label: "Photo Gallery",
     fields: ProfessionalPracticePhotoGallerySectionFields,
     defaultProps: {
       section: {
@@ -382,13 +378,15 @@ export const ProfessionalPracticePhotoGallerySection: YextComponentConfig<Profes
       },
     },
     render: (props) => (
-      <ProfessionalPracticePhotoGallerySectionComponent {...props} />
+      <TypographyScope>
+        <ProfessionalPracticePhotoGallerySectionComponent {...props} />
+      </TypographyScope>
     ),
   };
 
 export const config: SectionConfig = {
   id: "ProfessionalPracticePhotoGallerySection",
-  displayName: "Photo Gallery Section",
+  displayName: "Photo Gallery",
   description: "Photo Gallery Section",
   pageSetTypes: ["ENTITY"],
 };
