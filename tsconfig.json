@@ -5,14 +5,16 @@
     "moduleResolution": "Bundler",
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
-    "rootDir": "./src",
+    "rootDir": ".",
     "outDir": "./dist",
     "skipLibCheck": true,
     "module": "esnext",
     "types": ["vite/client"],
     "paths": {
       "@yext/pages": ["./node_modules/@yext/pages/dist/types/src/index.d.ts"]
-    }
+    },
+    "noEmit": true,
+    "allowImportingTsExtensions": true
   },
   "include": ["src", "global.d.ts", "theme.config.ts"]
 }

@@ -59,8 +59,8 @@ import {
   DEFAULT_LOCATOR_RESULT_CARD_PROPS,
   Location,
   LocatorResultCard,
-} from "./LocatorResultCard";
-import type { LocatorProps } from "./Locator";
+} from "./LocatorResultCard.render";
+import type { LocatorProps } from "./Locator.render";
 import {
   COUNTRY_CODE_FIELD,
   FilterModal,
@@ -80,13 +80,13 @@ import {
   LoadingMapPlaceholder,
   LocationStyleConfig,
   makiIconMap,
-} from "./Map";
+} from "./Map.render";
 import {
   MobileLocatorResultsSection,
   ResultsCountSummary,
   RESULTS_LIMIT,
   SearchState,
-} from "./Results";
+} from "./Results.render";
 
 export const INITIAL_LOCATION_KEY = "initialLocation";
 const LOCATION_QUERY_KEY = "q";

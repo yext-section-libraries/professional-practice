@@ -1,19 +1,15 @@
+import { LocatorComponent as renderConfig } from "./Locator.render";
+import type { LocatorProps } from "./Locator.render";
+export type { LocatorProps } from "./Locator.render";
 import { FieldLabel, setDeep } from "@puckeditor/core";
-import { type MultiSelectorValue } from "@yext/visual-editor/section-library-support";
 import { YextAutoField } from "@yext/visual-editor/section-library-support";
-import { TranslatableString } from "@yext/visual-editor/section-library-support";
 import { msg, pt } from "@yext/visual-editor/section-library-support";
-import { TranslatableAssetImage } from "@yext/visual-editor/section-library-support";
-import {
-  backgroundColors,
-  ThemeColor,
-} from "@yext/visual-editor/section-library-support";
+import { backgroundColors } from "@yext/visual-editor/section-library-support";
 import {
   DEFAULT_ENTITY_TYPE,
   getEntityTypeLabel,
   getLocatorEntityTypeSourceMap,
   isLocatorEntityType,
-  LocatorEntityType,
 } from "@yext/visual-editor/section-library-support";
 import {
   toPuckFields,
@@ -23,13 +19,8 @@ import {
 } from "@yext/visual-editor/section-library-support";
 import { ImageStylingFields } from "../contentBlocks/image/styling";
 import { getFacetFieldOptions } from "./Filters";
-import {
-  DEFAULT_LOCATOR_RESULT_CARD_PROPS,
-  DistanceDisplayOption,
-  LocatorResultCardProps,
-} from "./LocatorResultCard";
+import { DEFAULT_LOCATOR_RESULT_CARD_PROPS } from "./LocatorResultCard";
 import { ResultCardPropsField } from "./Results";
-import { LocatorWrapper } from "./LocatorWrapper";
 import {
   DEFAULT_LOCATION_STYLE,
   DEFAULT_MAKI_ICON_NAME,
@@ -40,94 +31,6 @@ import {
 } from "./Map";
 const DEFAULT_TITLE = "Find a Location";
 const DEFAULT_DISTANCE_DISPLAY = "distanceFromUser";
-
-export interface LocatorProps {
-  /**
-   * The visual theme for the map tiles, chosen from a predefined list of Mapbox styles.
-   * @defaultValue 'mapbox://styles/mapbox/streets-v12'
-   */
-  mapStyle?: string;
-
-  /**
-   * Props to customize the locator map pin styles.
-   * Controls map pin appearance depending on the result's entity type.
-   * The number of entries is locked to the locator entity types for the page set.
-   */
-  locationStyles: Array<{
-    /** The entity type this style applies to. */
-    entityType: LocatorEntityType;
-    /** Whether to render an icon in the pin. */
-    pinIcon?: {
-      type: "none" | "icon" | "customImage";
-      /** Defaults to the first available Maki icon when type is 'icon'. */
-      iconName?: string;
-      /** Image rendered within the pin when type is 'customImage'. */
-      image?: TranslatableAssetImage;
-      /**
-       * Width of the custom image rendered within the pin.
-       * @defaultValue 14
-       * */
-      width?: number;
-      /** Aspect ratio of the custom image rendered within the pin. */
-      aspectRatio?: number;
-    };
-    /** The color applied to the pin. */
-    pinColor?: ThemeColor;
-  }>;
-
-  /**
-   * Configuration for the filters available in the locator search experience.
-   */
-  filters: {
-    /**
-     * If 'true', displays a button to filter for locations that are currently open.
-     * @defaultValue false
-     */
-    openNowButton: boolean;
-    /**
-     * If 'true', displays several distance options to filter searches to only locations within
-     * a certain radius.
-     * @defaultValue false
-     */
-    showDistanceOptions: boolean;
-    /** Accent color for filter button and icons. */
-    accentColor?: ThemeColor;
-    /** Which fields are facetable in the search experience */
-    facetFields?: MultiSelectorValue<string>;
-  };
-
-  /**
-   * The starting location for the map.
-   */
-  mapStartingLocation?: {
-    latitude: string;
-    longitude: string;
-  };
-  /**
-   * Configuration for the locator page heading.
-   * Allows customizing the title text and its color.
-   */
-  pageHeading?: {
-    /** The title displayed at the top of the locator page. */
-    title: TranslatableString;
-    /**
-     * The color applied to the locator page title.
-     * @defaultValue inherited from theme
-     */
-    color?: ThemeColor;
-  };
-  /**
-   * Props to customize the locator result card component.
-   * Controls which fields are displayed and their styling depending on the result's entity type.
-   * The number of entries is locked to the locator entity types for the page set.
-   */
-  resultCard: Array<{
-    /** Props to customize the locator result card component. */
-    props: LocatorResultCardProps;
-  }>;
-  /** Controls which distance value to display on each locator result card. */
-  distanceDisplay?: DistanceDisplayOption;
-}
 
 const locatorFields: YextFields<LocatorProps> = {
   mapStyle: {
@@ -298,7 +201,7 @@ const locatorFields: YextFields<LocatorProps> = {
       showDistanceOptions: {
         label: msg(
           "fields.options.showDistanceOptions",
-          "Include Distance Options"
+          "Include Distance Options",
         ),
         type: "radio",
         options: [
@@ -323,7 +226,7 @@ const locatorFields: YextFields<LocatorProps> = {
         },
         placeholderOptionLabel: msg(
           "fields.options.selectAField",
-          "Select a field"
+          "Select a field",
         ),
       } as any, // TODO(SUMO-8378): remove 'as any' when puck fixes objectFields typing
     },
@@ -417,7 +320,7 @@ export const LocatorComponent: YextComponentConfig<LocatorProps> = {
       ? getLocatorEntityTypeSourceMap(entityDocument)
       : { [DEFAULT_ENTITY_TYPE]: undefined };
     const entityTypes = Object.keys(
-      entityTypeSourceMap
+      entityTypeSourceMap,
     ) as (keyof typeof entityTypeSourceMap)[];
     const entityTypeCount = entityTypes.length;
 
@@ -425,12 +328,12 @@ export const LocatorComponent: YextComponentConfig<LocatorProps> = {
     updatedFields = setDeep(
       updatedFields,
       "locationStyles.min",
-      entityTypeCount
+      entityTypeCount,
     );
     updatedFields = setDeep(
       updatedFields,
       "locationStyles.max",
-      entityTypeCount
+      entityTypeCount,
     );
     updatedFields = setDeep(updatedFields, "resultCard.min", entityTypeCount);
     updatedFields = setDeep(updatedFields, "resultCard.max", entityTypeCount);
@@ -462,7 +365,7 @@ export const LocatorComponent: YextComponentConfig<LocatorProps> = {
       ? getLocatorEntityTypeSourceMap(entityDocument)
       : { [DEFAULT_ENTITY_TYPE]: undefined };
     const entityTypes = Object.keys(
-      entityTypeSourceMap
+      entityTypeSourceMap,
     ) as (keyof typeof entityTypeSourceMap)[];
 
     const previousLocationStyles = data.props.locationStyles ?? [];
@@ -470,25 +373,25 @@ export const LocatorComponent: YextComponentConfig<LocatorProps> = {
     const hasSameEntityTypes = (currentEntityTypes: string[]) =>
       currentEntityTypes.length === entityTypes.length &&
       entityTypes.every((entityType) =>
-        currentEntityTypes.includes(entityType)
+        currentEntityTypes.includes(entityType),
       );
 
     const locationStylesByEntityType = new globalThis.Map(
       previousLocationStyles
         .filter((item) => !!item.entityType)
-        .map((item) => [item.entityType, item] as const)
+        .map((item) => [item.entityType, item] as const),
     );
     const resultCardsByEntityType = new globalThis.Map(
       previousResultCard
         .filter((item) => !!item?.props?.entityType)
-        .map((item) => [item.props.entityType, item] as const)
+        .map((item) => [item.props.entityType, item] as const),
     );
 
     const previousLocationStyleEntityTypes = previousLocationStyles.map(
-      (item) => item.entityType
+      (item) => item.entityType,
     );
     const previousResultCardEntityTypes = previousResultCard.map(
-      (item) => item.props?.entityType
+      (item) => item.props?.entityType,
     );
 
     const shouldReconcileLocationStyles =
@@ -522,5 +425,5 @@ export const LocatorComponent: YextComponentConfig<LocatorProps> = {
 
     return data;
   },
-  render: (props) => <LocatorWrapper {...props} />,
+  render: renderConfig.render,
 };

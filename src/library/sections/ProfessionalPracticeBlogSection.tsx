@@ -1,155 +1,13 @@
-import { resolveTextStyles, TypographyScope } from "../shared/typography";
-import { useTranslation } from "react-i18next";
+import { ProfessionalPracticeBlogSection as renderConfig } from "./ProfessionalPracticeBlogSection.render";
+import type { ProfessionalPracticeBlogSectionProps } from "./ProfessionalPracticeBlogSection.render";
+import { blogCardsSource } from "./ProfessionalPracticeBlogSection.render";
 import type { SectionConfig } from "@yext/visual-editor";
-
-import * as React from "react";
-import type { PuckComponent } from "@puckeditor/core";
 import {
   msg,
-  Background,
-  ComprehensiveCTA,
-  type ComprehensiveCTAValue,
-  createItemSource,
-  EntityField,
-  getAnalyticsScopeHash,
-  getDefaultRTF,
-  getSurfaceColorStyle,
-  getThemeColorCssValue,
-  Image,
-  resolveComponentData,
-  type StyledImageValue,
-  type ThemeColor,
-  type TranslatableAssetImage,
-  type TranslatableRichText,
-  useDocument,
-  VisibilityWrapper,
   type YextComponentConfig,
-  type YextEntityField,
   type YextFields,
 } from "@yext/visual-editor";
-import { AnalyticsScopeProvider } from "@yext/pages-components";
-import {
-  defaultTextStyles,
-  renderResolvedRichText,
-  type StyledTextProps,
-  type StyledTextValueWithLetterSpacing,
-} from "../shared/sectionHelpers";
-
-type BlogCardFields = {
-  image: YextEntityField<TranslatableAssetImage>;
-  title: YextEntityField<string>;
-  description: YextEntityField<TranslatableRichText>;
-  cta: Pick<ComprehensiveCTAValue, "data" | "styles">;
-};
-
-const defaultBlogCtaStyles: ComprehensiveCTAValue["styles"] = {
-  variant: "secondary",
-  color: { selectedColor: "white", contrastingColor: "palette-secondary" },
-  button: {
-    ...defaultTextStyles,
-    letterSpacing: "default",
-    borderRadius: "12px",
-  },
-  link: {
-    ...defaultTextStyles,
-    letterSpacing: "default",
-    includeCaret: "default",
-  },
-};
-
-const blogCardsSource = createItemSource<BlogCardFields>({
-  label: msg("fields.blogCards", "Blog Cards"),
-  mappingFields: {
-    image: {
-      type: "entityField",
-      label: msg("fields.options.image", "Image"),
-      filter: { types: ["type.image"] },
-    },
-    title: {
-      type: "entityField",
-      label: msg("fields.title", "Title"),
-      filter: { types: ["type.string"] },
-    },
-    description: {
-      type: "entityField",
-      label: msg("fields.description", "Description"),
-      filter: { types: ["type.rich_text_v2"] },
-    },
-    cta: {
-      label: msg("fields.callToAction", "Call to Action"),
-      type: "comprehensiveCTA",
-    },
-  },
-  defaultValues: [
-    {
-      imageUrl:
-        "https://a.mktgcdn.com/p/Qdlacb36DqN5Lt3q6V9jw-qSMmbPyl_AeMEI_CyDkHc/1267x1900.jpg",
-      title: "Dog Coat Care Between Grooms: 5 Tips for Pet Parents",
-      description:
-        "Prevent painful matting and keep your dog's coat looking fresh between professional visits with these easy, 5-minute brushing habits.",
-      ctaLabel: "Read Grooming Guide",
-    },
-    {
-      imageUrl:
-        "https://a.mktgcdn.com/p/UHR6VTEvcR-yDMqPSOS7LyK87Qt56EOrmfNbhLQxI08/1267x1900.jpg",
-      title: "Understanding the Doodle Coat: How to Pick the Right Trim",
-      description:
-        "From kennel cuts to teddy bear trims, we break down the most popular Goldendoodle and Labradoodle cuts and how to maintain them.",
-      ctaLabel: "Read Article",
-    },
-  ].map(({ imageUrl, title, description, ctaLabel }) => ({
-    image: {
-      field: "",
-      constantValue: { url: imageUrl, width: 1267, height: 1900 },
-      constantValueEnabled: true,
-    },
-    title: { field: "", constantValue: title, constantValueEnabled: true },
-    description: {
-      field: "",
-      constantValue: {
-        defaultValue: getDefaultRTF(description),
-        hasLocalizedValue: "true",
-      },
-      constantValueEnabled: true,
-    },
-    cta: {
-      data: {
-        actionType: "link",
-        cta: {
-          field: "",
-          constantValue: {
-            ctaType: "textAndLink",
-            label: { defaultValue: ctaLabel },
-            link: { defaultValue: "#" },
-            linkType: "URL",
-          },
-          constantValueEnabled: true,
-          selectedType: "textAndLink",
-        },
-        openInNewTab: false,
-      },
-      styles: defaultBlogCtaStyles,
-    },
-  })),
-});
-
-type ProfessionalPracticeBlogSectionProps = {
-  section: { visibleOnLivePage: boolean; backgroundColor: ThemeColor };
-  heading: StyledTextProps;
-  cards: {
-    data: typeof blogCardsSource.value;
-    styles: {
-      overlayBackgroundColor: ThemeColor;
-      image: StyledImageValue;
-      imageAspectRatio: number;
-      title: StyledTextValueWithLetterSpacing;
-      titleFontColor?: ThemeColor;
-      description: StyledTextValueWithLetterSpacing;
-      descriptionFontColor?: ThemeColor;
-    };
-  };
-};
-
+import { defaultTextStyles } from "../shared/sectionHelpers";
 const ProfessionalPracticeBlogSectionFields: YextFields<ProfessionalPracticeBlogSectionProps> =
   {
     section: {
@@ -180,7 +38,10 @@ const ProfessionalPracticeBlogSectionFields: YextFields<ProfessionalPracticeBlog
           label: msg("fields.options.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
+        styles: {
+          label: msg("fields.textStyles", "Text Styles"),
+          type: "styledText",
+        },
         fontColor: {
           label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
@@ -198,21 +59,39 @@ const ProfessionalPracticeBlogSectionFields: YextFields<ProfessionalPracticeBlog
           type: "object",
           objectFields: {
             overlayBackgroundColor: {
-              label: msg("fields.overlayBackgroundColor", "Overlay Background Color"),
+              label: msg(
+                "fields.overlayBackgroundColor",
+                "Overlay Background Color",
+              ),
               type: "basicSelector",
               options: "BACKGROUND_COLOR",
             },
-            image: { label: msg("fields.imageStyles", "Image Styles"), type: "styledImage" },
-            imageAspectRatio: { label: msg("fields.imageAspectRatio", "Image Aspect Ratio"), type: "number" },
-            title: { label: msg("fields.titleStyles", "Title Styles"), type: "styledText" },
+            image: {
+              label: msg("fields.imageStyles", "Image Styles"),
+              type: "styledImage",
+            },
+            imageAspectRatio: {
+              label: msg("fields.imageAspectRatio", "Image Aspect Ratio"),
+              type: "number",
+            },
+            title: {
+              label: msg("fields.titleStyles", "Title Styles"),
+              type: "styledText",
+            },
             titleFontColor: {
               label: msg("fields.titleFontColor", "Title Font Color"),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
-            description: { label: msg("fields.descriptionStyles", "Description Styles"), type: "styledText" },
+            description: {
+              label: msg("fields.descriptionStyles", "Description Styles"),
+              type: "styledText",
+            },
             descriptionFontColor: {
-              label: msg("fields.descriptionFontColor", "Description Font Color"),
+              label: msg(
+                "fields.descriptionFontColor",
+                "Description Font Color",
+              ),
               type: "basicSelector",
               options: "SITE_COLOR",
             },
@@ -221,207 +100,6 @@ const ProfessionalPracticeBlogSectionFields: YextFields<ProfessionalPracticeBlog
       },
     },
   };
-
-const textStyle = (
-  styles: StyledTextValueWithLetterSpacing,
-  color?: ThemeColor,
-): React.CSSProperties => ({
-  ...resolveTextStyles(styles),
-  color: color ? getThemeColorCssValue(color.selectedColor) : undefined,
-});
-
-const ProfessionalPracticeBlogSectionComponent: PuckComponent<
-  ProfessionalPracticeBlogSectionProps
-> = (props) => {
-  const streamDocument = useDocument();
-  const { i18n } = useTranslation();
-  const locale = i18n.language;
-  const cards = blogCardsSource.resolveItems(props.cards.data, streamDocument);
-  const authoredCards = props.cards.data.constantValueEnabled
-    ? props.cards.data.constantValue
-    : undefined;
-  const imageBorderRadius =
-    props.cards.styles.image.borderRadius === "default"
-      ? "16px"
-      : props.cards.styles.image.borderRadius === "none"
-        ? 0
-        : props.cards.styles.image.borderRadius;
-
-  return (
-    <VisibilityWrapper
-      liveVisibility={props.section.visibleOnLivePage}
-      isEditing={props.puck.isEditing}
-    >
-      <AnalyticsScopeProvider
-        name={`ProfessionalPracticeBlogSection${getAnalyticsScopeHash(props.id)}`}
-      >
-        <Background background={props.section.backgroundColor}>
-          <section
-            style={getSurfaceColorStyle(
-              props.section.backgroundColor,
-              streamDocument,
-            )}
-          >
-            <div className="mx-auto flex max-w-[1280px] flex-col gap-[30px] px-4 py-[30px] md:px-8 md:py-[60px] xl:px-20">
-              <EntityField
-                displayName="Heading"
-                fieldId={props.heading.text.field}
-                constantValueEnabled={props.heading.text.constantValueEnabled}
-              >
-                <h2
-                  className="m-0"
-                  style={textStyle(
-                    props.heading.styles,
-                    props.heading.fontColor,
-                  )}
-                >
-                  {resolveComponentData(
-                    props.heading.text,
-                    locale,
-                    streamDocument,
-                  )}
-                </h2>
-              </EntityField>
-              <EntityField
-                displayName="Blog Cards"
-                fieldId={props.cards.data.field}
-                constantValueEnabled={props.cards.data.constantValueEnabled}
-              >
-                <div className="grid gap-6 md:grid-cols-2">
-                  {cards.map((card, index) => {
-                    const authoredCard =
-                      authoredCards?.[index] ?? props.cards.data.mappings;
-                    const resolvedTitle = authoredCard?.title
-                      ? resolveComponentData(
-                          authoredCard.title,
-                          locale,
-                          streamDocument,
-                        )
-                      : undefined;
-                    const title =
-                      typeof resolvedTitle === "string"
-                        ? resolvedTitle
-                        : "";
-                    const resolvedImage = authoredCard?.image
-                      ? resolveComponentData(
-                          authoredCard.image,
-                          locale,
-                          streamDocument,
-                        )
-                      : undefined;
-                    const image =
-                      !resolvedImage ||
-                      React.isValidElement(resolvedImage) ||
-                      typeof resolvedImage === "string"
-                        ? undefined
-                        : (("image" in resolvedImage &&
-                            resolvedImage.image &&
-                            typeof resolvedImage.image === "object"
-                            ? resolvedImage.image
-                            : resolvedImage) as TranslatableAssetImage);
-                    const descriptionOverrides = {
-                      ...props.cards.styles.description,
-                      color: props.cards.styles.descriptionFontColor,
-                    };
-                    const description = authoredCard?.description
-                      ? resolveComponentData(
-                          authoredCard.description,
-                          locale,
-                          streamDocument,
-                        )
-                      : undefined;
-                    const ctaValue = card.cta as unknown as
-                      ComprehensiveCTAValue | undefined;
-                    return (
-                      <Background
-                        key={`${title || "blog"}-${index}`}
-                        background={props.cards.styles.overlayBackgroundColor}
-                      >
-                        <article
-                          className="rounded-[16px]"
-                          style={getSurfaceColorStyle(
-                            props.cards.styles.overlayBackgroundColor,
-                            streamDocument,
-                          )}
-                        >
-                          {image ? (
-                            <EntityField
-                              displayName="Image"
-                              fieldId={authoredCard?.image.field}
-                              constantValueEnabled={
-                                authoredCard?.image.constantValueEnabled
-                              }
-                            >
-                              <Image
-                                image={image}
-                                className="h-full w-full object-cover"
-                                style={{
-                                  aspectRatio:
-                                    props.cards.styles.imageAspectRatio,
-                                  borderRadius: imageBorderRadius,
-                                }}
-                              />
-                            </EntityField>
-                          ) : null}
-                          <div className="flex flex-col gap-4 p-6">
-                            <EntityField
-                              displayName="Title"
-                              fieldId={authoredCard?.title.field}
-                              constantValueEnabled={
-                                authoredCard?.title.constantValueEnabled
-                              }
-                            >
-                              <h3
-                                className="m-0"
-                                style={textStyle(
-                                  props.cards.styles.title,
-                                  props.cards.styles.titleFontColor,
-                                )}
-                              >
-                                {title}
-                              </h3>
-                            </EntityField>
-                            <EntityField
-                              displayName="Description"
-                              fieldId={authoredCard?.description.field}
-                              constantValueEnabled={
-                                authoredCard?.description.constantValueEnabled
-                              }
-                            >
-                              {renderResolvedRichText(
-                                description,
-                                descriptionOverrides,
-                              )}
-                            </EntityField>
-                            {ctaValue ? (
-                              <EntityField
-                                displayName="Call to Action"
-                                fieldId={authoredCard?.cta.data.cta.field}
-                                constantValueEnabled={
-                                  authoredCard?.cta.data.cta
-                                    .constantValueEnabled
-                                }
-                              >
-                                <ComprehensiveCTA
-                                  value={ctaValue}
-                                  eventName={`blogCard${index}`}
-                                />
-                              </EntityField>
-                            ) : null}
-                          </div>
-                        </article>
-                      </Background>
-                    );
-                  })}
-                </div>
-              </EntityField>
-            </div>
-          </section>
-        </Background>
-      </AnalyticsScopeProvider>
-    </VisibilityWrapper>
-  );
-};
 
 export const ProfessionalPracticeBlogSection: YextComponentConfig<ProfessionalPracticeBlogSectionProps> =
   {
@@ -460,11 +138,7 @@ export const ProfessionalPracticeBlogSection: YextComponentConfig<ProfessionalPr
         },
       },
     },
-    render: (props) => (
-      <TypographyScope>
-        <ProfessionalPracticeBlogSectionComponent {...props} />
-      </TypographyScope>
-    ),
+    render: renderConfig.render,
   };
 
 export const config: SectionConfig = {

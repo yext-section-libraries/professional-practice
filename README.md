@@ -160,6 +160,57 @@ contains library and layout metadata, render and editor paths, and default
 layout data. It contains no section source. It is not expected that
 these files should require any editing.
 
+## Paired section configs
+
+Each visible section has an editor file (`Section.tsx`) and a live companion
+(`Section.render.tsx`). Props types and React implementations live in the
+companion. The editor imports its renderer and keeps the fields, insertion
+defaults, resolvers, and literal `SectionConfig` metadata. Runtime imports must
+never point from a companion back into an editor config.
+
+`shared/componentRegistry.render.ts` registers the hidden Directory render
+components and render roots. Its native Puck schemas retain the nested slots;
+the full registry keeps data resolvers and editor controls. Locator's card, map,
+and results modules follow the same direction. Runtime fallback constants remain
+with the renderers that use them.
+
+The plugin generates both configs per layout. Editor and build-time migration
+and resolution use the full config. Live SSR and hydration use the render config.
+Saved layout JSON, IDs, translations, and previews are unchanged.
+
+Run `npm test` for insertion-contract compatibility, resolved Directory cards,
+Locator entity-type reconciliation, nested SSR equivalence, generated imports,
+and the complete local source import boundary. Tests regenerate configs through
+the plugin. `npm run typecheck:library` checks the authored library; the broader
+`npm run typecheck` also checks plugin-generated templates. The packed beta.4
+currently produces generated-code type errors involving `toPuckFields` and Pages
+`TemplateProps.relativePrefixToRoot`; these also occurred before the split.
+Typechecking does not emit files.
+
+For a local production build, run `SECTION_LIBRARY_REVISION_ID=local npm run build`.
+Then run `npm run measure:live --silent` to measure each live entry's complete
+JavaScript static import closure. The command reports raw bytes, gzip, and Brotli per file
+and totals; it excludes dynamic imports and extracted CSS, and counts shared files once per entry.
+Compression is calculated independently for each file, matching separate
+responses. `benchmarks/combined-live-baseline.json` records the unchanged combined
+library built with the same beta.4 split-support tarball. Deployment-specific
+measurements should use the same dependency and build settings for both versions.
+
+The local comparison recorded these reductions (bytes, separately compressed files):
+
+| Layout | Raw reduction | Gzip reduction | Brotli reduction |
+| --- | ---: | ---: | ---: |
+| Entity | 68,105 | 10,106 | 7,452 |
+| Directory | 31,802 | 6,440 | 5,898 |
+| Locator | 47,342 | 9,308 | 8,351 |
+
+The shared framework/vendor chunk remains about 1.52 MB gzip. These reductions
+measure the config split with a fixed dependency version, rather than the package
+upgrade. Browser checks opened all three layouts and verified Hero field editing
+and persistence after reload; the original value was restored. Directory's nested
+cards and Locator's fixture search results rendered. Deployed map behavior still
+needs a valid Mapbox key because the local fixture key cannot fetch tiles.
+
 ## Local Editor
 
 Local Editor lets you edit Section Library layouts in development using

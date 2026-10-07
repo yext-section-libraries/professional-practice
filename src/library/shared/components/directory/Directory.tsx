@@ -1,63 +1,17 @@
-import { useTemplateProps } from "@yext/visual-editor/section-library-support";
-import {
-  backgroundColors,
-  ThemeColor,
-} from "@yext/visual-editor/section-library-support";
-import { PageSection } from "@yext/visual-editor/section-library-support";
+import { Directory as renderConfig } from "./Directory.render";
+import type { DirectoryProps } from "./Directory.render";
+export type { DirectoryStyles, DirectoryProps } from "./Directory.render";
+import { backgroundColors } from "@yext/visual-editor/section-library-support";
 import { msg } from "@yext/visual-editor/section-library-support";
-import { Background } from "@yext/visual-editor/section-library-support";
 import { HeadingTextProps } from "../contentBlocks/HeadingText";
 import { BreadcrumbsSectionProps } from "../pageSections/Breadcrumbs";
-import { PuckComponent, setDeep, Slot } from "@puckeditor/core";
-import { AnalyticsScopeProvider } from "@yext/pages-components";
-import { DirectoryList } from "./DirectoryWrapper";
+import { setDeep } from "@puckeditor/core";
 import { isDirectoryGrid } from "@yext/visual-editor/section-library-support";
 import {
   toPuckFields,
   YextComponentConfig,
   YextFields,
 } from "@yext/visual-editor/section-library-support";
-
-export interface DirectoryStyles {
-  /**
-   * The background color for the directory page heading area.
-   * @defaultValue Background Color 1
-   */
-  backgroundColor: ThemeColor;
-
-  /**
-   * The background color for the directory list area.
-   * @defaultValue Background Color 1
-   */
-  listBackgroundColor: ThemeColor;
-
-  /**
-   * The color of links in the directory list layout.
-   */
-  linkColor?: ThemeColor;
-}
-
-export interface DirectoryProps {
-  /**
-   * This object contains properties for customizing the component's appearance.
-   * @propCategory Style Props
-   */
-  styles: DirectoryStyles;
-
-  /** @internal */
-  slots: {
-    TitleSlot: Slot;
-    SiteNameSlot: Slot;
-    BreadcrumbsSlot: Slot;
-    DirectoryGrid: Slot;
-  };
-
-  /** @internal */
-  analytics: {
-    scope?: string;
-  };
-}
-
 const directoryFields: YextFields<DirectoryProps> = {
   styles: {
     type: "object",
@@ -72,7 +26,7 @@ const directoryFields: YextFields<DirectoryProps> = {
         type: "basicSelector",
         label: msg(
           "fields.directoryListBackgroundColor",
-          "Directory List Background Color"
+          "Directory List Background Color",
         ),
         options: "BACKGROUND_COLOR",
       },
@@ -106,37 +60,6 @@ const directoryFields: YextFields<DirectoryProps> = {
   },
 };
 
-const DirectoryComponent: PuckComponent<DirectoryProps> = ({
-  styles,
-  slots,
-}) => {
-  const { document: streamDocument, relativePrefixToRoot } = useTemplateProps();
-
-  return (
-    <Background background={styles.backgroundColor}>
-      <slots.BreadcrumbsSlot style={{ height: "auto" }} />
-      <PageSection className="flex flex-col items-center gap-2">
-        <slots.SiteNameSlot style={{ height: "auto", width: "100%" }} />
-        <slots.TitleSlot style={{ height: "auto", width: "100%" }} />
-      </PageSection>
-      {streamDocument.dm_directoryChildren &&
-        isDirectoryGrid(streamDocument.dm_directoryChildren) && (
-          <slots.DirectoryGrid style={{ height: "auto" }} />
-        )}
-      {streamDocument.dm_directoryChildren &&
-        !isDirectoryGrid(streamDocument.dm_directoryChildren) && (
-          <DirectoryList
-            streamDocument={streamDocument}
-            directoryChildren={streamDocument.dm_directoryChildren}
-            relativePrefixToRoot={relativePrefixToRoot ?? ""}
-            linkColor={styles.linkColor}
-            backgroundColor={styles.listBackgroundColor}
-          />
-        )}
-    </Background>
-  );
-};
-
 /**
  * The Directory Page component serves as a navigational hub,
  * displaying a list of child entities within a hierarchical structure
@@ -155,10 +78,10 @@ export const Directory: YextComponentConfig<DirectoryProps> = {
       const updatedFields = setDeep(
         directoryFields,
         "styles.objectFields.listBackgroundColor.visible",
-        false
+        false,
       );
       return toPuckFields(
-        setDeep(updatedFields, "styles.objectFields.linkColor.visible", false)
+        setDeep(updatedFields, "styles.objectFields.linkColor.visible", false),
       );
     }
     return toPuckFields(directoryFields);
@@ -252,9 +175,5 @@ export const Directory: YextComponentConfig<DirectoryProps> = {
       scope: "directory",
     },
   },
-  render: (props) => (
-    <AnalyticsScopeProvider name={props?.analytics?.scope ?? "directory"}>
-      <DirectoryComponent {...props} />
-    </AnalyticsScopeProvider>
-  ),
+  render: renderConfig.render,
 };

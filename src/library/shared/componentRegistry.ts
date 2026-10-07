@@ -1,3 +1,4 @@
+import type { SectionConfig } from "@yext/visual-editor";
 import type { Config } from "@puckeditor/core";
 import { HeadingText as SharedComponent0 } from "./components/contentBlocks/HeadingText";
 import { BreadcrumbsSection as SharedComponent1 } from "./components/pageSections/Breadcrumbs";
@@ -9,7 +10,10 @@ import { Phone as SharedComponent6 } from "./components/contentBlocks/Phone";
 import { directoryRootConfig, locatorRootConfig } from "./roots";
 
 /** Hidden internal Puck components referenced by saved Directory layout data. */
-export const sharedComponentMetadata = [
+export const sharedComponentMetadata: ReadonlyArray<{
+  readonly id: string;
+  readonly pageSetTypes: Readonly<SectionConfig["pageSetTypes"]>;
+}> = [
   { id: "HeadingTextSlot", pageSetTypes: ["DIRECTORY"] },
   { id: "BreadcrumbsSlot", pageSetTypes: ["DIRECTORY"] },
   { id: "DirectoryGrid", pageSetTypes: ["DIRECTORY"] },

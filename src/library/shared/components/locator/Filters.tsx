@@ -16,7 +16,7 @@ import { getPreferredDistanceUnit } from "@yext/visual-editor/section-library-su
 import { msg } from "@yext/visual-editor/section-library-support";
 import { LocatorEntityType } from "@yext/visual-editor/section-library-support";
 import { Body } from "@yext/visual-editor/section-library-support";
-import { translateDistanceUnit } from "./Results";
+import { translateDistanceUnit } from "./Results.render";
 
 export const LOCATION_FIELD = "builtin.location";
 export const COUNTRY_CODE_FIELD = "address.countryCode";

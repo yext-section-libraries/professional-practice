@@ -1,31 +1,21 @@
-import React from "react";
-import { FieldLabel, PuckComponent, Slot } from "@puckeditor/core";
+import { DirectoryGrid as renderConfig } from "./DirectoryWrapper.render";
+import type { DirectoryGridProps } from "./DirectoryWrapper.render";
+export type { DirectoryGridProps } from "./DirectoryWrapper.render";
+export { DirectoryList } from "./DirectoryWrapper.render";
+import { FieldLabel } from "@puckeditor/core";
 import {
   backgroundColors,
-  ThemeColor,
   ThemeOptions,
 } from "@yext/visual-editor/section-library-support";
-import { Body } from "@yext/visual-editor/section-library-support";
-import { MaybeLink } from "@yext/visual-editor/section-library-support";
 import { msg, pt } from "@yext/visual-editor/section-library-support";
-import { PageSection } from "@yext/visual-editor/section-library-support";
-import { CardContextProvider } from "@yext/visual-editor/section-library-support";
-import {
-  isDirectoryGrid,
-  sortAlphabetically,
-} from "@yext/visual-editor/section-library-support";
+import { isDirectoryGrid } from "@yext/visual-editor/section-library-support";
 import {
   createDefaultLinkOverrideFieldValue,
   defaultDirectoryCardSlotData,
   DirectoryCardProps,
 } from "./DirectoryCard";
-import { StreamDocument } from "@yext/visual-editor/section-library-support";
-import { resolveDirectoryListChildren } from "@yext/visual-editor/section-library-support";
-import { getThemeValue } from "@yext/visual-editor/section-library-support";
-import { useDocument } from "@yext/visual-editor/section-library-support";
 import {
   createDirectoryChildReference,
-  DirectoryChildrenProvider,
   getSortedDirectoryChildren,
 } from "./directoryChildReference";
 import {
@@ -47,21 +37,6 @@ import {
 } from "@yext/visual-editor/section-library-support";
 import { FaInfoCircle } from "react-icons/fa";
 import { useTemplateMetadata } from "@yext/visual-editor/section-library-support";
-
-export type DirectoryGridProps = {
-  data: typeof directoryCardsSource.value;
-  styles: {
-    backgroundColor?: ThemeColor;
-  };
-  /** @internal */
-  manualSlots?: {
-    CardSlot: Slot;
-  };
-  slots: {
-    CardSlot: Slot;
-  };
-};
-
 const DirectoryFieldTooltip = () => {
   const templateMetadata = useTemplateMetadata();
   return (
@@ -81,7 +56,7 @@ const DirectoryFieldTooltip = () => {
             "Use a custom URL path for each card's title link. If the value is empty, the generated directory URL will be used.",
             {
               entityType: templateMetadata.entityTypeDisplayName,
-            }
+            },
           )}
           <TooltipArrow fill="ve-bg-popover" />
         </TooltipContent>
@@ -208,7 +183,7 @@ const directoryCardsSource = createSlottedItemSource<
 // The linked entity slot helper allows field selection and constant values
 // however the directory should be locked to the dm_directoryChildren field.
 const getNormalizedDirectoryGridData = (
-  value: typeof directoryCardsSource.value | undefined
+  value: typeof directoryCardsSource.value | undefined,
 ): typeof directoryCardsSource.value => ({
   ...directoryCardsSource.defaultValue,
   ...value,
@@ -232,90 +207,6 @@ const getNormalizedDirectoryGridData = (
     showPhoneNumber: value?.mappings?.showPhoneNumber ?? true,
   },
 });
-
-export const DirectoryList = ({
-  streamDocument,
-  directoryChildren,
-  relativePrefixToRoot,
-  backgroundColor,
-  linkColor,
-}: {
-  streamDocument: StreamDocument;
-  directoryChildren: {
-    id: string;
-    name: string;
-    slug: string;
-    meta?: {
-      entityType?: {
-        id: "dm_country" | "dm_region" | "dm_city";
-      };
-    };
-    dm_addressCountryDisplayName?: string;
-    dm_addressRegionDisplayName?: string;
-  }[];
-  relativePrefixToRoot: string;
-  backgroundColor: ThemeColor;
-  linkColor?: ThemeColor;
-}) => {
-  const sortedDirectoryChildren = sortAlphabetically(
-    [...directoryChildren],
-    "name"
-  );
-  const linkTextTransformValue = (
-    getThemeValue("--textTransform-link-textTransform", streamDocument) ?? ""
-  ).toLowerCase();
-  const shouldTitleCase =
-    linkTextTransformValue === "none" || linkTextTransformValue === "normal";
-
-  return (
-    <PageSection verticalPadding="sm" background={backgroundColor}>
-      <ul className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
-        {sortedDirectoryChildren.map((child, idx) => {
-          const childSlug = resolveDirectoryListChildren(streamDocument, child);
-          let label;
-          switch (child?.meta?.entityType?.id) {
-            case "dm_country":
-              label = child.dm_addressCountryDisplayName ?? child.name;
-              break;
-            case "dm_region":
-              label = child.dm_addressRegionDisplayName ?? child.name;
-              break;
-            case "dm_city":
-              label = child.name;
-              break;
-            default:
-              label = child.name;
-          }
-
-          return (
-            <li key={idx}>
-              <MaybeLink
-                eventName={`child${idx}`}
-                variant="directoryLink"
-                color={linkColor}
-                href={
-                  relativePrefixToRoot
-                    ? relativePrefixToRoot + childSlug
-                    : childSlug
-                }
-              >
-                <Body
-                  style={{
-                    textTransform: shouldTitleCase
-                      ? ("capitalize" as React.CSSProperties["textTransform"])
-                      : ("var(--textTransform-link-textTransform)" as React.CSSProperties["textTransform"]),
-                  }}
-                >
-                  {label}
-                </Body>
-              </MaybeLink>
-            </li>
-          );
-        })}
-      </ul>
-    </PageSection>
-  );
-};
 
 const directoryGridFields: YextFields<DirectoryGridProps> = {
   data: {
@@ -351,33 +242,6 @@ const directoryGridFields: YextFields<DirectoryGridProps> = {
   },
 };
 
-const DirectoryGridWrapper: PuckComponent<DirectoryGridProps> = (props) => {
-  const { styles, slots } = props;
-  const streamDocument = useDocument<StreamDocument>();
-  const sortedDirectoryChildren = React.useMemo(
-    () => getSortedDirectoryChildren(streamDocument.dm_directoryChildren),
-    [streamDocument.dm_directoryChildren]
-  );
-
-  return (
-    <DirectoryChildrenProvider directoryChildren={sortedDirectoryChildren}>
-      <CardContextProvider>
-        <PageSection
-          verticalPadding="sm"
-          background={styles.backgroundColor}
-          className={"flex min-h-0 min-w-0 mx-auto"}
-        >
-          <slots.CardSlot
-            className="flex min-h-0 min-w-0 mx-auto flex-col sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8"
-            allow={[]}
-            style={{ height: "auto" }}
-          />
-        </PageSection>
-      </CardContextProvider>
-    </DirectoryChildrenProvider>
-  );
-};
-
 export const DirectoryGrid: YextComponentConfig<DirectoryGridProps> = {
   label: msg("components.directoryGrid", "Directory Grid"),
   fields: directoryGridFields,
@@ -399,7 +263,7 @@ export const DirectoryGrid: YextComponentConfig<DirectoryGridProps> = {
     }
 
     const sortedDirectoryChildren = getSortedDirectoryChildren(
-      streamDocument.dm_directoryChildren
+      streamDocument.dm_directoryChildren,
     );
     const normalizedData = getNormalizedDirectoryGridData(data.props.data);
     const titleField = normalizedData.mappings?.cardTitle.constantValueEnabled
@@ -422,7 +286,7 @@ export const DirectoryGrid: YextComponentConfig<DirectoryGridProps> = {
           index,
           createDirectoryChildReference(sortedDirectoryChildren[index], index),
           firstCardProps?.styles,
-          firstCardProps?.slots
+          firstCardProps?.slots,
         ),
       toParentData: ({ child, childIndex }) => ({
         childRef: createDirectoryChildReference(child, childIndex),
@@ -435,7 +299,7 @@ export const DirectoryGrid: YextComponentConfig<DirectoryGridProps> = {
               titleItems[index].cardTitle,
               streamDocument.locale || "en",
               streamDocument,
-              { output: "plainText" }
+              { output: "plainText" },
             )
           : "[[name]]";
       const cardSlots = card.props.slots ?? {};
@@ -468,7 +332,7 @@ export const DirectoryGrid: YextComponentConfig<DirectoryGridProps> = {
                         },
                       },
                     }
-                  : headingSlot
+                  : headingSlot,
             ),
           },
         },
@@ -487,5 +351,5 @@ export const DirectoryGrid: YextComponentConfig<DirectoryGridProps> = {
       },
     };
   },
-  render: (props) => <DirectoryGridWrapper {...props} />,
+  render: renderConfig.render,
 };

@@ -1,97 +1,13 @@
-import { resolveTextStyles, TypographyScope } from "../shared/typography";
-import { useTranslation } from "react-i18next";
+import { ProfessionalPracticePhotoGallerySection as renderConfig } from "./ProfessionalPracticePhotoGallerySection.render";
+import type { ProfessionalPracticePhotoGallerySectionProps } from "./ProfessionalPracticePhotoGallerySection.render";
+import { photoSource } from "./ProfessionalPracticePhotoGallerySection.render";
 import type { SectionConfig } from "@yext/visual-editor";
-
-import * as React from "react";
-import type { PuckComponent } from "@puckeditor/core";
 import {
   msg,
-  Background,
-  createItemSource,
-  EntityField,
-  getAnalyticsScopeHash,
-  getSurfaceColorStyle,
-  getThemeColorCssValue,
-  Image,
-  resolveComponentData,
-  type StyledImageValue,
-  type ThemeColor,
-  type TranslatableAssetImage,
-  useDocument,
-  VisibilityWrapper,
   type YextComponentConfig,
-  type YextEntityField,
   type YextFields,
 } from "@yext/visual-editor";
-import { AnalyticsScopeProvider } from "@yext/pages-components";
-import {
-  defaultTextStyles,
-  type StyledTextProps,
-  type StyledTextValueWithLetterSpacing,
-} from "../shared/sectionHelpers";
-
-type PhotoFields = {
-  image: YextEntityField<TranslatableAssetImage>;
-  caption: YextEntityField<string>;
-};
-
-const imageUrls = [
-  "https://a.mktgcdn.com/p/UHR6VTEvcR-yDMqPSOS7LyK87Qt56EOrmfNbhLQxI08/1267x1900.jpg",
-  "https://a.mktgcdn.com/p/fbSbItkZpsHpkc8qHH7GxvQkWzxsfm6mGc0k4Lmfl-A/1267x1900.jpg",
-  "https://a.mktgcdn.com/p/Qdlacb36DqN5Lt3q6V9jw-qSMmbPyl_AeMEI_CyDkHc/1267x1900.jpg",
-];
-
-const photoSource = createItemSource<PhotoFields>({
-  label: msg("fields.photos", "Photos"),
-  mappingFields: {
-    image: {
-      type: "entityField",
-      label: msg("fields.options.image", "Image"),
-      filter: { types: ["type.image"] },
-    },
-    caption: {
-      type: "entityField",
-      label: msg("fields.caption", "Caption"),
-      filter: { types: ["type.string"] },
-    },
-  },
-  defaultValues: [
-    "Seasonal service days stay light, airy, and unrushed.",
-    "Our mobile setup keeps every visit self-contained and tidy.",
-    "Comfort-first routines help pets settle in quickly.",
-  ].map((caption, index) => ({
-    image: {
-      field: "",
-      constantValue: { url: imageUrls[index], width: 1267, height: 1900 },
-      constantValueEnabled: true,
-    },
-    caption: {
-      field: "",
-      constantValue: caption,
-      constantValueEnabled: true,
-    },
-  })),
-});
-
-type ProfessionalPracticePhotoGallerySectionProps = {
-  section: {
-    visibleOnLivePage: boolean;
-    backgroundColor: ThemeColor;
-  };
-  heading: StyledTextProps;
-  displayType: "grid" | "carousel";
-  photos: {
-    data: typeof photoSource.value;
-    styles: {
-      image: StyledImageValue;
-      aspectRatio: number;
-      imageConstrain: "fixed" | "filled";
-      caption: StyledTextValueWithLetterSpacing;
-      captionFontColor?: ThemeColor;
-    };
-  };
-};
-
+import { defaultTextStyles } from "../shared/sectionHelpers";
 const ProfessionalPracticePhotoGallerySectionFields: YextFields<ProfessionalPracticePhotoGallerySectionProps> =
   {
     section: {
@@ -122,7 +38,10 @@ const ProfessionalPracticePhotoGallerySectionFields: YextFields<ProfessionalPrac
           label: msg("fields.options.text", "Text"),
           filter: { types: ["type.string"] },
         },
-        styles: { label: msg("fields.textStyles", "Text Styles"), type: "styledText" },
+        styles: {
+          label: msg("fields.textStyles", "Text Styles"),
+          type: "styledText",
+        },
         fontColor: {
           label: msg("fields.fontColor", "Font Color"),
           type: "basicSelector",
@@ -135,7 +54,10 @@ const ProfessionalPracticePhotoGallerySectionFields: YextFields<ProfessionalPrac
       type: "select",
       options: [
         { label: msg("fields.options.grid", "Grid"), value: "grid" },
-        { label: msg("fields.options.carousel", "Carousel"), value: "carousel" },
+        {
+          label: msg("fields.options.carousel", "Carousel"),
+          value: "carousel",
+        },
       ],
     },
     photos: {
@@ -147,14 +69,23 @@ const ProfessionalPracticePhotoGallerySectionFields: YextFields<ProfessionalPrac
           label: msg("fields.galleryPresentation", "Gallery Presentation"),
           type: "object",
           objectFields: {
-            image: { label: msg("fields.imageStyles", "Image Styles"), type: "styledImage" },
+            image: {
+              label: msg("fields.imageStyles", "Image Styles"),
+              type: "styledImage",
+            },
             aspectRatio: {
               label: msg("fields.options.aspectRatio", "Aspect Ratio"),
               type: "select",
               options: [
                 { label: msg("fields.options.square", "Square"), value: 1 },
-                { label: msg("fields.options.portrait", "Portrait"), value: 1.24 },
-                { label: msg("fields.options.landscape", "Landscape"), value: 1.6 },
+                {
+                  label: msg("fields.options.portrait", "Portrait"),
+                  value: 1.24,
+                },
+                {
+                  label: msg("fields.options.landscape", "Landscape"),
+                  value: 1.6,
+                },
               ],
             },
             imageConstrain: {
@@ -162,10 +93,16 @@ const ProfessionalPracticePhotoGallerySectionFields: YextFields<ProfessionalPrac
               type: "select",
               options: [
                 { label: msg("fields.options.fixed", "Fixed"), value: "fixed" },
-                { label: msg("fields.options.filled", "Filled"), value: "filled" },
+                {
+                  label: msg("fields.options.filled", "Filled"),
+                  value: "filled",
+                },
               ],
             },
-            caption: { label: msg("fields.captionStyles", "Caption Styles"), type: "styledText" },
+            caption: {
+              label: msg("fields.captionStyles", "Caption Styles"),
+              type: "styledText",
+            },
             captionFontColor: {
               label: msg("fields.captionFontColor", "Caption Font Color"),
               type: "basicSelector",
@@ -176,173 +113,6 @@ const ProfessionalPracticePhotoGallerySectionFields: YextFields<ProfessionalPrac
       },
     },
   };
-
-const textStyle = (
-  styles: StyledTextValueWithLetterSpacing,
-  fontColor?: ThemeColor,
-): React.CSSProperties => ({
-  ...resolveTextStyles(styles),
-  color: fontColor ? getThemeColorCssValue(fontColor.selectedColor) : undefined,
-});
-
-const ProfessionalPracticePhotoGallerySectionComponent: PuckComponent<
-  ProfessionalPracticePhotoGallerySectionProps
-> = (props) => {
-  const streamDocument = useDocument();
-  const { i18n } = useTranslation();
-  const locale = i18n.language;
-  const photos = photoSource.resolveItems(props.photos.data, streamDocument);
-  const authoredPhotos = props.photos.data.constantValueEnabled
-    ? props.photos.data.constantValue
-    : undefined;
-
-  return (
-    <VisibilityWrapper
-      liveVisibility={props.section.visibleOnLivePage}
-      isEditing={props.puck.isEditing}
-    >
-      <AnalyticsScopeProvider
-        name={`ProfessionalPracticePhotoGallerySection${getAnalyticsScopeHash(props.id)}`}
-      >
-        <Background background={props.section.backgroundColor}>
-          <section
-            style={getSurfaceColorStyle(
-              props.section.backgroundColor,
-              streamDocument,
-            )}
-          >
-            <div className="mx-auto flex max-w-[1280px] flex-col gap-[30px] px-4 py-[30px] md:px-8 md:py-[60px] xl:px-20">
-              <EntityField
-                displayName="Heading"
-                fieldId={props.heading.text.field}
-                constantValueEnabled={props.heading.text.constantValueEnabled}
-              >
-                <h2
-                  className="m-0"
-                  style={textStyle(
-                    props.heading.styles,
-                    props.heading.fontColor,
-                  )}
-                >
-                  {resolveComponentData(
-                    props.heading.text,
-                    locale,
-                    streamDocument,
-                  )}
-                </h2>
-              </EntityField>
-              <EntityField
-                displayName="Photos"
-                fieldId={props.photos.data.field}
-                constantValueEnabled={props.photos.data.constantValueEnabled}
-              >
-                <div
-                  className={
-                    props.displayType === "carousel"
-                      ? "flex snap-x snap-mandatory gap-6 overflow-x-auto pb-2"
-                      : "grid gap-6 md:grid-cols-2 xl:grid-cols-3"
-                  }
-                >
-                  {photos.map((photo, index) => {
-                    const authoredPhoto =
-                      authoredPhotos?.[index] ?? props.photos.data.mappings;
-                    const resolvedCaption = authoredPhoto?.caption
-                      ? resolveComponentData(
-                          authoredPhoto.caption,
-                          locale,
-                          streamDocument,
-                        )
-                      : undefined;
-                    const caption =
-                      typeof resolvedCaption === "string"
-                        ? resolvedCaption
-                        : "";
-                    const resolvedImage = authoredPhoto?.image
-                      ? resolveComponentData(
-                          authoredPhoto.image,
-                          locale,
-                          streamDocument,
-                        )
-                      : undefined;
-                    const image =
-                      !resolvedImage ||
-                      React.isValidElement(resolvedImage) ||
-                      typeof resolvedImage === "string"
-                        ? undefined
-                        : (("image" in resolvedImage &&
-                            resolvedImage.image &&
-                            typeof resolvedImage.image === "object"
-                            ? resolvedImage.image
-                            : resolvedImage) as TranslatableAssetImage);
-                    return (
-                      <figure
-                        key={`${caption || "photo"}-${index}`}
-                        className={
-                          props.displayType === "carousel"
-                            ? "m-0 min-w-[280px] snap-start md:min-w-[360px]"
-                            : "m-0"
-                        }
-                      >
-                        {image ? (
-                          <EntityField
-                            displayName="Image"
-                            fieldId={authoredPhoto?.image.field}
-                            constantValueEnabled={
-                              authoredPhoto?.image.constantValueEnabled
-                            }
-                          >
-                            <div className="overflow-hidden">
-                              <Image
-                                image={image}
-                                className="h-full w-full"
-                                style={{
-                                  aspectRatio: props.photos.styles.aspectRatio,
-                                  borderRadius:
-                                    props.photos.styles.image.borderRadius ===
-                                    "default"
-                                      ? undefined
-                                      : props.photos.styles.image.borderRadius,
-                                  objectFit:
-                                    props.photos.styles.imageConstrain ===
-                                    "filled"
-                                      ? "cover"
-                                      : "contain",
-                                }}
-                              />
-                            </div>
-                          </EntityField>
-                        ) : null}
-                        {caption ? (
-                          <EntityField
-                            displayName="Caption"
-                            fieldId={authoredPhoto?.caption.field}
-                            constantValueEnabled={
-                              authoredPhoto?.caption.constantValueEnabled
-                            }
-                          >
-                            <figcaption
-                              className="mt-3"
-                              style={textStyle(
-                                props.photos.styles.caption,
-                                props.photos.styles.captionFontColor,
-                              )}
-                            >
-                              {caption}
-                            </figcaption>
-                          </EntityField>
-                        ) : null}
-                      </figure>
-                    );
-                  })}
-                </div>
-              </EntityField>
-            </div>
-          </section>
-        </Background>
-      </AnalyticsScopeProvider>
-    </VisibilityWrapper>
-  );
-};
 
 export const ProfessionalPracticePhotoGallerySection: YextComponentConfig<ProfessionalPracticePhotoGallerySectionProps> =
   {
@@ -377,11 +147,7 @@ export const ProfessionalPracticePhotoGallerySection: YextComponentConfig<Profes
         },
       },
     },
-    render: (props) => (
-      <TypographyScope>
-        <ProfessionalPracticePhotoGallerySectionComponent {...props} />
-      </TypographyScope>
-    ),
+    render: renderConfig.render,
   };
 
 export const config: SectionConfig = {
