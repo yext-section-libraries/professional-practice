@@ -44,6 +44,7 @@
     "answerFontColor": "Vastauksen fontin väri",
     "answerStyles": "Vastauksen tyylit",
     "ariaLabel": "ARIA-tunniste",
+    "autoSearchOnMapMove": "Hae automaattisesti kartan liikkeestä",
     "backgroundColor": "Taustaväri",
     "bannerText": "Banneriteksti",
     "baseHubLabel": "Peruskeskuksen tunniste",

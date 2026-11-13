@@ -44,6 +44,7 @@
     "answerFontColor": "Colore carattere della risposta",
     "answerStyles": "Stili della risposta",
     "ariaLabel": "Etichetta ARIA",
+    "autoSearchOnMapMove": "Cerca automaticamente sul movimento della mappa",
     "backgroundColor": "Colore di sfondo",
     "bannerText": "Testo banner",
     "baseHubLabel": "Etichetta hub di base",

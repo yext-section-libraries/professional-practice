@@ -44,6 +44,7 @@
     "answerFontColor": "回答のフォント色",
     "answerStyles": "回答のスタイル",
     "ariaLabel": "ARIA ラベル",
+    "autoSearchOnMapMove": "地図移動時に自動検索",
     "backgroundColor": "背景色",
     "bannerText": "バナーテキスト",
     "baseHubLabel": "ベースハブのラベル",

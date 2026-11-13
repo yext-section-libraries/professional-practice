@@ -44,6 +44,7 @@
     "answerFontColor": "Skriftfarve for svar",
     "answerStyles": "Svarstile",
     "ariaLabel": "ARIA-label",
+    "autoSearchOnMapMove": "Søg automatisk på kortbevægelse",
     "backgroundColor": "Baggrundsfarve",
     "bannerText": "Bannertekst",
     "baseHubLabel": "Etiket for basishub",

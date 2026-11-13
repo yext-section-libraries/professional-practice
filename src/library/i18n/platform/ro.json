@@ -44,6 +44,7 @@
     "answerFontColor": "Culoarea fontului răspunsului",
     "answerStyles": "Stiluri pentru răspuns",
     "ariaLabel": "Etichetă ARIA",
+    "autoSearchOnMapMove": "Căutare automată pe Hartă Mișcare",
     "backgroundColor": "Culoarea fundalului",
     "bannerText": "Text banner",
     "baseHubLabel": "Eticheta centrului de bază",

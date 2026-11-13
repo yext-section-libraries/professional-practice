@@ -44,6 +44,7 @@
     "answerFontColor": "Vastuse fondi värv",
     "answerStyles": "Vastuse stiilid",
     "ariaLabel": "ARIA silt",
+    "autoSearchOnMapMove": "Otsige automaatselt kaardil liikumist",
     "backgroundColor": "Taustvärv",
     "bannerText": "Bänneri tekst",
     "baseHubLabel": "Baasjaoturi silt",

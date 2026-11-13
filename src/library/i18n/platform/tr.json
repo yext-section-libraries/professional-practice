@@ -44,6 +44,7 @@
     "answerFontColor": "Yanıt yazı tipi rengi",
     "answerStyles": "Yanıt stilleri",
     "ariaLabel": "ARIA Etiketi",
+    "autoSearchOnMapMove": "Harita Hareketinde Otomatik Arama",
     "backgroundColor": "Arka plan rengi",
     "bannerText": "Banner Metni",
     "baseHubLabel": "Temel Merkez Etiketi",

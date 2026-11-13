@@ -44,6 +44,7 @@
     "answerFontColor": "Tekstkleur van antwoord",
     "answerStyles": "Antwoordstijlen",
     "ariaLabel": "ARIA-label",
+    "autoSearchOnMapMove": "Automatisch zoeken op kaartbeweging",
     "backgroundColor": "Achtergrondkleur",
     "bannerText": "Bannertekst",
     "baseHubLabel": "Label van basishub",

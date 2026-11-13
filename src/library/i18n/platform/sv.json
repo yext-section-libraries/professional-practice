@@ -44,6 +44,7 @@
     "answerFontColor": "Teckensnittsfärg för svar",
     "answerStyles": "Svarsstilar",
     "ariaLabel": "ARIA-etikett",
+    "autoSearchOnMapMove": "Sök automatiskt på kartrörelse",
     "backgroundColor": "Bakgrundsfärg",
     "bannerText": "Bannertext",
     "baseHubLabel": "Etikett för basnav",
