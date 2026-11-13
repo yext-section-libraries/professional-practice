@@ -44,6 +44,7 @@
     "answerFontColor": "Válasz betűszíne",
     "answerStyles": "Válasz stílusai",
     "ariaLabel": "ARIA-címke",
+    "autoSearchOnMapMove": "Automatikus keresés a térképen, mozgás",
     "backgroundColor": "Háttérszín",
     "bannerText": "Szalagszöveg",
     "baseHubLabel": "Alapközpont címkéje",

@@ -44,6 +44,7 @@
     "answerFontColor": "Atsakymo šrifto spalva",
     "answerStyles": "Atsakymo stiliai",
     "ariaLabel": "ARIA etiketė",
+    "autoSearchOnMapMove": "Automatiškai ieškoti judėjimo žemėlapyje",
     "backgroundColor": "Fono spalva",
     "bannerText": "Reklamjuostės tekstas",
     "baseHubLabel": "Pagrindinio centro etiketė",

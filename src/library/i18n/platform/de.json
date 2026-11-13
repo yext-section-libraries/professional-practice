@@ -44,6 +44,7 @@
     "answerFontColor": "Schriftfarbe der Antwort",
     "answerStyles": "Antwortstile",
     "ariaLabel": "ARIA-Beschriftung",
+    "autoSearchOnMapMove": "Automatische Suche nach Kartenbewegung",
     "backgroundColor": "Hintergrundfarbe",
     "bannerText": "Bannertext",
     "baseHubLabel": "Beschriftung des Basis-Hubs",

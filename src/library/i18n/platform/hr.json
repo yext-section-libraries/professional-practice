@@ -44,6 +44,7 @@
     "answerFontColor": "Boja fonta odgovora",
     "answerStyles": "Stilovi odgovora",
     "ariaLabel": "ARIA oznaka",
+    "autoSearchOnMapMove": "Automatsko pretraživanje po kretanju karte",
     "backgroundColor": "Boja pozadine",
     "bannerText": "Tekst natpisa",
     "baseHubLabel": "Oznaka osnovnog središta",

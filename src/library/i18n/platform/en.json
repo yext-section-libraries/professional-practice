@@ -44,6 +44,7 @@
     "answerFontColor": "Answer Font Color",
     "answerStyles": "Answer Styles",
     "ariaLabel": "Aria Label",
+    "autoSearchOnMapMove": "Automatically Search on Map Movement",
     "backgroundColor": "Background Color",
     "bannerText": "Banner Text",
     "baseHubLabel": "Base Hub Label",

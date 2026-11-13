@@ -44,6 +44,7 @@
     "answerFontColor": "答案字体颜色",
     "answerStyles": "回答样式",
     "ariaLabel": "ARIA 标签",
+    "autoSearchOnMapMove": "地图移动自动搜索",
     "backgroundColor": "背景颜色",
     "bannerText": "横幅文本",
     "baseHubLabel": "基础中心标签",

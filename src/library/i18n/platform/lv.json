@@ -44,6 +44,7 @@
     "answerFontColor": "Atbildes fonta krāsa",
     "answerStyles": "Atbildes stili",
     "ariaLabel": "ARIA etiķete",
+    "autoSearchOnMapMove": "Automātiski meklēt kartē kustību",
     "backgroundColor": "Fona krāsa",
     "bannerText": "Reklāmkaroga teksts",
     "baseHubLabel": "Pamata centra etiķete",

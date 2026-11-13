@@ -44,6 +44,7 @@
     "answerFontColor": "Barva písma odpovědi",
     "answerStyles": "Styly odpovědi",
     "ariaLabel": "Popisek ARIA",
+    "autoSearchOnMapMove": "Automaticky hledat při pohybu na mapě",
     "backgroundColor": "Barva pozadí",
     "bannerText": "Text banneru",
     "baseHubLabel": "Popisek základního centra",
